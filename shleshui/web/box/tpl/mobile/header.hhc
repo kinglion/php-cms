@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<meta name="author" content="www.ithhc.cn" />
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+
+		<title><{if empty(@top_title)}><{hhc::set_up::lang_title}><{else /}><{@top_title}><{/if}></title>
+		<meta name="keywords" content="<{hhc::set_up::keywords}>" />
+		<meta name="description" content="<{hhc::set_up::description}>" />
+		<link href="./sundry/static_file/img/favicon.ico" rel="icon" type="image/x-icon" />
+		<link href="./sundry/static_file/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+		<link type="text/css" rel="stylesheet" href="HHC_TPL_HHC/css/m/flexslider.css" />
+		<link type="text/css" rel="stylesheet" href="HHC_TPL_HHC/css/m/jquery.mmenu.all.css" />
+		<link type="text/css" rel="stylesheet" href="HHC_TPL_HHC/css/m/style.css" />
+		<script type="text/javascript" src="HHC_TPL_HHC/js/m/jquery.min.js"></script>
+		<script type="text/javascript" src="HHC_TPL_HHC/js/m/jquery.mmenu.min.all.js"></script>
+		<script type="text/javascript" src="HHC_TPL_HHC/js/m/jquery.flexslider.js"></script>
+		<script type="text/javascript" src="HHC_TPL_HHC/js/m/o-script.js"></script>
+		
+	</head>
+	<body class="o-page">
+		<div id="page">
+			<!-- Header -->
+			<div id="header">
+				<a href="#menu"></a>
+				<span id="Logo" class="svg">
+				</span>
+				<a class="backBtn" href="javascript:history.back();"></a>
+			</div>
+			<div class="subHeader"><a href="web.php?m=1"><i class="i-home i-small"></i></a></div>
+			

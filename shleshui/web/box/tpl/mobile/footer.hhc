@@ -1,0 +1,60 @@
+<div style="clear:both;"></div>
+			<!-- Social Icons -->
+			<div class="socialMedia  scl-grey ">
+				<font color="white">Program by <a href="http://www.ithhc.cn/" title="郝海川博客" target="_blank">郝海川博客</a>  &nbsp;&nbsp;@ Copyright <{hhc::set_up::short_title}>&nbsp;&nbsp;<{hhc::set_up::tongji}></font>
+			</div>
+			<!-- Menu navigation -->
+			<nav id="menu">
+				<ul>
+					<li>
+						<a href="web.php?m=1">
+							<i class="i-home i-small"></i>网站首页
+						</a>
+					</li>
+					<li>
+						<a href="web.php?h=index&c=news&m=1">
+							<i class="i-home i-small"></i>新闻动态
+						</a>
+					</li>
+					<li>
+						<a href="web.php?h=index&c=product&m=1">
+							<i class="i-home i-small"></i>产品展示	
+						</a>
+					</li>
+					<li>
+						<a href="web.php?h=index&c=casez&m=1">
+							<i class="i-home i-small"></i>客户案例				
+						</a>
+					</li>	
+					<li>
+						<a href="web.php?h=index&c=solution&m=1">
+							<i class="i-home i-small"></i>解决方案
+						</a>
+					</li>
+					<li>
+						<a href="web.php?h=index&c=comment&m=1">
+							<i class="i-home i-small"></i>留言反馈
+						</a>
+					</li>
+					<li>
+						<a href="web.php?h=index&c=jobs&m=1">
+							<i class="i-home i-small"></i>人才招聘
+						</a>
+					</li>
+					<li>
+						<a href="web.php?h=index&c=user&m=1">
+							<i class="i-home i-small"></i>客户服务
+						</a>
+					</li>
+					<li>
+						<a href="web.php?m=0">
+							<i class="i-home i-small"></i>电脑版
+						</a>
+					</li>
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</body>
+</html>

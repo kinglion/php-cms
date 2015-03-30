@@ -1,0 +1,87 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<form method="post" class="forms" action="?h=moxing&c=moxing_create_submit" enctype="multipart/form-data">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						模型创建<span>注：这里所填写的信息 不能修改</span>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										模型中文名
+									</div>
+									<div class="oli_div_2">
+										<input name="cn_name" type="text" class="oli_text" value="">
+									</div>
+									<div class="oli_div_3">
+										模型中文名称 用于展示
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										模型英文名
+									</div>
+									<div class="oli_div_2">
+										<input name='en_name' value="" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										模型英文名 用于在数据库中操作
+
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										模型作者
+									</div>
+									<div class="oli_div_2">
+										<input name='author' type="text" class="oli_text" value="">
+									</div>
+									<div class="oli_div_3">
+										
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										模型logo
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+										<div class="file_get">
+											<div class="file_get_1">
+												<div class="file_get_1_div" style="">
+													<input class="file_get_name" readonly="readonly" type="text" value="">
+												</div>
+											</div>
+											<div class="file_get_2">选择文件
+												<input name="logo" width="50" class="file_get_2_file opacity_0" type="file">
+											</div>
+											<div class="clear"></div>
+										</div>
+									</div>
+									<div class="oli_div_3">
+										模型logo图片
+										
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="创建">
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+			<{*网站基本信息结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

@@ -1,0 +1,107 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=ziliao&c=bianji"><li>基本资料</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">联系方式</li>
+							<a href="?h=ziliao&c=xiangxi"><li>详细信息</li></a>
+						</ul>
+					</div>
+					<form action="?h=ziliao&c=lianxi_submit" method="post">
+					<div class="n_main_main_main">
+						<ul class="n_main_main_main_sul">
+							<li>
+								<div class="n_main_main_main_li_l">联系地址&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="lxdz" class="text" type="text" value="<{@_SESSION['user']['lxdz']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出50个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">个人网站&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="website" class="text" type="text" value="<{@_SESSION['user']['website']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出50个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">邮箱&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="youxiang" class="text" type="text" value="<{@_SESSION['user']['youxiang']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出50个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">手机号码&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="sjhm" class="text" type="text" value="<{@_SESSION['user']['sjhm']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出11个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">固定电话&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="gddh" class="text" type="text" value="<{@_SESSION['user']['gddh']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">格式如： 0543-2809182 不能超出12个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">QQ&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="qq" class="text" type="text" value="<{@_SESSION['user']['qq']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出15个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">阿里旺旺&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="wangwang" class="text" type="text" value="<{@_SESSION['user']['wangwang']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出50个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">微信&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="weixin" class="text" type="text" value="<{@_SESSION['user']['weixin']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出50个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">MSN&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="msn" class="text" type="text" value="<{@_SESSION['user']['msn']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出50个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">YY&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="yy" class="text" type="text" value="<{@_SESSION['user']['yy']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">不能超出50个字符&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+						</ul>
+						<div style="margin:30px 0 0 20px;">
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</div>
+				</div>
+			</form>
+
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=bianji">基本资料</a></li>
+					<li><a href="?h=ziliao&c=lianxi">联系方式</a></li>
+					<li><a href="?h=ziliao&c=xiangxi">详细信息</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

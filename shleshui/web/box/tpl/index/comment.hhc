@@ -1,0 +1,88 @@
+<?php
+	$w = '1';
+	if(!empty($_GET['key']))
+		$w = "class_id='{$_GET['key']}' ";
+	$order = ' order by id desc';
+	$page = new page(DB_PRE.'lyfk','*',$w.$order,20,'p');
+	$artcle = $page->page_2(10);
+	$artcle['0'] = !empty($artcle['0']) ? $artcle['0'] : array();
+	$pages = $page -> pages;
+    include './sundry/cache/json/config.php';
+    $arr = json_decode($json,true);
+	$top_title = "留言反馈 - 第{$pages}页 - {$arr['4']}";
+?>
+<{include ./header.hhc}>
+<script type="text/javascript" src="HHC_TPL_HHC/js/jquery.domWindow.js"></script>
+
+<div class="index_con">
+<div class="page_left">
+<div class="magtop10 search">
+<p class="searchp01">站内搜索</p>
+<form action="web.php" method="get">
+<input name="name" type="text" class="searchinp"/>
+<input type="hidden" name="h" value="index">
+<input type="hidden" name="c" value="so">
+<p class="searchp02"><input type="submit" value="" class="searchbon" /></p>
+</form>
+
+</div>
+<div class="magtop10"><a href="web.php?h=index&c=comment" title="留言反馈"><img src="HHC_TPL_HHC/images/left01.gif"  alt="留言反馈"/></a></div>
+</div>
+<div class="page_right">
+<div class="pagetop"><span class="web_navi">当前位置：<a href="web.php">首页</a> &gt;&gt; <a href="web.php?h=index&c=comment">留言反馈</a></span><h2><a href="#">留言反馈</a></h2>
+</div>
+<div class="borl_r singpage">
+<p class="red"><A class=defaultDOMWindow href="#inlineContent" jQuery1298700141187="2"><img src="HHC_TPL_HHC/images/luiyan.gif" alt="发表留言" class="luiyanimg"/></A>　　欢迎您访问本站，如果有什么建议或意见及疑难问题，请从这里提交您的信息，我们将在第一时间给您回复，不得发表攻击性言论， ！</p>
+<SCRIPT type=text/javascript> $('.defaultDOMWindow').openDOMWindow({ eventType:'click', loader:1, loaderImagePath:'animationProcessing.gif', loaderHeight:16, loaderWidth:17 }); </SCRIPT>
+<div id="inlineContent" style=" display:none;">
+<div class="tomtoluyan">
+<form action="web.php?h=index&c=comment_submit" method="post" name="liuyanform">
+<div class="touxiang">
+<img src="./sundry/static_file/img/pic/1.jpg" style="width:80px;height:80px;" name="touxiang" id="touxiang">
+<script type="text/javascript">
+	$(function(){
+		$('select[name=pic]').change(function(){
+			$('#touxiang').attr('src',"./sundry/static_file/img/pic/"+$(this).val()+".jpg");
+		})
+	})
+</script>
+<select style="width:80px;" name="pic">
+<?php for($i=1;$i<=30;$i++){ ?>
+<option value="<{@i}>">头像<{@i}></option>
+<?php } ?>
+</select> 
+</div>
+<h2>发表留言反馈</h2>
+<P>您的姓名：<input name="fasongzhe" type="text" class="luyqninput" size="30" /><span>*</span></P>
+<P>您的电话：<input name="title" type="text" class="luyqninput" size="30" /></P>
+<p>留言反馈内容：<span>*</span></p>
+<p><textarea name="neirong" cols="" rows="" class="luyqninaarea"></textarea></p>
+<p><input name="" type="submit" value="提交信息" class="luiyabot"/>
+</p>
+</form>
+</div>
+</div>
+<ul class="liuyanul">
+<?php 
+	foreach($artcle['0'] as $v){
+?>
+<li>
+<div class="iteleft"><img src="<{@v['pic']}>" width="80" height="80" /><p><{@v['fasongzhe']}></p></div>
+<div class="iteright">
+<p class="lytime">发表时间：<{@v['time']}></p>
+<p class="lymr"><{@v['neirong']}></p>
+<p class="lite04"></p>
+<p class="lymr"><span class="red">管理员回复：<{@v['huifu']}></span></p>
+<p class="lite05"></p>
+</div>
+</li>
+<?php } ?>
+</ul>
+<div class="epages"><{@artcle['1']}></div>
+</div>
+<div class="page_bot"></div>
+</div>
+<div class="clear"></div>
+<div class="blank10"></div>
+</div>
+<{include ./footer.hhc}>

@@ -1,0 +1,83 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=ziliao&c=jifen"><li>我的<{hhc::set_up::jifen}></li></a>
+							<a href="?h=ziliao&c=jinbi"><li>我的<{hhc::set_up::jinbi}></li></a>
+							<a href="?h=ziliao&c=jindou"><li>我的<{hhc::set_up::jindou}></li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;"><{hhc::set_up::jifen}>转换</li>
+							<a href="?h=ziliao&c=chongzhi"><li><{hhc::set_up::jinbi}>充值</li></a>
+						</ul>
+					</div>
+					<?php
+						$page = new page('`'.DB_PRE.'user_zhuanhuan`','*'," 1 and user_id = '{$_SESSION['user']['user_id']}' order by `id` desc",20,'p');
+						$res = $page -> page_2(10);
+					?>
+					<form action="?h=ziliao&c=zhuanhuan_submit" method="post">
+					<div class="n_main_main_main">
+						<div class="jf_main">
+							<div class="zhuanhua_input_parent">
+								请输入要转换的<{hhc::set_up::jifen}>数：
+								<input class="text" type="text" name="jifen">&nbsp;&nbsp;
+								<input type="submit" class="submit_x" value="提交">
+								<span style="color:#888888;">[1金币=10金豆 1金豆=10积分 默认使用金币转换 金币不足时 会使用金豆补充]</span>
+							</div>
+							<table>
+								<tr>
+									<th class="td2">详情</th>
+									<th class="td3">时间</th>
+								</tr>
+								<?php if(!empty($res['0'])){ ?>
+								<?php foreach($res['0'] as $v){ ?>
+								<tr>
+									<td class="td2">
+										<?php echo $v['xiangqing']; ?>
+									</td>
+									<td class="td3">
+										<?php echo date('Y-m-d',$v['time']); ?>
+									</td>
+								</tr>
+								<?php } ?>
+								<tr>
+									<td class="td2">
+										<div class="page_parent">	
+											<?php echo $res['1']; ?>
+										</div>
+									</td>
+									<td class="td3">
+										
+									</td>
+								</tr>
+								<?php }else{ ?>
+								<tr>
+									<td class="td2">
+										截止<?php echo date('Y年m月d日'); ?> 没有<{hhc::set_up::jifen}>转换记录
+									</td>
+									<td class="td3">
+										
+									</td>
+								</tr>
+								<?php } ?>
+							</table>
+						</div>
+					</div>
+				</div>
+			</form>
+
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=jifen">我的<{hhc::set_up::jifen}></a></li>
+					<li><a href="?h=ziliao&c=jinbi">我的<{hhc::set_up::jinbi}></a></li>
+					<li><a href="?h=ziliao&c=jindou">我的<{hhc::set_up::jindou}></a></li>
+					<li><a href="?h=ziliao&c=zhuanhuan"><{hhc::set_up::jifen}>转换</a></li>
+					<li><a href="?h=ziliao&c=chongzhi"><{hhc::set_up::jinbi}>充值</a></li>
+				</ul>
+			</div>
+
+
+		</div>
+<{include public::footer.hhc}>

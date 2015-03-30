@@ -1,0 +1,16 @@
+<form action="?h=custom&c=biaodan_submit" method="post" enctype="multipart/form-data">
+<{biaodan::list}>
+			
+						<li style="top:<?php echo $i*80; ?>px;">
+							<div class="main_form_left"><{biaodan::cn_name /}></div>
+							<div class="main_form_medium"><{biaodan::type /}></div>
+							<div class="main_form_right">
+								<div class="main_form_right_div"><{biaodan::tishi /}></div>
+							</div>
+							<div class="clear"></div>
+						</li>
+						<div class="clear"></div>
+						<{/biaodan::list}>
+
+
+						<input type="submit">

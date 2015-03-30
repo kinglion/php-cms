@@ -1,0 +1,7 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<{include user::index_medium.hhc}>
+			<{include user::index_right.hhc}>
+		</div>
+<{include public::footer.hhc}>

@@ -1,0 +1,78 @@
+<?php
+	$pdo = get_pdo();
+	if($_GET['k']!=='0'){
+		$xc_res = $pdo -> query('select * from '.DB_PRE."user_xiangce where id='{$_GET['k']}' limit 1",'');
+		if(empty($xc_res)){
+			alert_2(0,'相册不存在或已删除','?h=hudong&c=xiangce',3);
+		}
+	}
+	$zp_res = $pdo -> query('select * from `'.DB_PRE."user_zhaopian` where `xiangce_id`='{$_GET['k']}' and `user_id`='{$_SESSION['user']['user_id']}'");
+	$zp_res = empty($zp_res) ? array() : $zp_res;
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=hudong&c=xiangce"><li style="border-bottom:0;height:35px;background:#FFFFFF;">我的相册</li></a>
+							<a href="?h=hudong&c=sc_xiangce"><li>上传照片</li></a>
+							<a href="?h=hudong&c=cj_xiangce"><li>创建相册</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main" style="overflow:hidden">
+						<div class="jf_main">
+							<style type="text/css">
+								.jf_main a{color:#369;}
+								.jf_main a:hover{text-decoration:underline;}
+							</style>
+							<ul class='xc_main'>
+							<div style="margin-bottom:20px;">
+							<{if(empty(@zp_res))}>
+							本相册没有照片 <a href="?h=hudong&c=sc_xiangce&k=<{@_GET['k']}>">上传新照片</a>
+							<{else}>
+							本相册有<?php echo count($zp_res); ?>张相片
+							<a href="?h=hudong&c=sc_xiangce&k=<{@_GET['k']}>">上传新照片</a>
+							<{/if}>
+							</div>
+							<?php foreach($zp_res as $v){ ?>
+								<li>
+									<div class="xc_img"><img src="<{@v['pic']}>"></div>
+
+									<a href="?h=hudong&c=zp_delete&k=<{@v['id']}>&k2=<{@_GET['k']}>" class="xc_sc">删除</a>
+									<div class="xcmc">
+								<?php  
+									if(!empty($_GET['k'])){
+										if($v['pic']==$xc_res['pic']){
+								?>
+										<span style="color:#F60;line-height:23px;">已设为封面</span>
+								<?php
+										}else{
+								?>
+										<a href="?h=hudong&c=fengmian&k=<{@_GET['k']}>&k2=<{@v['id']}>" style="color:#F60;line-height:23px;font-size:13px;color:#333333;font-family:'宋体';">设为相册封面</a>
+								<?php
+										}
+									}
+								?>
+									</div>
+								</li>
+							<?php } ?>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</form>
+
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=xiangce">我的相册</a></li>
+					<li><a href="?h=hudong&c=sc_xiangce">上传照片</a></li>
+					<li><a href="?h=hudong&c=cj_xiangce">创建相册</a></li>
+				</ul>
+			</div>
+
+
+		</div>
+<{include public::footer.hhc}>

@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+/**
+ *	admin.css 管理登陆页面的css
+ *	@Author 郝海川
+ *	@WebSite IThhc.cn
+ */
+
+#admin_login_body{background:url(../img/css/login/login_bg.jpg) no-repeat;}
+#admin_login_div{width:720px;margin:8% auto;}
+#admin_login_title{text-align:center;color:#FFFFFF;font-size:35px;font-family:"微软雅黑";text-shadow: 2px 2px 2px #B0B0B0;font-weight:bold;}
+#admin_login_frame{margin-top:80px;height:200px;}
+#admin_login_frame input{background:none;border:0;}
+.admin_login_font_default span{display:none;}
+.admin_login_font_default{padding:5px 0 0 15px;float:left;width:273px;height:48px;background:url(../img/css/login/login_input_bg.png) no-repeat 0px -63px;}
+.admin_login_font_default span,.admin_login_font_default input{
+	color:#AAAAAA;font-family:"微软雅黑";font-weight:bold;font-size:14px;}
+.admin_login_font_default span{font-size:18px;position:relative;left:-235px;top:4px;}
+.admin_login_font_default input{padding-top:10px;width:229px;}
+#admin_login_frame #admin_login_submit{cursor:pointer;background:url(../img/css/login/btn.png) no-repeat 0 -316px;width:140px;height:46px;color:#FFFFFF;font-size:18px;font-family:"微软雅黑";font-weight:bold;}
+#admin_login_info{margin-top:30px;width:500px;float:right;height:50px;}
+#admin_login_rem_pwd{cursor:default;float:left;color:#CCCCCC;font-family: "微软雅黑";font-size: 14px;font-weight:bold;}
+#admin_login_rem_pwd div{float:left;background:url(../img/css/login/admin_login_check.png) 0 0 no-repeat;width:18px;height:18px;}
+#admin_login_forget_pwd{float:left;margin-left:20px;color:#CCCCCC;font-family: "微软雅黑";font-size: 14px;font-weight:bold;}
+#admin_login_forget_pwd:hover{color:#FFFFFF;}
+.transition{transition: all 1s ease 0s;-moz-transition: all 2s ease 0s; 5. -webkit-transition: all 2s ease 0s; 6. -o-transition: all 2s ease 0s;}
+.admin_login_notice{background:#16181A;width:300px;padding:13px 0;
+margin-left:150px;color:#FFFFFF;text-align:center;
+cursor:default;display:none;font-size:13px;}
+
+

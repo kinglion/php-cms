@@ -1,0 +1,3 @@
+<?php
+	$json='{"gywm":{"id":"3","cn_name":"\u5173\u4e8e\u6211\u4eec","type":"1","en_name":"gywm","tpl":"default"},"lxdz":{"id":"4","cn_name":"\u8054\u7cfb\u5730\u5740","type":"1","en_name":"lxdz","tpl":"default"},"lyfk":{"id":"7","cn_name":"\u7559\u8a00\u53cd\u9988","type":"2","en_name":"lyfk","tpl":"default"},"banner":{"id":"9","cn_name":"\u9996\u9875banner","type":"3","en_name":"banner","tpl":""}}';
+?>

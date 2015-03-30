@@ -1,0 +1,74 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=ziliao&c=tuiguang"><li>网址推广</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">推广记录</li>
+						</ul>
+					</div>
+					<?php
+						$pdo = get_pdo();
+						$page = new page('`'.DB_PRE.'tuiguang_jilu`','*'," 1 and user_id = '{$_SESSION['user']['user_id']}' order by `id` desc",20,'p');
+						$res = $page -> page_2(10);
+					?>
+					<div class="n_main_main_main">
+						<div class="n_main_main_main_2">
+							<div class="jf_main">
+							<table>
+								<tr style="border-top:1px solid #EEEEEE;">
+									<th class="td2">详情</th>
+									<th class="td3">时间</th>
+								</tr>
+								<?php if(!empty($res['0'])){ 
+									foreach($res['0'] as $v){
+								?>
+								<tr>
+									<td class="td2">
+										<{@v['shuoming']}>
+									</td>
+									<td class="td3">
+										<?php echo date('Y-m-d H:i',$v['time']); ?>
+									</td>
+								</tr>
+								<?php } ?>
+								<tr>
+									<td class="td2">
+										<div class="page_parent">	
+											<{@res['1']}>
+										</div>
+									</td>
+									<td class="td3">
+									</td>
+								</tr>
+								<?php }else{ ?>
+								<tr>
+									<td class="td2">
+										暂无推广记录
+									</td>
+									<td class="td3">
+									</td>
+								</tr>
+								<?php } ?>
+								
+							</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=tuiguang">网址推广</a></li>
+					<li><a href="?h=ziliao&c=tuiguangjilu">推广记录</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

@@ -1,0 +1,248 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*图片设置开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						图片设置
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li style="margin:15px 0 0 20px;">注：本程序只支持jpg/gif/png的图像处理</li>
+								<form method="post" action="?h=set_up&c=file_update">
+								<li class="oli">
+									<div class="oli_div_1">
+										略缩图最大高度
+									</div>
+									<div class="oli_div_2">
+										<input type="text" name="29" class="oli_text" value="<{$file['29']}>">
+									</div>
+									<div class="oli_div_3">
+										文章略缩图最大高度 超出系统会自行压缩 建议为100
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										略缩图最大宽度
+									</div>
+									<div class="oli_div_2">
+										<input value="<{$file['30']}>" name="30" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										文章略缩图最大宽度 超出系统会自行压缩 建议为100
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										普通图片最大高度
+									</div>
+									<div class="oli_div_2">
+										<input value="<{$file['31']}>" name="31" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										普通图片最大高度 超出系统会自行压缩 建议为300-500
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										普通图片最大宽度
+									</div>
+									<div class="oli_div_2">
+										<input value="<{$file['32']}>" name="32" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										普通图片最大宽度 超出系统会自行压缩 建议为300-500
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										上传图片的最大尺寸
+									</div>
+									<div class="oli_div_2">
+										<input value="<{$file['33']}>" name="33" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										上传图片时的最大尺寸 建议为1024左右 此处单位为KB
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" style="margin:50px 10px 30px 10px;" value="提交修改">
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+			<{*图片设置结束*}>
+
+
+
+
+
+
+			<{*附件设置开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						图片设置
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<form method="post" action="?h=set_up&c=file_update">
+								<li class="oli">
+									<div class="oli_div_1">
+										允许上传的附件类型
+									</div>
+									<?php 
+									include './sundry/cache/json/f_type.php';
+									if(!isset($json))
+										show_err('错误0x009 您删除过程序文件 导致出错!'); ?>
+									<div class="oli_div_2">
+										<textarea name="file_type" class='oli_textarea'><{hhc:php}>
+											foreach(json_decode($json) as $v){
+												echo $v.",";
+											}
+											<{/hhc:php}></textarea>
+									</div>
+									<div class="oli_div_3">
+										此处留空，则都不允许上传,留*[不建议],则任何文件都可以上传,建议单独写扩展名 多个请用逗号隔开
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										附件上传的最大尺寸
+									</div>
+									<div class="oli_div_2">
+										<input value="<{$file['34']}>" name="34" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										上传图片时的最大尺寸 建议为1024左右 此处单位为KB
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+							<input type="submit" class="create_zidingyi" style="margin:50px 10px 30px 10px;" value="提交修改">
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<{*附件设置结束*}>
+
+
+			<{*水印开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						水印设置
+					</h1>
+					<form method="post" action="?h=set_up&c=file_update" enctype="multipart/form-data">
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										是否开启水印
+									</div>
+									<div class="oli_div_2" style="font-size:13px;color:#333333;">
+										<input value="1" <{if $file['35']=='1'}>checked="checked" <{/if}> type="radio" name="35" class="">开启&nbsp;&nbsp;
+										<input value="0" <{if $file['35']=='0'}>checked="checked" <{/if}> type="radio" name="35" class="">关闭
+									</div>
+									<div class="oli_div_3">
+										
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										最小高度
+									</div>
+									<div class="oli_div_2">
+										<input value="<{$file['37']}>" name="37" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										被添加图片的最小高度 建议使用200
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										最小宽度
+									</div>
+									<div class="oli_div_2">
+										<input value="<{$file['36']}>" name="36" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										被添加图片的最小宽度 建议使用280
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										略缩图
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+										<div class="file_get">
+											<div class="file_get_1">
+												<div class="file_get_1_div" style="">
+													<input type="hidden" name="hhc_v_k" value="38" />
+													<input type="hidden" name="hhc_v_k2" value="41" />
+													<input class="file_get_name" readonly="readonly" type="text" value="<{$file['41']}>">
+												</div>
+											</div>
+											<div class="file_get_2">选择文件
+												<input name="logo" width="50" class="file_get_2_file opacity_0" type="file">
+											</div>
+											<div class="clear"></div>
+										</div>
+									</div>
+									<div class="oli_div_3">
+										略缩图 也就是那个小图，请自行控制大小 尽可能在80px*50px左右
+										<{if !empty($file['38'])}>
+										,已上传<a target="_blank;" class="logo_chakan" style="color:#0074A2;" href="<{$file['38']}>">点击查看</a>
+										<{/if}>
+									</div>
+								<div class="clear"></div>
+								</li>
+								
+								<li class="oli">
+									<div class="oli_div_1">
+										透明度
+									</div>
+									<div class="oli_div_2">
+										<input name="39" value="<{$file['39']}>" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										小图的透明度 为0是完全透明 100最清晰
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" style="margin:50px 10px 30px 10px;" value="提交修改">
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<{*水印结束*}>
+
+
+
+
+
+
+
+
+		</div>
+		<{include index::footer.hhc}>

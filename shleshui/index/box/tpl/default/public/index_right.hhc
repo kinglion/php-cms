@@ -1,0 +1,37 @@
+
+
+
+<div class="main_right" id="float_right">
+<div class="des_mm">
+<p><{hhc::set_up::jieshao}></p>
+</div>
+
+<div class="rssBox" style="background:#6977C0;">
+<h3>发帖</h3>
+<div class="lineS_L"></div>
+<a target="_blank" href="user.php?h=article&c=release&k=24" style="display:block;background:url('HHC_TPL_HHC/default/timg/btns.png') no-repeat;height:52px;margin:10px auto;width:210px;"></a>
+<div class="clear"></div>
+</div>
+
+
+<div class="rssBox">
+<h3>分类</h3>
+<div class="lineS_L"></div>
+<ul>
+	<?php 
+		include './sundry/cache/json/extended_settings.php'; 
+		$arrz = json_decode($json,true);
+		$arrz = explode('|',$arrz['yxjfl']['v']);
+		foreach($arrz as $v){
+	?>
+<li class="social_sina"><a target="_blank" href="?h=index&c=so&word=<{@v}>"><{@v}></a></li>
+<?php } ?>
+</ul>
+<div class="clear"></div>
+</div>
+
+
+
+</div>
+
+<div class="clear"></div>

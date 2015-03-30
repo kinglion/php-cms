@@ -1,0 +1,46 @@
+body{background:#F8F8F8;}
+.header{height:30px;background:url(../img/css/login/topbar_bg.gif);
+position:fixed;top:0;left:0;width:100%;z-index:9999;}
+.header_main{width:85%;min-width:960px;line-height:30px;}
+.header_right{float:right;font-size:12px;color:#888888;}
+.header_right a{font-size:12px;color:#0074A2;;}
+.header_right a:hover{text-decoration:underline;color:#FF0000}
+
+.main{width:75%;min-width:960px;margin:0 auto;background:#FFFFFF;
+border:1px solid #DDDDDD;}
+.main h1{width:95%;margin:0 auto;border-bottom:1px solid #DDDDDD;
+padding:15px 0;color:#555555;
+}
+.main h1 span{background:url("../img/css/login/login-logic-icons.png") no-repeat scroll -55px 0;
+width:16px;height:16px;display:block;float:left;margin-right:5px;}
+.main_form{width:80%;margin:50px auto;}
+.main_form li{position:absolute;width:100%;}
+.main_form_left{font-size:17px;float:left;line-height:40px;width:20%;
+text-align: right;}
+.main_form_medium{width:37%;height:40px;float:left;margin-left:3%;
+font-size:12px;line-height:40px;}
+.main_form_medium .text{border:2px solid #e1e1e1;
+margin-left:1%;padding:10px 2%;width:96%;font-size:17px;}
+.main_form_medium textarea{border:2px solid #e1e1e1;padding:10px 2%;resize:none;
+height:60px;width:96%;}
+.main_form_medium select{border:1px solid #CCCCCC;padding:2px 5px;
+}
+.main_form_medium option{padding:1px 5px;}
+.main_form_right{width:38%;margin-left:2%;float:left;}
+
+.main_form_right_div{padding:10px 0;width:287px;}
+.main_form_right_div_border{height:5px;width:287px;}
+
+.main_form_right_div1{background:url("../img/css/login/verification-ui6.gif") no-repeat scroll 0 -190px;}
+.main_form_right_div1_border{background:url("../img/css/login/verification-ui6.gif") no-repeat scroll 0 -375px;}
+
+.main_form_right_div2{background:url("../img/css/login/verification-ui6.gif") no-repeat scroll 0 0;}
+.main_form_right_div2_border{background:url("../img/css/login/verification-ui6.gif") no-repeat scroll 0 -184px;}
+
+.main_form_right_div p{margin-left:45px;font-size:12px;padding-right:10px;
+line-height:20px;}
+.main_form_right_ok{background:url("../img/css/login/login-logic-icons.png") no-repeat scroll -74px 0;
+width:16px;height:16px;float:left;margin-right:5px;margin-top:10px;}
+.submit{padding:10px 40px;background:#A3B745;color:#FFFFFF;font-size:13px;
+border:1px solid #839237;cursor:pointer;}
+.submit:hover{background:#93A43E;}

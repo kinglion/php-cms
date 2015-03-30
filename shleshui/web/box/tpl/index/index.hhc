@@ -1,0 +1,86 @@
+<{include ./header.hhc}>
+<div class="index_con">
+<div class="ind_news">
+<div class="title">
+<a href="web.php?h=index&c=news" class="indmore"></a>
+<h2>新闻动态</h2>
+</div>
+<div class="indlist borl_r">
+<ul class="ind_newsul">
+<?php 
+	$pdo = get_pdo();
+	$res = $pdo -> query('select title,id from '.DB_PRE."z_web_news order by id desc limit 5");
+	$res = empty($res) ? array() : $res;
+	foreach($res as $v){
+?>
+<li><a href="web.php?h=index&c=news_content&k=<{@v['id']}>"" target="_blank" title="<{@v['title']}>"><{@v['title']}></a></li>
+<?php } ?>
+</ul>
+</div>
+<div class="indnewbot"></div>
+</div>
+<div class="ind_pro">
+<div class="title">
+<a href="web.php?h=index&c=product" class="indmore"></a>
+<h2>产品展示</h2>
+</div>
+<div class="indpic borl_r">
+<a id="prev" href="javascript:void(0)"></a>
+<a id="next" href="javascript:void(0)"></a>
+<div id="gun">
+<ul id="gunul">
+<?php
+	$res = $pdo -> query('select * from '.DB_PRE."z_web_product order by id desc limit 5");
+	$res = empty($res) ? array() : $res;
+	foreach($res as $v){
+?>
+<li><a href="web.php?h=index&c=product_content&k=<{@v['id']}>"" target="_blank" title="<{@v['title']}>"><img src="<{@v['pic']}>" style="height:85px;width:121px;" alt="<{@v['title']}>"/></a><h3><a href="web.php?h=index&c=product_content&k=<{@v['id']}>" target="_blank" title="<{@v['title']}>"><{@v['title']}></a></h3></li>
+<?php } ?>
+</ul>
+</div>
+</div>
+<div class="indprobot"></div>
+</div>
+<?php
+	$configs = $pdo -> query('select * from '.DB_PRE."z_web_config where id in(1,2,3)");
+	$config = array();
+	foreach($configs as $v){
+		$config[$v['k']] = str_replace("\n",'<br />',str_replace(" ",'&nbsp;',$v));
+	}
+?>
+<div class="ind_contact">
+<h2>联系我们</h2>
+<div class="catacta borl_r">
+<{@config['lxwm']['v']}>
+</div>
+<div class="catacta_bot"></div>
+</div>
+<div class="clear"></div>
+<div class="blank10"></div>
+<div class="adoutus">
+<div class="title">
+<a href="web.php?h=index&c=user" class="indmore"></a>
+<h2>公司简介</h2>
+</div>
+<div class="ina_acon borl_r">
+<{@config['gsjj']['v']}>
+</div>
+<div class="ina_abot"></div>
+</div>
+<div class="alli">
+<div class="title">
+<a href="web.php?h=index&c=casez" class="indmore"></a>
+<h2>客户案例</h2>
+</div>
+<div class="anliacon  borl_r">
+<p style="border:0;"><{@config['khal']['v']}></p>
+
+</div>
+<div class="alli_bot"></div>
+</div>
+
+
+<div class="clear"></div>
+<div class="blank10"></div>
+</div>
+<{include ./footer.hhc}>

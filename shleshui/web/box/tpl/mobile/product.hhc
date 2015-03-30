@@ -1,0 +1,31 @@
+<?php 
+	$w = '1';
+	$order = ' order by id desc';
+	$page = new page(DB_PRE.'z_web_product','title,id,pic,on_read,content,time',$w.$order,12,'p');
+	$artcle = $page->page_2(3,0);
+	$artcle['0'] = !empty($artcle['0']) ? $artcle['0'] : array();
+	$pages = $page -> pages;
+    include './sundry/cache/json/config.php';
+    $arr = json_decode($json,true);
+	$top_title = "产品展示 - 第{$pages}页 - {$arr['4']}";
+?>
+<{include ./header.hhc}>
+			<div id="content">
+<?php
+	foreach($artcle['0'] as $v){
+?>
+				<article>
+					<a href="web.php?h=index&c=product_content&k=<{@v['id']}>&m=1"><img src="<{@v['pic']}>" /></a>
+					<h2><a href="web.php?h=index&c=product_content&k=<{@v['id']}>&m=1"><{@v['title']}></a></h2>
+					<p><?php echo mb_substr(strip_tags($v['content']),0,60,'utf-8'); ?></p>
+					<div class="a-meta">
+						<a href="web.php?h=index&c=product_content&k=<{@v['id']}>&m=1"><i class="i-comments i-small"></i>阅读(<{@v['on_read']}>)</a> &nbsp;&nbsp;
+						<a href="web.php?h=index&c=product_content&k=<{@v['id']}>&m=1"><i class="i-calendar i-small"></i><?php echo date('Y-m-d',$v['time']); ?></a>
+					</div>
+				</article>	
+<?php } ?>			
+			<ul class="page" style="text-align:center;margin-top:60px;">
+				<{@artcle['1']}>
+			</ul>
+			</div>
+<{include ./footer.hhc}>

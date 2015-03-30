@@ -1,0 +1,28 @@
+<?php
+	if(empty($_GET['k'])){
+		alert_2(1,'请选择一个产品','',3);
+	}
+	$pdo = get_pdo();
+	$artcle = $pdo -> query('select * from '.DB_PRE."z_web_product where id = '{$_GET['k']}' limit 1",'');
+	if(empty($artcle))
+		alert_2(1,'产品不存在或已被删除','',3);
+    include './sundry/cache/json/config.php';
+	$pdo -> sql('update '.DB_PRE."z_web_product set on_read=on_read+1 where id='{$_GET['k']}'");
+    $arr = json_decode($json,true);
+	$top_title = "{$artcle['title']} - 产品展示 - {$arr['4']}";
+?>
+<{include ./header.hhc}>
+			<div id="content" style="min-height:500px;">
+				<h2 style="margin-bottom:20px;font-weight:bold;text-align:center;"><{@artcle['title']}></h2>
+<div>				
+<p>
+<{@artcle['content']}>
+</p>
+</div>				
+			</div>
+			<div class="block">
+				
+			</div>
+			
+			
+<{include ./footer.hhc}>

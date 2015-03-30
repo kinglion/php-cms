@@ -1,0 +1,129 @@
+<?php
+	if (!empty($_GET['k'])){
+		$pdo = get_pdo();
+		$rz_res = $pdo -> query('select title,con,fenzu_id,pic from '.DB_PRE."user_rizhi where id='{$_GET['k']}' and user_id='{$_SESSION['user']['user_id']}' limit 1",'');
+	}
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=hudong&c=rizhi"><li>我的日志</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">发布日志</li>
+							<a href="?h=hudong&c=zx_rizhi"><li>最新日志</li></a>
+							<a href="?h=hudong&c=jc_rizhi"><li>精彩日志</li></a>
+							<a href="?h=hudong&c=fz_guanli"><li>分组管理</li></a>
+						</ul>
+					</div>
+					<form action="?h=hudong&c=fb_rizhi_submit" method="post" enctype="multipart/form-data">
+						<?php if(!empty($rz_res)){?><input type="hidden" name="id" value="<{@_GET['k']}>"><?php } ?>
+					<div class="n_main_main_main">
+						<ul class="n_main_main_main_sul">
+						<div style="margin:30px 0 0 20px;">
+			<!--[if lt IE 8]>
+			<style type="text/css">
+				.bxdng1{margin-left:-20px;}
+			</style>
+			<![endif]-->
+							<li>
+								<div class="n_main_main_main_li_l">标题&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 
+									<input type="text" class="text bxdng1" name="title" value="<?php if(!empty($rz_res)){?><{@rz_res['title']}><?php } ?>">
+								&nbsp;</div>
+								<div class="n_main_main_main_li_r">日志的标题，50个字符以内&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">分组&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 
+									<?php 
+							$pdo = get_pdo();
+							$sql = 'select name,id from '.DB_PRE."rizhi_fenzu where user_id='{$_SESSION['user']['user_id']}'";
+							$res = $pdo -> query($sql);
+							$res=empty($res) ? array() : $res;		
+									?>
+						<{if(!empty(@res))}>
+									<select name="fenzu">
+										<?php foreach($res as $v){ ?>
+										<option <?php if(!empty($rz_res)){if($v['id']==$rz_res['fenzu_id']){echo 'selected="selected"';}} ?> value="<{@v['id']}>"><{@v['name']}></option>
+										<?php } ?>
+									</select>
+						<{else /}>
+							没有可用的分组 请先<a href="?h=hudong&c=cj_fenzu" class="all_a" target="_blank">创建</a>
+						<{/if}>
+								&nbsp;</div>
+								<div class="n_main_main_main_li_r">日志所属的分组 <a href="?h=hudong&c=cj_fenzu" class="all_a" target="_blank">创建分组</a>&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">日志略缩图&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 
+									<input type="file" name="pic">
+								&nbsp;</div>
+								<div class="n_main_main_main_li_r">
+<{if(!empty(@rz_res))}>
+	<{if(!empty(@rz_res['pic']))}>图片已上传&nbsp;&nbsp;<a class="all_a" target="_blank" href="<{@rz_res['pic']}>">点击查看</a>
+	<{else /}>未上传图片
+	<{/if}>
+	<input type="hidden" name="piv_val" value="<{@rz_res['pic']}>">
+<{/if}>&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+	
+			<li>
+				<div style="width:15%;" class="n_main_main_main_li_l">内容&nbsp;</div>
+				<div style="width:75%" class="n_main_main_main_li_m"> 
+				
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.config.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.all.min.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/lang/zh-cn/zh-cn.js"></script>
+				<?php
+$v['html_gongneng']='bold,italic,link,unlink,imagenone,imagecenter,imageleft,imageright,simpleupload,insertimage,inserttable,deletetable,forecolor,customstyle,paragraph,fontfamily,fontsize,emotion,map,attachment,spechars,searchreplace,template,';
+$arr = explode(',',$v['html_gongneng']);
+$o='';
+foreach($arr as $vxz){
+	$o.="'$vxz',";
+}
+										?>
+    <script id="con" type="text/plain" style="width:98%;height:200px;" name="con"><?php if(!empty($rz_res)){?><{@rz_res['con']}><?php } ?></script>
+    <script type="text/javascript">
+    var ue = UE.getEditor('con', {   
+    toolbars:[[
+      <{@o}>
+    ]]
+});
+    </script>
+				
+				&nbsp;</div>
+				
+				<div class="clear"></div>
+			</li>
+<div class="clear"></div>
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</div>
+				</div>
+</form>
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=rizhi">我的日志</a></li>
+					<li><a href="?h=hudong&c=fb_rizhi">发布日志</a></li>
+					<li><a href="?h=hudong&c=zx_rizhi">最新日志</a></li>
+					<li><a href="?h=hudong&c=jc_rizhi">精彩日志</a></li>
+					<li><a href="?h=hudong&c=fz_guanli">分组管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

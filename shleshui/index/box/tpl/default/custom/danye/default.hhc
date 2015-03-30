@@ -1,0 +1,8 @@
+
+
+<{danye::title /}>
+<{danye::content /}>
+
+<{danye::list}>
+<a href="<{danye::list::url /}>"><{danye::list::cn_name /}></a>
+<{/danye::list}>

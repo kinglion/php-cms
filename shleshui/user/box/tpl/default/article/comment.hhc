@@ -1,0 +1,96 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=article&c=manage&k=<{@_GET['k']}>"><li>文章管理</li></a>
+							<a href="?h=article&c=release&k=<{@_GET['k']}>"><li>发布文章</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">评论管理</li>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<table class="auto_table" style="width:94%;margin:0 auto;">
+							<tr>
+								<th>编号</th>
+								<th>文章标题</th>
+								<th>发布时间</th>
+								<th>状态</th>
+								<th>发布者</th>
+								<th>操作</th>
+							</tr>
+							<?php 
+								$pdo = get_pdo(); 
+								$res = $pdo -> query('select `nav_moxing` from `'.DB_PRE."nav` where `nav_id`='{$_GET['k']}' limit 1",'');
+								if(empty($res)){
+									header('Location: ?');
+									exit;
+								}
+								$res2 = $pdo -> query('select `moxing_ziduan_table_name` from `'.DB_PRE."moxing` where `id`='{$res['nav_moxing']}' limit 1",'');
+$tb_name=DB_PRE.'pinglun';
+$type=<<<TYPE
+	a.pinglun_id,
+	a.time,
+	a.zhuangtai,
+	b.con_id,
+	b.con_biaoti,
+	c.user_name,
+	c.username
+TYPE;
+$w="a.user_id='{$_SESSION['user']['user_id']}' and a.lanmu_id='{$_GET['k']}'";
+$order='order by pinglun_id desc';
+$even_arr = array(
+	array('table_k'=>'b','table_name'=>DB_PRE."{$res2['moxing_ziduan_table_name']}",'where'=>'on a.art_id=b.con_id'),
+	array('table_k'=>'c','table_name'=>DB_PRE."user",'where'=>'on a.user_id=c.user_id'),
+);
+$page = new page($tb_name,$type,$w.$order,20,'p',true,'a',$even_arr);
+$res3 = $page->page_2(5,1);
+								
+								if(!empty($res3['0'])){
+									foreach($res3['0'] as $v){
+							?>
+							<tr>
+								<td style="width"><{@v['pinglun_id']}></td>
+								<td><a href="index.php?h=index&c=moxing_content&con_id=<{@v['con_id']}>&lanmu_id=<{@_GET['k']}>" class="all_a" target="_blank"><{@v['con_biaoti']}></a></td>
+								<td><?php echo date('Y-m-d H:i',$v['time']); ?></td>
+								<td><{if @v['zhuangtai']==='0'}>已审核<{else /}><span style="color:#FF0000;">未审核</span><{/if}></td>
+								<td>
+									<{if(!empty(@v['username']))}>
+										<{@v['username']}>
+									<{else /}>
+										<{@v['user_name']}>
+									<{/if}>
+								</td>
+								<td><a class="all_a" href="?h=article&c=comment_update&k=<{@_GET['k']}>&k2=<{@v['pinglun_id']}>">编辑</a></td>
+							</tr>
+							<?php 	} ?>
+							<input class="go_type" type="hidden" name="go_type" value="">
+							<input type="hidden" name="tb_name" value="<?php echo DB_PRE."{$res2['moxing_ziduan_table_name']}" ?>">
+							<input value="<{@_GET['k']}>" type="hidden" name="key">
+							<tr>
+								<td colspan="6" style="padding:12px 0;"><{@res3['1']}></td>
+							</tr>
+							<?php }else{ ?>
+							<tr>
+								<td colspan="6">本栏目没有评论</td>
+							</tr>
+							<?php } ?>
+						</table>
+					</div>
+				</div>
+				<ul class="position_right_title">
+					<li><a href="?h=article&c=manage&k=<{@_GET['k']}>">文章管理</a></li>
+					<li><a href="?h=article&c=release&k=<{@_GET['k']}>">文章发布</a></li>
+					<li><a href="?h=article&c=comment&k=<{@_GET['k']}>">评论管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

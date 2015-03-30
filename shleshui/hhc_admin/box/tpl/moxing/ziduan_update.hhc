@@ -1,0 +1,255 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*字段创建开始*}>
+			<form method="post" action="?h=moxing&c=ziduan_update_submit">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						字段修改
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										字段中文名
+									</div>
+									<div class="oli_div_2">
+										<input name="cn_name" type="text" value="<{$ziduan['cn_name']}>" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										字段的中文名称 用于展示给用户 30个字符之内
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										字段英文名
+									</div>
+									<div class="oli_div_2">
+										<input name="en_name" type="text" value="<{$ziduan['en_name']}>" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										字段的英文名称 用户存储在数据库中 30个字符之内
+									</div>
+								<div class="clear"></div>
+								</li><input type="hidden" name="old_en_name" value="<{$ziduan['en_name']}>">
+								<input type="hidden" name="ziduan_id" value="<{@_GET['k']}>">
+								<li class="oli">
+									<div class="oli_div_1">
+										提示信息
+									</div>
+									<div class="oli_div_2">
+										<textarea name="tishi" class="oli_textarea"><{$ziduan['tishi']}></textarea>
+									</div>
+									<div class="oli_div_3">
+										字段右边的提示信息 300个字符之内
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										显示方式
+									</div>
+									<div class="oli_div_2 margin_left_10">
+
+										<input <{if $ziduan['xianshi_fangshi']=='0'}>checked="checked"<{/if}> value="0" type="radio" name="xianshi_fangshi" class="">前台后台都显示&nbsp;&nbsp;
+										<input <{if $ziduan['xianshi_fangshi']=='1'}>checked="checked"<{/if}>  value="1" type="radio" name="xianshi_fangshi" class="">前台后台都不显示<br/><br/>
+										<input <{if $ziduan['xianshi_fangshi']=='2'}>checked="checked"<{/if}>  value="2" type="radio" name="xianshi_fangshi" class="">只在后台显示&nbsp;&nbsp;
+										<input <{if $ziduan['xianshi_fangshi']=='3'}>checked="checked"<{/if}>  value="3" type="radio" name="xianshi_fangshi" class="">只在前台显示
+									</div>
+									<div class="oli_div_3">
+										字段显示位置 如果只在后台显示 普通 用户将无法编写
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										是否是系统字段
+									</div>
+									<div class="oli_div_2 margin_left_10">
+
+										<input <{if $ziduan['xitong']=='0'}>checked="checked"<{/if}>  value="0" type="radio" name="xitong" class="">普通字段&nbsp;&nbsp;
+										<input <{if $ziduan['xitong']=='1'}>checked="checked"<{/if}> value="1" type="radio" name="xitong" class="">系统字段<br/>
+									</div>
+									<div class="oli_div_3">
+										系统字段用户将无法直接修改和删除
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										关联的栏目
+									</div>
+									<div class="oli_div_2 margin_left_10">
+
+										<input <{if $ziduan['parent_lanmu']==''}>checked="checked"<{/if}> value="0" type="radio" name="ziduan_guanlian_lanmu"  class="ziduan_guanlian_lanmu">全部栏目&nbsp;&nbsp;
+										<input <{if $ziduan['parent_lanmu']!=''}>checked="checked"<{/if}> value="1" type="radio" name="ziduan_guanlian_lanmu" class="ziduan_guanlian_lanmu">指定栏目
+										<?php include './sundry/cache/json/nav.php'; 
+										$json=json_decode($json,true);
+										$nav=array();
+										foreach($json as $k => $v){
+											if($v['nav_type']=='1' && $v['nav_moxing']==$_GET['k2']){
+												$nav[$k]=$v;
+											}
+										}
+										
+											?>
+											<ul class="zhiding_lanmu" style="margin:0;font-size:13px;">
+												<?php if(empty($nav)){ ?>
+												<br/><br/>暂无栏目 请选择全部栏目
+												<?php }else{
+											$arr=explode(',',$this->tpl_vars['ziduan']['parent_lanmu']);
+												 foreach($nav as $v){  ?>
+												<li class='html_gn_li' style="margin:10px 20px 10px 0;width:auto;">
+													<input <?php if(in_array($v['nav_id'],$arr)){ ?>checked="checked"<?php } ?>value="<{@v['nav_id']}>" name="parent_lanmu[]" type="checkbox">&nbsp;<?php echo $v['nav_name'] ?>
+												</li>
+												<?php } ?>
+												<div class="clear"></div>
+											</ul>
+											<?php
+										}
+
+										?>
+										
+										
+									</div>
+									<div class="oli_div_3">
+										字段所关联的栏目 做普通分类时 可能常用
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli" style="margin-top:50px;">
+									<div class="oli_div_1">
+										字段类型
+									</div>
+									<input type="hidden" name="moxing_id" value="<?php echo $_GET['k2']; ?>">
+									<div class="oli_div_2 margin_left_10">
+										<ol>
+											<{hhc:php}>
+											$ziduan=get_ziduan_leixing(0,2);
+											<{/hhc:php}>
+											<{foreach @ziduan as $k => $v}>
+											<li class="ziduan_li">
+							<input <{if $ziduan['moxing_type']==@k}>checked="checked"<{/if}> type="radio" class="ziduan_create_leixing" value="<{@k}>" key="<{@k}>" name="moxing_type"><{@v['type']}>
+											</li>
+											<{/foreach}>
+											<div class="clear"></div>
+										</ol>
+										</div>
+									<div class="oli_div_3">
+										字段的类型
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli html_gongneng">
+									<div class="oli_div_1">
+										html文本功能
+									</div>
+									<div class="oli_div_2 margin_left_10" style="width:80%;">
+										<ul>
+						<?php
+							
+						$xml = get_xml_array('./sundry/static_file/xml/html_gongneng.xml');
+						if($this->tpl_vars['ziduan']['moxing_type']=='8'){
+						$arr2x=explode(',',$this->tpl_vars['ziduan']['html_gongneng']);
+					}elseif($this->tpl_vars['ziduan']['moxing_type']=='9'||$this->tpl_vars['ziduan']['moxing_type']=='10'||$this->tpl_vars['ziduan']['moxing_type']=='11'){
+						$arr3x=$this->tpl_vars['ziduan']['default_val'];
+					}elseif($this->tpl_vars['ziduan']['moxing_type']=='16'){
+						$arr4x=$this->tpl_vars['ziduan']['default_val'];
+					}elseif($this->tpl_vars['ziduan']['moxing_type']=='17'){
+						$arr5x=$this->tpl_vars['ziduan']['default_val'];
+					}
+?>
+							<{foreach @xml['input'] as $v}>
+						<li class="html_gn_li"><input name="html_gongneng[]" value="<{@v['@attributes']['name']}>" <?php  ?> key="<{@v['@attributes']['key']}>"<?php if(isset($arr2x)){if(in_array($v['@attributes']['name'],$arr2x)){echo 'checked="checked"';}}elseif($v['@attributes']['key']=='1'){ ?>checked="checked"<?php } ?> type="checkbox" class="html_gongneng_input">&nbsp;<{@v['@attributes']['value']}></li>
+						<{/foreach}>
+								<div class="clear"></div>
+
+										</ul>
+							<div>
+								<a href="javascript:void(0)" id="html_gongneng_quanxuan">全选</a>
+								<a href="javascript:void(0)" id="html_gongneng_quanbuxuan">全不选</a>
+								<a href="javascript:void(0)" id="html_gongneng_fanxuan">反选</a>
+								<a href="javascript:void(0)" id="html_gongneng_moren">默认</a>
+							</div>
+									</div>
+									<script type="text/javascript">
+									$(function(){
+
+							$('#html_gongneng_quanxuan').click(function(){
+								$('.html_gongneng_input').prop("checked",true);
+							})
+							$('#html_gongneng_quanbuxuan').click(function(){
+								$('.html_gongneng_input').prop("checked",false);
+							})
+							$('#html_gongneng_fanxuan').click(function(){
+								$('.html_gongneng_input').each(function(){
+									if($(this).prop("checked"))
+										$(this).prop("checked",false)
+									else
+										$(this).prop("checked",true)
+								})
+							})
+							$('#html_gongneng_moren').click(function(){
+								$('.html_gongneng_input').prop("checked",false);
+								$('.html_gongneng_input[key=1]').prop("checked",true);
+							})
+									})
+									</script>
+								<div class="clear"></div>
+								</li>
+								<li class="oli kexuan_zhi">
+									<div class="oli_div_1">
+										字段可选的值
+									</div>
+									<div class="oli_div_2">
+										<textarea name="default_val" class="oli_textarea"><?php if(isset($arr3x)){echo $arr3x;} ?></textarea>
+									</div>
+									<div class="oli_div_3">
+										字段可选的值,多个用逗号隔开，如 滨州,淄博,济南
+使用类型：option/radio/checkbox
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli lei_bieming">
+									<div class="oli_div_1">
+										分类的类别名
+									</div>
+									<div class="oli_div_2">
+										<textarea name="default_val2" class="oli_textarea"><?php if(isset($arr4x)){echo $arr4x;} ?></textarea>
+									</div>
+									<div class="oli_div_3">
+								一个主名称 多个副名称 写法:价格|200-500,500-800,800-1000,其他
+分类的值,多个用逗号隔开<br/>
+注：使用分类后，本模型将无法使用缓存！
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli yiju_ziduan">
+									<div class="oli_div_1">
+										排序所依据的字段
+									</div>
+									<div class="oli_div_2">
+										<input name="paixu_ziduan" type="text" value="<?php if(isset($arr5x)){echo $arr5x;} ?>" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										字段名，例如：如果是根据发布时间排序 这里使用con_time,如果根据点击率排序 这里使用con_liulan&nbsp;&nbsp;可以随便自定义名称 但是在这之前 必须存在这个字段 而且这个字段必须是数字 
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<{*字段创建结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

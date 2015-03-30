@@ -1,0 +1,72 @@
+		<div class='user_main_left'>
+			<dl style="padding-bottom:10px;">
+				<dt>我的资料</dt>
+				<dd class="user_left_top" style="overflow:hidden;">
+					<img src="<{@_SESSION['user']['pic']}>">
+					<a class="user_name" href="?h=ziliao&c=bianji"><{@_SESSION['user']['user_name']}></a>
+					<div class="user_left_top_dengji">
+					<{if @_SESSION['user']['vip']==='0'}>
+						<a title="未点亮VIP" class="no_vip" href=""></a>
+					<{else if @_SESSION['user']['vip']==='1' /}>
+						<{if @_SESSION['user']['sex']==='0'}>
+							<a title="个性VIP 点击查看我的特权" class="gx_vip_0" href=""></a>
+						<{else /}>
+							<a title="个性VIP 点击查看我的特权" class="gx_vip_1" href=""></a>
+						<{/if}>
+					<{else if @_SESSION['user']['vip']==='2' /}>
+						<a title="黄金VIP 点击查看我的特权" class="hj_vip" href=""></a>
+					<{/if}>
+					</div>
+					<div class="clear"></div>
+				</dd>
+				<dd><a title="当前等级：Lv<{@_SESSION['user']['level_class']}>  ">等级：Lv<{@_SESSION['user']['level_class']}></a>&nbsp;[<span style="color:#<{@_SESSION['user']['level_color']}>;"><{@_SESSION['user']['level_name']}></span>]</dd>
+				<dd>我的<{hhc::set_up::jifen}>：<{@_SESSION['user']['user_integral']}></dd>
+				<dd><{hhc::set_up::jinbi}>余额：<{@_SESSION['user']['jinbi']}></dd>
+				<dd><{hhc::set_up::jindou}>余额：<{@_SESSION['user']['jindou']}></dd>
+			</dl>
+
+			<dl class="list_dl">
+				<dt>完善资料</dt>
+				<a href="?h=ziliao&c=bianji"><dd><span>></span>编辑资料</dd></a>
+				<a href="?h=ziliao&c=avatar"><dd><span>></span>修改头像</dd></a>
+				<a href="?h=ziliao&c=password"><dd><span>></span>修改密码</dd></a>
+				<a href="?h=ziliao&c=jifen"><dd><span>></span>积分</dd></a>
+				<!--<a href="?h=ziliao&c=dengji"><dd><span>></span>等级</dd></a>-->
+				<a href="?h=ziliao&c=tuiguang"><dd class=""><span>></span>推广</dd></a>
+			</dl>
+
+			<dl class="list_dl">
+				<dt>文章管理 - 选择栏目</dt>
+				<?php
+					$pdo = get_pdo();
+					$left_res = $pdo -> query('select `nav_name`,`nav_id` from `'.DB_PRE."nav` where `nav_type` = '1' order by `nav_paixu` desc");
+					$left_res = empty($left_res) ? array() : $left_res;
+					foreach($left_res as $v){
+				?>
+				<a href="?h=article&c=manage&k=<{@v['nav_id']}>"><dd><span>></span><?php echo $v['nav_name'] ?></dd></a>
+				<?php } ?>
+			</dl>
+
+			<dl class="list_dl">
+				<dt>会员互动</dt>
+				<dd><span>></span><a href="?h=hudong&c=sc_xiangce" class='list_dl_dd_a'>上传</a><a href="?h=hudong&c=xiangce">我的相册</a></dd>
+				<a href="?h=hudong&c=rizhi"><dd><span>></span>我的日志</dd></a>
+				<a href="?h=hudong&c=xiaoxi"><dd><span>></span>我的消息</dd></a>
+				<!--<a href="?h=hudong&c=haoyou"><dd><span>></span>好友列表</dd></a>
+				<a href="?h=hudong&c=guanzhu"><dd><span>></span>我的关注</dd></a>-->
+				<a href="?h=hudong&c=weibo"><dd><span>></span>心情微博</dd></a>
+				<!--<a href="?h=hudong&c=kanwo"><dd><span>></span>谁看过我</dd></a>
+				<a href="?h=hudong&c=ceshi"><dd class=""><span>></span>心理测试</dd></a>-->
+			</dl>
+<!--
+			<dl class="list_dl">
+				<dt>个人主页</dt>
+				<a href="hhc.php?h=website&c=index&k=<{@_SESSION['user']['user_id']}>" target="_blank"><dd><span>></span>我的主页</dd></a>
+				<a href="?h=website&c=setting"><dd><span>></span>网站设置</dd></a>
+				<a href="?h=website&c=temp"><dd><span>></span>编辑模板</dd></a>
+				<a href="?h=website&c=url"><dd class=""><span>></span>个性网址</dd></a>
+			</dl>
+-->
+		</div>
+
+

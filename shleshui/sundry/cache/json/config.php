@@ -1,0 +1,7 @@
+<?php
+		
+		$json = <<<JSON
+		{"1":"5","2":"600","3":"\u4e50\u968f\u8d38\u6613","4":"\u4e0a\u6d77\u4e50\u968f\u8d38\u6613\u6709\u9650\u516c\u53f8","5":"\u6caaICP\u590714034501\u53f7","6":"<script type=\"text\/javascript\">var cnzz_protocol = ((\"https:\" == document.location.protocol) ? \" https:\/\/\" : \" http:\/\/\");document.write(unescape(\"%3Cspan id='cnzz_stat_icon_1000267880'%3E%3C\/span%3E%3Cscript src='\" + cnzz_protocol + \"s96.cnzz.com\/z_stat.php%3Fid%3D1000267880%26show%3Dpic' type='text\/javascript'%3E%3C\/script%3E\"));<\/script>","7":".\/sundry\/uploads\/20150203\/1422928220706.gif","8":"1","9":"12","10":"1421909766907.gif","11":"1","12":"1","13":"\u83b7\u53d6\u9a8c\u8bc1\u7801","14":"0","15":"http:\/\/www.ithhc.cn","16":"\u6ce8\u518c\u5173\u95ed\u4e86awdd","17":"2","18":"0","19":"\u7528\u6237\u540d\u5df2\u88ab\u6ce8\u518c","20":"5adw","21":"20","22":"5","23":"30awd","24":"0","25":"0","26":"0","27":"20dawd","28":"1","29":"100","30":"100","31":"600","32":"300","33":"10242","34":"1024","35":"0","36":"280","37":"200","38":".\/sundry\/uploads\/20140824\/1408866564405.jpg","39":"100","40":"5","43":"\u91d1\u5e01","42":"\u79ef\u5206","41":"delete.jpg","44":"\u91d1\u8c46","45":"0","46":"2","47":"0","48":"0","49":"1.02"}
+JSON;
+
+?>

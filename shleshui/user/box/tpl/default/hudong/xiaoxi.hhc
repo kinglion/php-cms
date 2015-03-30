@@ -1,0 +1,83 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">我的消息</li>
+							<a href="?h=hudong&c=fs_xiaoxi"><li>发送消息</li></a>
+						</ul>
+					</div>
+					<form action="?h=ziliao&c=lianxi_submit" method="post">
+					<div class="n_main_main_main" style="padding:10px 0;">
+						<div style="margin:0 0 0 20px;">
+							<ul class="my_xiaoxi">
+								<?php 
+$tb_name = DB_PRE."xiaoxi";
+$type='a.id,a.title,a.time,a.xitong,b.user_name,b.username,b.user_id,b.pic';
+$w = "1 and a.user_id='{$_SESSION['user']['user_id']}'";
+$order = 'order by a.id desc';
+$even_arr = array(
+	array('table_k'=>'b','table_name'=>DB_PRE."user",'where'=>'on a.uid=b.user_id'),
+);
+$page = new page($tb_name,$type,$w.$order,10,'p',true,'a',$even_arr);
+$res = $page->page_2(5,1);
+					if(empty($res['0'])){
+						//
+					}else{
+								foreach($res['0'] as $v){ 
+								?>
+								<li>
+									<div class="xiaoxi_1">
+										<a href=""><img src="<{if @v['xitong']=='0'}><{@v['pic']}><{else /}>./sundry/static_file/img/systempm.png<{/if}>"></a>
+									</div>
+									<div class="xiaoxi_2">
+										<div class="xiaoxi_2_time">
+											<{if @v['xitong']=='0'}>[<a href="" class="all_a"><{@v['user_name']}></a>]<{else /}>[<span>系统消息</span>]<{/if}>&nbsp;&nbsp;
+											<span><?php echo date('Y-m-d H:i',$v['time']); ?></span>
+										</div>
+										<div class="xiaoxi_2_title">
+											<a href="?h=hudong&c=xiaoxi_con&k=<{@v['id']}>"><{@v['title']}></a>
+										</div>
+									</div>
+								</li>
+								<?php } 
+						?>
+						
+
+						<div style="margin-top:30px;"><{@res['1']}></div>
+<?php
+
+							} ?>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<style type="text/css">
+				.n_main_main_main .my_xiaoxi li{border-bottom:1px dashed #DDDDDD;padding-top:10px;height:60px;}
+				.n_main_main_main .my_xiaoxi .xiaoxi_1,.n_main_main_main .my_xiaoxi .xiaoxi_2{float:left;}
+				.n_main_main_main .my_xiaoxi .xiaoxi_1{border:1px solid #DDDDDD;height:50px;padding:2px;}
+				.n_main_main_main .my_xiaoxi .xiaoxi_2{margin-left:20px;}
+				.n_main_main_main .my_xiaoxi .xiaoxi_1 img{width:50px;height:50px;}
+				.xiaoxi_2_time span{font-size:13px;color:#999999;}
+				.xiaoxi_2_title{line-height:50px;}
+				.xiaoxi_2_title a{color:#DE6014;}
+				.xiaoxi_2_title a:hover{text-decoration:underline;}
+			</style>
+
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=xiaoxi">我的消息</a></li>
+					<li><a href="?h=ziliao&c=fs_xiaoxi">发送消息</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

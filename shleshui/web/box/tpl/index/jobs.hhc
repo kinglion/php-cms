@@ -1,0 +1,46 @@
+<?php
+	$pdo = get_pdo();
+	$artcle = $pdo -> query('select * from '.DB_PRE."z_web_config2 where id = '1' limit 1",'');
+	if(empty($artcle))
+		alert_2(1,'栏目不存在','',3);
+    include './sundry/cache/json/config.php';
+    $arr = json_decode($json,true);
+	$top_title = "人才招聘 - {$arr['4']}";
+?>
+<{include ./header.hhc}>
+<div class="index_con">
+<div class="page_left">
+<div class="magtop10 search">
+<p class="searchp01">站内搜索</p>
+<form action="web.php" method="get">
+<input name="name" type="text" class="searchinp"/>
+<input type="hidden" name="h" value="index">
+<input type="hidden" name="c" value="so">
+<p class="searchp02"><input type="submit" value="" class="searchbon" /></p>
+</form>
+
+</div>
+<div class="magtop10"><a href="#" title="留言反馈"><img src="HHC_TPL_HHC/images/left01.gif"  alt="留言反馈"/></a></div>
+<{*<div class="magtop10"><a href="#" title=""><img src="HHC_TPL_HHC/images/left02.gif"  alt="在线加盟"/></a></div>*}>
+</div>
+<div class="page_right">
+<div class="pagetop"><span class="web_navi">当前位置：<a href="web.php">首页</a> &gt;&gt; <a href="web.php?h=index&c=jobs">人才招聘</a></span><h2>人才招聘</h2></div>
+<div class="borl_r pic_xq">
+<div class="pic_xqa">
+<p>
+<{@artcle['v']}>
+</p>
+</div>
+<p class="pageback"><a href="javascript:history.go(-1);" rel="nofollow">→返回上一页</a></p>
+<div class="xgpic magtop10">
+
+<div class="clear"></div>
+</div>
+
+</div>
+<div class="page_bot"></div>
+</div>
+<div class="clear"></div>
+<div class="blank10"></div>
+</div>
+<{include ./footer.hhc}>

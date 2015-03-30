@@ -1,0 +1,2062 @@
+<?php
+	$pdo = get_pdo();
+	if(!empty($_GET['lid'])){
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_id`='{$_GET['lid']}' limit 1",'');
+	}
+	if(empty($res)){
+		$lid=$_SESSION['user']['level_class']+1;
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_class`='{$lid}' limit 1",'');
+	}
+	if(empty($res)){
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_class`='{$_SESSION['user']['level_class']}' order by `level_class` asc limit 1",'');
+	}
+	$res['name'] = empty($res['type']) ? "晋级用户组 - {$res['level_name']}" : "特殊用户组 - {$res['level_name']}";
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">我的等级</li>
+						</ul>
+						<?php
+							$level = $pdo -> query('select `level_id`,`level_name`,`type` from `'.DB_PRE."level` order by `paixu` desc");
+							$teshu = array();
+							$jinji = array();
+							foreach($level as $k => $v){
+								if(!empty($v['type']) && $v['level_id']!='7')
+									$teshu[$k] = $v;
+								else
+									$jinji[$k] = $v;
+							}
+						?>
+						<div style="float:right;margin:10px 100px 0 0;">
+							<div style="position:relative;width:300px;">
+								<div class="dj_main_yhz" style="position:absolute;">
+									<h4>特殊用户组</h4>
+									<div class="dj_main_yhz_hide">
+									<?php foreach($teshu as $v){ ?>
+										<a href="?h=ziliao&c=dengji&lid=<?php echo $v['level_id']; ?>"><?php echo $v['level_name']; ?></a>
+									<?php } ?>
+									</div>
+
+								</div>
+								<div class="dj_main_yhz" style="position:absolute;left:160px;">
+									<h4>晋级用户组</h4>
+									<div class="dj_main_yhz_hide">
+									<?php foreach($jinji as $v){ ?>
+										<a href="?h=ziliao&c=dengji&lid=<?php echo $v['level_id']; ?>"><?php echo $v['level_name']; ?></a>
+									<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<form action="?h=ziliao&c=lianxi_submit" method="post">
+					<div class="n_main_main_main">
+						<div class="dj_main">
+							<table>
+								<tr>
+									<th class="th1"></th>
+									<th class="th2">我的用户组 - <?php echo mb_substr($_SESSION['user']['level_name'],0,10,'utf-8'); ?></th>
+									<th class="th3"><{@res['name']}></th>
+								</tr>
+								<tr>
+									<td class="td1">&nbsp;</td>
+									<td class="td2">本等级所需经验值：<span style="font-weight:bold;"><{@_SESSION['user']['experience']}></span></td>
+									<td class="td3">本等级所需经验值：<span style="font-weight:bold;"><{@res['experience']}></span></td>
+								</tr>
+								<tr>
+									<td class="td1">用户等级</td>
+									<td class="td2">Lv<{@_SESSION['user']['level_class']}></td>
+									<td class="td3">Lv<{@res['level_class']}></td>
+								</tr>
+								<tr>
+									<td class="td1">用户级别</td>
+									<td class="td2">
+						<?php $arr = get_level_class_img($_SESSION['user']['level_class']);
+							foreach($arr as $v){
+						 ?>
+										<img src="<{@v}>">
+							<?php } ?>
+									</td>
+									<td class="td3">
+							<?php $arr = get_level_class_img($res['level_class']);
+								foreach($arr as $v){
+							 ?>
+											<img src="<{@v}>">
+								<?php } ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">用户称号</td>
+									<td class="td2" style="color:<{@_SESSION['user']['level_color']}>"><{@_SESSION['user']['level_name']}></td>
+									<td class="td3" style="color:<{@res['level_color']}>"><{@res['level_name']}></td>
+								</tr>
+								<tr>
+									<td class="td1">每天登陆获得经验值</td>
+									<td class="td2"><{@_SESSION['user']['jingyan']}></td>
+									<td class="td3"><{@res['jingyan']}></td>
+								</tr>
+								<tr>
+									<td class="td1">每天登陆获得积分</td>
+									<td class="td2"><{@_SESSION['user']['jifen']}></td>
+									<td class="td3"><{@res['jifen']}></td>
+								</tr>
+								<tr>
+									<td class="td1">允许隐身</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxys']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxys']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">阅读文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['ydwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['ydwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表日志</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbrz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbrz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表视频</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbsp']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbsp']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表心情微博</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbxqwb']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbxqwb']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许上传相册</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscxc']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscxc']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布评论</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">文章搜索</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['wzss']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['wzss']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发站内消息</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfznxx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfznxx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发送邮件</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfyj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfyj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发送手机短信</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfssjdx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfssjdx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许添加好友</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxtjhy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxtjhy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许使用个性签名</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsygxqm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsygxqm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">个性签名长度</td>
+									<td class="td2"><{@_SESSION['user']['qianming']}>个字符</td>
+									<td class="td3"><{@res['qianming']}>个字符</td>
+								</tr>
+								<tr>
+									<td class="td1">允许TA +关注</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxjgz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxjgz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发布心理测试</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfbxlcs']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfbxlcs']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许开通我的主页</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxktwdzy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxktwdzy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许使用二级域名</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsyejym']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsyejym']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">空间存储大小</td>
+									<td class="td2"><{@_SESSION['user']['cunchu']}>MB</td>
+									<td class="td3"><{@res['cunchu']}>MB</td>
+								</tr>
+								<tr>
+									<td class="td1">单张图片最大尺寸</td>
+									<td class="td2">2MB</td>
+									<td class="td3">2MB</td>
+								</tr>
+								<tr>
+									<td class="td1">查看文章无视加密</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['ckwzwsjm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['ckwzwsjm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许删除文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许删除评论</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许锁定用户</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsdyh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsdyh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布文章允许使用链接</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwzyxsylj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwzyxsylj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布文章不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwzbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwzbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布评论不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbplbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbplbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布微博不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwbbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwbbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+							</table>	
+							<div style="text-align:center;margin-top:10px;">
+								<img src="./sundry/static_file/img/v.gif">
+								表示有权操作　　　
+								<img src="./sundry/static_file/img/x.gif">
+								表示无权操作
+							</div>						
+						</div>
+					</div>
+				</div>
+			</form>
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=dengji">我的等级</a></li>
+				</ul>
+			</div>
+
+
+		</div>
+<{include public::footer.hhc}><?php
+	$pdo = get_pdo();
+	if(!empty($_GET['lid'])){
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_id`='{$_GET['lid']}' limit 1",'');
+	}
+	if(empty($res)){
+		$lid=$_SESSION['user']['level_class']+1;
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_class`='{$lid}' limit 1",'');
+	}
+	if(empty($res)){
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_class`='{$_SESSION['user']['level_class']}' order by `level_class` asc limit 1",'');
+	}
+	$res['name'] = empty($res['type']) ? "晋级用户组 - {$res['level_name']}" : "特殊用户组 - {$res['level_name']}";
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">我的等级</li>
+						</ul>
+						<?php
+							$level = $pdo -> query('select `level_id`,`level_name`,`type` from `'.DB_PRE."level` order by `paixu` desc");
+							$teshu = array();
+							$jinji = array();
+							foreach($level as $k => $v){
+								if(!empty($v['type']) && $v['level_id']!='7')
+									$teshu[$k] = $v;
+								else
+									$jinji[$k] = $v;
+							}
+						?>
+						<div style="float:right;margin:10px 100px 0 0;">
+							<div style="position:relative;width:300px;">
+								<div class="dj_main_yhz" style="position:absolute;">
+									<h4>特殊用户组</h4>
+									<div class="dj_main_yhz_hide">
+									<?php foreach($teshu as $v){ ?>
+										<a href="?h=ziliao&c=dengji&lid=<?php echo $v['level_id']; ?>"><?php echo $v['level_name']; ?></a>
+									<?php } ?>
+									</div>
+
+								</div>
+								<div class="dj_main_yhz" style="position:absolute;left:160px;">
+									<h4>晋级用户组</h4>
+									<div class="dj_main_yhz_hide">
+									<?php foreach($jinji as $v){ ?>
+										<a href="?h=ziliao&c=dengji&lid=<?php echo $v['level_id']; ?>"><?php echo $v['level_name']; ?></a>
+									<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<form action="?h=ziliao&c=lianxi_submit" method="post">
+					<div class="n_main_main_main">
+						<div class="dj_main">
+							<table>
+								<tr>
+									<th class="th1"></th>
+									<th class="th2">我的用户组 - <?php echo mb_substr($_SESSION['user']['level_name'],0,10,'utf-8'); ?></th>
+									<th class="th3"><{@res['name']}></th>
+								</tr>
+								<tr>
+									<td class="td1">&nbsp;</td>
+									<td class="td2">本等级所需经验值：<span style="font-weight:bold;"><{@_SESSION['user']['experience']}></span></td>
+									<td class="td3">本等级所需经验值：<span style="font-weight:bold;"><{@res['experience']}></span></td>
+								</tr>
+								<tr>
+									<td class="td1">用户等级</td>
+									<td class="td2">Lv<{@_SESSION['user']['level_class']}></td>
+									<td class="td3">Lv<{@res['level_class']}></td>
+								</tr>
+								<tr>
+									<td class="td1">用户级别</td>
+									<td class="td2">
+						<?php $arr = get_level_class_img($_SESSION['user']['level_class']);
+							foreach($arr as $v){
+						 ?>
+										<img src="<{@v}>">
+							<?php } ?>
+									</td>
+									<td class="td3">
+							<?php $arr = get_level_class_img($res['level_class']);
+								foreach($arr as $v){
+							 ?>
+											<img src="<{@v}>">
+								<?php } ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">用户称号</td>
+									<td class="td2" style="color:<{@_SESSION['user']['level_color']}>"><{@_SESSION['user']['level_name']}></td>
+									<td class="td3" style="color:<{@res['level_color']}>"><{@res['level_name']}></td>
+								</tr>
+								<tr>
+									<td class="td1">每天登陆获得经验值</td>
+									<td class="td2"><{@_SESSION['user']['jingyan']}></td>
+									<td class="td3"><{@res['jingyan']}></td>
+								</tr>
+								<tr>
+									<td class="td1">每天登陆获得积分</td>
+									<td class="td2"><{@_SESSION['user']['jifen']}></td>
+									<td class="td3"><{@res['jifen']}></td>
+								</tr>
+								<tr>
+									<td class="td1">允许隐身</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxys']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxys']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">阅读文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['ydwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['ydwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表日志</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbrz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbrz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表视频</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbsp']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbsp']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表心情微博</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbxqwb']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbxqwb']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许上传相册</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscxc']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscxc']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布评论</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">文章搜索</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['wzss']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['wzss']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发站内消息</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfznxx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfznxx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发送邮件</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfyj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfyj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发送手机短信</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfssjdx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfssjdx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许添加好友</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxtjhy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxtjhy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许使用个性签名</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsygxqm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsygxqm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">个性签名长度</td>
+									<td class="td2"><{@_SESSION['user']['qianming']}>个字符</td>
+									<td class="td3"><{@res['qianming']}>个字符</td>
+								</tr>
+								<tr>
+									<td class="td1">允许TA +关注</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxjgz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxjgz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发布心理测试</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfbxlcs']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfbxlcs']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许开通我的主页</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxktwdzy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxktwdzy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许使用二级域名</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsyejym']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsyejym']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">空间存储大小</td>
+									<td class="td2"><{@_SESSION['user']['cunchu']}>MB</td>
+									<td class="td3"><{@res['cunchu']}>MB</td>
+								</tr>
+								<tr>
+									<td class="td1">单张图片最大尺寸</td>
+									<td class="td2">2MB</td>
+									<td class="td3">2MB</td>
+								</tr>
+								<tr>
+									<td class="td1">查看文章无视加密</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['ckwzwsjm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['ckwzwsjm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许删除文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许删除评论</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许锁定用户</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsdyh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsdyh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布文章允许使用链接</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwzyxsylj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwzyxsylj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布文章不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwzbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwzbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布评论不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbplbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbplbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布微博不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwbbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwbbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+							</table>	
+							<div style="text-align:center;margin-top:10px;">
+								<img src="./sundry/static_file/img/v.gif">
+								表示有权操作　　　
+								<img src="./sundry/static_file/img/x.gif">
+								表示无权操作
+							</div>						
+						</div>
+					</div>
+				</div>
+			</form>
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=dengji">我的等级</a></li>
+				</ul>
+			</div>
+
+
+		</div>
+<{include public::footer.hhc}><?php
+	$pdo = get_pdo();
+	if(!empty($_GET['lid'])){
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_id`='{$_GET['lid']}' limit 1",'');
+	}
+	if(empty($res)){
+		$lid=$_SESSION['user']['level_class']+1;
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_class`='{$lid}' limit 1",'');
+	}
+	if(empty($res)){
+		$res = $pdo -> query('select * from `'.DB_PRE."level` where `level_class`='{$_SESSION['user']['level_class']}' order by `level_class` asc limit 1",'');
+	}
+	$res['name'] = empty($res['type']) ? "晋级用户组 - {$res['level_name']}" : "特殊用户组 - {$res['level_name']}";
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">我的等级</li>
+						</ul>
+						<?php
+							$level = $pdo -> query('select `level_id`,`level_name`,`type` from `'.DB_PRE."level` order by `paixu` desc");
+							$teshu = array();
+							$jinji = array();
+							foreach($level as $k => $v){
+								if(!empty($v['type']) && $v['level_id']!='7')
+									$teshu[$k] = $v;
+								else
+									$jinji[$k] = $v;
+							}
+						?>
+						<div style="float:right;margin:10px 100px 0 0;">
+							<div style="position:relative;width:300px;">
+								<div class="dj_main_yhz" style="position:absolute;">
+									<h4>特殊用户组</h4>
+									<div class="dj_main_yhz_hide">
+									<?php foreach($teshu as $v){ ?>
+										<a href="?h=ziliao&c=dengji&lid=<?php echo $v['level_id']; ?>"><?php echo $v['level_name']; ?></a>
+									<?php } ?>
+									</div>
+
+								</div>
+								<div class="dj_main_yhz" style="position:absolute;left:160px;">
+									<h4>晋级用户组</h4>
+									<div class="dj_main_yhz_hide">
+									<?php foreach($jinji as $v){ ?>
+										<a href="?h=ziliao&c=dengji&lid=<?php echo $v['level_id']; ?>"><?php echo $v['level_name']; ?></a>
+									<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<form action="?h=ziliao&c=lianxi_submit" method="post">
+					<div class="n_main_main_main">
+						<div class="dj_main">
+							<table>
+								<tr>
+									<th class="th1"></th>
+									<th class="th2">我的用户组 - <?php echo mb_substr($_SESSION['user']['level_name'],0,10,'utf-8'); ?></th>
+									<th class="th3"><{@res['name']}></th>
+								</tr>
+								<tr>
+									<td class="td1">&nbsp;</td>
+									<td class="td2">本等级所需经验值：<span style="font-weight:bold;"><{@_SESSION['user']['experience']}></span></td>
+									<td class="td3">本等级所需经验值：<span style="font-weight:bold;"><{@res['experience']}></span></td>
+								</tr>
+								<tr>
+									<td class="td1">用户等级</td>
+									<td class="td2">Lv<{@_SESSION['user']['level_class']}></td>
+									<td class="td3">Lv<{@res['level_class']}></td>
+								</tr>
+								<tr>
+									<td class="td1">用户级别</td>
+									<td class="td2">
+						<?php $arr = get_level_class_img($_SESSION['user']['level_class']);
+							foreach($arr as $v){
+						 ?>
+										<img src="<{@v}>">
+							<?php } ?>
+									</td>
+									<td class="td3">
+							<?php $arr = get_level_class_img($res['level_class']);
+								foreach($arr as $v){
+							 ?>
+											<img src="<{@v}>">
+								<?php } ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">用户称号</td>
+									<td class="td2" style="color:<{@_SESSION['user']['level_color']}>"><{@_SESSION['user']['level_name']}></td>
+									<td class="td3" style="color:<{@res['level_color']}>"><{@res['level_name']}></td>
+								</tr>
+								<tr>
+									<td class="td1">每天登陆获得经验值</td>
+									<td class="td2"><{@_SESSION['user']['jingyan']}></td>
+									<td class="td3"><{@res['jingyan']}></td>
+								</tr>
+								<tr>
+									<td class="td1">每天登陆获得积分</td>
+									<td class="td2"><{@_SESSION['user']['jifen']}></td>
+									<td class="td3"><{@res['jifen']}></td>
+								</tr>
+								<tr>
+									<td class="td1">允许隐身</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxys']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxys']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">阅读文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['ydwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['ydwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表日志</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbrz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbrz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表视频</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbsp']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbsp']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发表心情微博</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbxqwb']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbxqwb']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许上传相册</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscxc']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscxc']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布评论</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">文章搜索</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['wzss']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['wzss']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发站内消息</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfznxx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfznxx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发送邮件</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfyj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfyj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发送手机短信</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfssjdx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfssjdx']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许添加好友</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxtjhy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxtjhy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许使用个性签名</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsygxqm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsygxqm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">个性签名长度</td>
+									<td class="td2"><{@_SESSION['user']['qianming']}>个字符</td>
+									<td class="td3"><{@res['qianming']}>个字符</td>
+								</tr>
+								<tr>
+									<td class="td1">允许TA +关注</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxjgz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxjgz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许发布心理测试</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxfbxlcs']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxfbxlcs']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许开通我的主页</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxktwdzy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxktwdzy']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许使用二级域名</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsyejym']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsyejym']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">空间存储大小</td>
+									<td class="td2"><{@_SESSION['user']['cunchu']}>MB</td>
+									<td class="td3"><{@res['cunchu']}>MB</td>
+								</tr>
+								<tr>
+									<td class="td1">单张图片最大尺寸</td>
+									<td class="td2">2MB</td>
+									<td class="td3">2MB</td>
+								</tr>
+								<tr>
+									<td class="td1">查看文章无视加密</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['ckwzwsjm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['ckwzwsjm']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许删除文章</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscwz']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许删除评论</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxscpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxscpl']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">允许锁定用户</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['yxsdyh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['yxsdyh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布文章允许使用链接</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwzyxsylj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwzyxsylj']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布文章不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwzbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwzbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布评论不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbplbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbplbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<tr>
+									<td class="td1">发布微博不需要审核</td>
+									<td class="td2">
+										<?php if($_SESSION['user']['fbwbbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+									<td class="td3">
+										<?php if($res['fbwbbxysh']=='1'){ ?>
+										<img src="./sundry/static_file/img/v.gif">
+										<?php }else{
+										?>
+										<img src="./sundry/static_file/img/x.gif">
+										<?php
+										} ?>
+									</td>
+								</tr>
+							</table>	
+							<div style="text-align:center;margin-top:10px;">
+								<img src="./sundry/static_file/img/v.gif">
+								表示有权操作　　　
+								<img src="./sundry/static_file/img/x.gif">
+								表示无权操作
+							</div>						
+						</div>
+					</div>
+				</div>
+			</form>
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=dengji">我的等级</a></li>
+				</ul>
+			</div>
+
+
+		</div>
+<{include public::footer.hhc}>

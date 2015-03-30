@@ -1,0 +1,199 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<form method="post" class="forms" action="?h=set_up&c=<{if @_GET['t']=='1'}>nav_submit_add<{else if @_GET['t']=='2' /}>nav_submit_update<{/if}>">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						<{if @_GET['t']=='1'}>
+							创建新栏目
+						<{else if @_GET['t']=='2' /}>
+							栏目修改
+							<input type="hidden" name="id" value="">
+						<{/if}>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										栏目名称
+									</div>
+									<div class="oli_div_2">
+										<input name="nav_name" type="text" class="oli_text" value="">
+									</div>
+									<div class="oli_div_3">
+										栏目的名称
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										隐藏名称
+									</div>
+									<div class="oli_div_2">
+										<input name='nav_yincang' value="" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										栏目的隐藏名称，可不填 当鼠标移动到栏目上时 会在一个白框里显示隐藏名称 比如：<span title="隐藏名称">标题</span>
+									</div>
+								<div class="clear"></div>
+								</li>
+								<{if @_GET['t']=='1' && !empty(@_GET['k'])}>
+								<{hhc:php}>
+								$nav=include_nav();
+								<{/hhc:php}>
+								<{if !empty(@nav[@_GET['k']])}>
+								<li class="oli">
+									<div class="oli_div_1">
+										父栏目名称
+									</div>
+									<div class="oli_div_2">
+										<input type="hidden" name="nav_parent_id" value="<{@_GET['k']}>">
+										<input readonly="readonly" value="<{@nav[$_GET['k']]['nav_name']}>" style="background:#EEEEEE;" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										上级栏目的名称
+									</div>
+								<div class="clear"></div>
+								</li>
+								<{/if}>
+								<{/if}>
+								<li class="oli">
+									<div class="oli_div_1">
+										栏目的类型
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+
+										<input checked="checked" name="nav_type" value="1" type="radio" class="type_1">模型栏目&nbsp;&nbsp;
+										<input name="nav_type" value="0" type="radio" class="type_0">普通链接
+									</div>
+									<div class="oli_div_3">
+										选择栏目的类型
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli nav_type_moxing">
+									<div class="oli_div_1">
+										栏目的类型
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+										<select name="nav_moxing">
+											<?php include './sundry/cache/json/moxing/moxing.php'; 
+											$json=json_decode($json,true);
+											foreach($json as $v){
+											?>
+											<option value="<?php echo $v['id']; ?>" class="moxing_1"><?php echo $v['name']; ?></option>
+											<?php } ?>
+										</select>
+									</div>
+									<div class="oli_div_3">
+										选择本栏目所使用的模型 您可以进入应用中心 安装新的模型 
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli nav_type_link">
+									<div class="oli_div_1">
+										链接地址
+									</div>
+									<div class="oli_div_2">
+										<input name='nav_link' type="text" class="oli_text" value="">
+									</div>
+									<div class="oli_div_3">
+										栏目的链接地址，注意：请填写完整的链接地址 需要以http://或者https://开头  如：http://ithhc.cn
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										排序号
+									</div>
+									<div class="oli_div_2">
+										<input name='nav_paixu' type="text" class="oli_text" value="">
+									</div>
+									<div class="oli_div_3">
+										栏目的排序号 必须是正整数或0
+										最大60000  前台显示时 由大=》小排列
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										打开方式
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+
+										<input value="0" type="radio" name="nav_dakai" checked="checked" class="dakai_0">本页打开&nbsp;&nbsp;
+										<input value="1" type="radio" name="nav_dakai" class="dakai_1">新窗口打开
+									</div>
+									<div class="oli_div_3">
+										在前台点击时的打开方式
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										是否显示
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+
+										<input value="1" type="radio" name="nav_xianshi" checked="checked" class="nav_xianshi_1">显示&nbsp;&nbsp;
+										<input value="0" type="radio" name="nav_xianshi" class="nav_xianshi_0">不显示
+									</div>
+									<div class="oli_div_3">
+										栏目是否在前台显示
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										是否允许发布
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+
+										<input value="0" type="radio" name="fabu" checked="checked" class="nav_fabu_0">允许发布文章&nbsp;&nbsp;
+										<input value="1" type="radio" name="fabu" class="nav_fabu_1">只允许后台发布文章
+									</div>
+									<div class="oli_div_3">
+										是否允许用户在本栏目下发布文章
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</div>
+					</div>
+				</div>
+				<{if @_GET['t']=='2'}>
+				<{hhc:php}>
+				$nav = include_nav();
+				$nav=$nav[$_GET['k']];
+				<{/hhc:php}>
+				<script type="text/javascript">
+					$(function(){
+						$('input[name=id]').val('<{@nav["nav_id"]}>')
+						$('input[name=nav_name]').val('<{@nav["nav_name"]}>')
+						$('input[name=nav_yincang]').val("<{@nav['nav_yincang']}>")
+						$('input[name=nav_paixu]').val("<{@nav['nav_paixu']}>")
+						$('input[name=nav_link]').val('<{@nav["nav_link"]}>')
+						
+						$(".type_<{@nav['nav_type']}>").attr('checked','checked');
+						nav_type();
+						$(".moxing_<{@nav['nav_moxing']}>").attr('selected','selected');
+
+						$(".dakai_<{@nav['nav_dakai']}>").attr('checked','checked');
+						$(".nav_xianshi_<{@nav['nav_xianshi']}>").attr('checked','checked');
+						$(".nav_fabu_<{@nav['fabu']}>").attr('checked','checked');
+					})
+				</script>
+				<{/if}>
+				</form>
+			</div>
+			<{*网站基本信息结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

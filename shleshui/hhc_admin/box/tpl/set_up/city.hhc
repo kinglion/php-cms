@@ -1,0 +1,108 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						城市设置  
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<div class="city_div">
+									<a target="_blank" href="?h=set_up&c=city_add" style="margin:5px 0 20px;" class="create_zidingyi">添加一个城市</a>
+								<div class="city_div_div">
+									<div style="float:left;width:75px;" class="city_span">选择地区：</div>
+									<div class="city_select" style="width:88%;">
+									<?php 
+										foreach($this->tpl_vars['city']['select'] as $k => $v){ ?> 
+									<select key="<{@k}>" name="city_select">
+										<?php $arr=array(); foreach($v as $val){
+											$arr[$val['id']]=$val['name']
+										 ?>
+										<?php if(!in_array('--请选择--',$arr)){ $arr['0']='--请选择--'; ?>
+										<option value="<?php echo $val['pid'] ?>">--请选择--</option>
+										<?php } v($arr); ?>
+										<option <?php if(!empty($val['select'])) echo 'selected="selected"'; ?> value="<{@val['id']}>"><{@val['name']}></option>
+										<?php }  unset($arr); ?>
+									</select>
+
+									<?php } ?>
+								</div>
+								<div class="clear"></div>
+								</div>
+								<div class="city_div_div">
+									<form method="get">
+									<span class="city_span">分类检索：</span>
+									<input type="hidden" name="h" value="set_up">
+									<input type="hidden" name="c" value="city">
+									<select name="xianshi">
+										<option value="0">--显示--</option>
+										<option value="0">显示当前地区</option>
+										<option value="1" <{if !empty(@_GET['xianshi'])}>selected="selected"<{/if}>>显示全部</option>
+									</select>&nbsp;&nbsp;
+
+									<span class="city_span">名称：</span>&nbsp;<input name="name" class="city_input" type="text" value="<{if !empty(@_GET['name'])}><{@_GET['name']}><{/if}>">&nbsp;&nbsp;
+									<input type="submit" value="提交" class="city_submit">
+									</form>
+								</div>
+								<div class="city_main">
+ 					 <{if !empty($city['res'])}>
+									<table class="city_table">
+										<tr>
+											<th>选中</th>
+											<th>排序号</th>
+										<th>名称</th>
+										<th>&nbsp;</th>
+										<th>操作</th></tr>			<form class="form1" method="post" action="?h=set_up&c=city_update">
+										<?php 
+										foreach($this->tpl_vars['city']['res'] as $v){ ?>
+										<tr>
+											<td><input class="input_checkbox_s" name="xuanzhong[]" type="checkbox" value="<{@v['id']}>"></td>
+
+											<td><input name="<{@v['id']}>[paixu]" value="<{@v['paixu']}>" type="text" class="city_input city_input_paixu"></td>
+										<td><input name="<{@v['id']}>[name]" value="<{@v['name']}>" type="text" class="city_input city_input_name"></td>
+										<td><a target="_blank" href="?h=set_up&c=city_add&k=<{@v['id']}>" class="city_erji">添加下级城市</a></td>
+										<td><a href='?h=set_up&c=city_update&k=<{@v['id']}>' class="city_input_a delete_tishi">删除</a></td>
+										<input name="delete" value="0" type="hidden">
+										</tr>
+										<?php } ?>
+										<tr>
+											<td>
+												&nbsp;
+												</td>
+											<td>&nbsp;</td>
+										<td>&nbsp;</th>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td></tr>
+										<tr>
+											<td>
+												<span class="quanxuan_s" style="">全选</span>
+												</td>
+											<td><span class="quanxuan_z" style="">取消</span></td>
+										<td>&nbsp;</th>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td></tr>
+									</table>
+					<{else /}>
+						本分类下没有城市 
+					<{/if}>	
+
+								</div>
+ 					 <{if !empty($city['res'])}>
+						<div>
+							<a class="create_zidingyi nav_update_a" href="javascript:void(0)" style="float:left;margin:50px 10px 30px 10px;">修改全部</a>
+							<a class="create_zidingyi nav_delete_a" href="javascript:void(0)" style="float:left;margin:50px 10px 30px 10px;">删除选中</a>
+						</div>
+					<{/if}>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<{*网站基本信息结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

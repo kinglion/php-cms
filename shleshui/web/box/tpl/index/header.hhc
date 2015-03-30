@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if empty(@top_title)}><{hhc::set_up::lang_title}><{else /}><{@top_title}><{/if}></title>
+<meta name="keywords" content="<{hhc::set_up::keywords}>" />
+<meta name="description" content="<{hhc::set_up::description}>" />
+<link href="HHC_TPL_HHC/css/main.css" rel="stylesheet" type="text/css" />
+<link href="./sundry/static_file/img/favicon.ico" rel="icon" type="image/x-icon" />
+<link href="./sundry/static_file/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<script type="text/javascript" src="HHC_TPL_HHC/js/jquery.js"></script>
+<script type="text/javascript" src="HHC_TPL_HHC/js/webskys.js"></script>
+<script type="text/javascript" src="HHC_TPL_HHC/js/ie6png.js"></script>
+<script type="text/javascript" src="HHC_TPL_HHC/js/gun.js"></script>
+</head>
+<body>
+<div class="top">
+<div class="topright">
+<ul>
+<li class="li01"><a href='web.php'>首页</a></li>
+<li class="li02"><a href='web.php?m=1'>手机版</a></li>
+<li class="li03"><a onclick="" href="web.php?h=other&c=bczm" rel="nofollow">保存到桌面</a></li>
+</ul>
+</div>
+<div class="logo">
+<a href="web.php" title="<{hhc::set_up::short_title}>"><img src="<{hhc::set_up::logo}>" style="height:71px;"  title="<{hhc::set_up::short_title}>"/></a></div>
+<div class="righttel">
+</div>
+<div class="webnav">
+<ul>
+<{hhc::nav }>
+<li class=""><a href="<{hhc::nav::navurl/}>" <{hhc::nav::target/}> title="<{hhc::nav::nav_yincang /}>"><{hhc::nav::nav_name/}></a></li>
+<{/hhc::nav }>
+<script type="text/javascript">
+    $(function(){
+        <?php if($_GET['h']=='index' && $_GET['c']=='index'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=='web.php'){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        }else if($_GET['c']=='news' || $_GET['c']=='news_content'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=="web.php?h=index&c=news"){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        }else if($_GET['c']=='product'||$_GET['c']=='product_content'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=="web.php?h=index&c=product"){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        }else if($_GET['c']=='comment'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=="web.php?h=index&c=comment"){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        }else if($_GET['c']=='solution'||$_GET['c']=='solution_content'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=="web.php?h=index&c=solution"){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        }else if($_GET['c']=='casez'||$_GET['c']=='casez_content'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=="web.php?h=index&c=casez"){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        }else if($_GET['c']=='jobs'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=="web.php?h=index&c=jobs"){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        }else if($_GET['c']=='user'){
+        ?>
+            $('.webnav li a').each(function(){
+                if($(this).attr('href')=="web.php?h=index&c=user"){
+                    $(this).parent().addClass('licurs');
+                }
+            })
+        <?php
+        } ?>
+    })
+</script>
+</ul>
+</div>
+</div>
+<div class="banner">
+<div id="banlbar"></div>
+<div id="banrbar"></div>
+<div id="banh">
+<ul>
+<?php
+    $pdo = get_pdo();
+    $res = $pdo -> query('select * from '.DB_PRE."z_web_hdp order by paixu desc");
+    $res = empty($res) ? array() : $res;
+    foreach($res as $v){
+?>
+<a href="<{@v['link']}>" target="_blank"><li><img title="<{@v['title']}>" class="top_hdp_pic" src="<{@v['pic']}>" /></li></a>
+<?php } ?>
+</ul>
+<script type="text/javascript">
+    window.onload = function(){
+        $('.top_hdp_pic').each(function(){
+            var h = 279/$(this).height();
+            var w = 968/$(this).width();
+            if(h > w){
+                $(this).css('height','279px');
+            }else{
+                $(this).css('width','968px');
+            }
+        })
+    }
+</script>
+
+</div>
+</div>

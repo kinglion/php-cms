@@ -1,0 +1,68 @@
+<?php
+	$w = '1';
+	if(!empty($_GET['key']))
+		$w = "class_id='{$_GET['key']}' ";
+	$order = ' order by id desc';
+	$page = new page(DB_PRE.'lyfk','*',$w.$order,15,'p');
+	$artcle = $page->page_2(3,0);
+	$pages = $page -> pages;
+	$artcle['0'] = !empty($artcle['0']) ? $artcle['0'] : array();
+    include './sundry/cache/json/config.php';
+    $arr = json_decode($json,true);
+	$top_title = "留言反馈 - 第{$pages}页 - {$arr['4']}";
+?>
+<{include ./header.hhc}>
+			<div id="content">
+				
+				<article>
+				<div class="article-comments">
+						<h3>评论列表</h3>
+						<hr>
+						<ul>
+							<{**}>
+<?php 
+	if(empty($artcle['0'])){
+?>
+<li style="border:0;">没有评论</li>
+<?php
+	}else{
+?>
+<?php
+	foreach($artcle['0'] as $v){
+?>
+							<li>
+								<div><{@v['fasongzhe']}>&nbsp;&nbsp;<{@v['time']}></div>
+								<p style="color:#888888;"><{@v['neirong']}></p>
+								<div style="margin-top:10px;color:#888888;">管理员回复：<{@v['huifu']}></div>
+							</li>
+<?php }} ?>
+						</ul>			
+			<ul class="page" style="text-align:center;margin-top:60px;">
+				<{@artcle['1']}>
+			</ul>			
+							<div style="width:90%;margin:0 auto;">
+								<form class="contactForm"  method="post" action="web.php?h=index&c=comment_submit">						<div>			
+									<label>称呼 <span class="required">*</span></label>
+									<input type="text" name="fasongzhe" id="ContactName" placeholder="称呼">
+									
+									<label>联系方式 <span class="required">*</span></label>
+									<input type="text" name="title" id="ContactName" placeholder="联系方式">
+									<input type="hidden" name="infoid" value="6" >
+									
+									<label>内容 <span class="required">*</span></label>
+									<textarea id="ContactMessage" name="neirong"  placeholder="评论要一针见血"></textarea>
+								</div>
+<style type="text/css">
+	.s_submit{background-color:#4D7EA2;color: #FFF;padding:10px 15px;border:none;text-transform:uppercase;cursor:pointer;margin-bottom:10px;}
+	.s_submit:hover{background-color:#245070;}
+</style>
+									<input class="s_submit" type="submit" style="" value="发表评论">
+									
+									<div id="msg" class="notifications" style="display:none"></div>
+								</form>
+							</div>
+					</div>
+				</article>
+
+			</div>
+<{include ./footer.hhc}>

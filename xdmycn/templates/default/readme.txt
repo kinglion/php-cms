@@ -1,0 +1,1 @@
+这是 sinsiu PHP 1.1 beta3 默认模板。

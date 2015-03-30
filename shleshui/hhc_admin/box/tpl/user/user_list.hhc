@@ -1,0 +1,56 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站栏目设置开始*}>
+			<form class="form1" method="post" action="?h=set_up&c=nav_update">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						用户列表
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table admin_nav_layout_table'>
+								<tr class='admin_con_tr_title admin_nav_layout'>
+									<th class="nav_th_checkbox">编号</th>
+									<th class="nav_th_text_shunxu">用户名</th>
+									<th class="nav_th_text">昵称</th>
+									<th class="nav_th_text">积分</th>
+									<th class="nav_th_text">使用此用户</th>
+									<th class="nav_th_text">权限</th>
+								</tr>
+
+								<{foreach $user ['0'] as $k => $v}>
+								<tr class="admin_con_tr_con">
+									<td><{@v['user_id']}></td>
+									<td><{@v['user_name']}></td>
+									<td><{@v['username']}></td>
+									<td><{@v['user_integral']}></td>
+									<td><a target="_blank" href="?h=user&c=user_list_go&k=<{@v['user_id']}>" style="color:#0074A2;">访问前台</a></td>
+									<td>
+										<?php if($v['shenhe']=='0'){ ?>
+										<span style="cursor:default;">正常</span> |
+										<a style="color:#0074A2;" href="?h=user&c=user_list_submit&k=1&k2=<{@v['user_id']}>">审核中</a>
+										<?php }else{
+										?>
+										<a style="color:#0074A2;" href="?h=user&c=user_list_submit&k=0&k2=<{@v['user_id']}>">正常</a> |
+										<span style="cursor:default;">审核中</span>
+										<?php
+										} ?>
+									</td>
+								</tr>
+								<{/foreach}>
+							</table>
+<div style="margin:20px 10px;"><{$user['1']}></div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+			<{*网站栏目设置结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

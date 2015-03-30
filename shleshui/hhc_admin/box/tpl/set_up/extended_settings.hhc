@@ -1,0 +1,136 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<form method="post" action="?h=set_up&c=extended_settings_submit" enctype="multipart/form-data">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						扩展设置&nbsp;&nbsp;&nbsp;<a class="hover_underline" target="_blank" style="color:red;" href="?h=set_up&c=add_extended_settings">创建设置</a>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<{if empty($res)}>
+								暂无设置
+								<{else /}>
+								<?php
+									$ts = false;
+								?>
+								<{foreach $res as $v}>
+<?php $v['v'] = !isset($v['v']) ? '' : $v['v']; ?>
+								<li class="oli">
+									<div class="oli_div_1">
+										<{@v['cn_name']}>&nbsp;
+									</div>
+									<div <{if @v['type']=='2'}>style="width:70%;"<{/if}> class="oli_div_2">
+										<?php
+											switch($v['type']){
+												case '0':
+										?>
+										<input name="<{@v['k']}>" type="text" value="<{@v['v']}>" class="oli_text">
+										<?php
+												break;
+												case '1':
+										?>
+										<textarea name="<{@v['k']}>" class="oli_textarea"><{@v['v']}></textarea>
+										<?php
+												break;
+												case '2':
+												if(!$ts){
+													$ts=true;
+										?>
+										<script type="text/javascript" src="./sundry/plus/ue/ueditor.config.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.all.min.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/lang/zh-cn/zh-cn.js"></script>
+										<?php
+												}
+$v['default_val']=!empty($v['default_val'])?$v['default_val']:'source,bold,italic,link,unlink,imagenone,imagecenter,imageleft,imageright,simpleupload,insertimage,inserttable,deletetable,forecolor,customstyle,paragraph,fontfamily,fontsize,emotion,map,attachment,spechars,searchreplace';
+$arr = explode(',',$v['default_val']);
+$o='';
+foreach($arr as $vxz){
+	$o.="'$vxz',";
+}
+							?>
+<script id="<{@v['k']}>" type="text/plain" style="width:98%;height:200px;" name="<{@v['k']}>"><{@v['v']}></script>
+    <script type="text/javascript">
+    var ue = UE.getEditor('<{@v['k']}>', {   
+    toolbars:[[
+      <{@o}>
+    ]]
+});
+    </script>
+										<?php
+												break;
+												case '3':
+										?>
+											<div style="width:40%;" class="file_get_1">
+												<div class="file_get_1_div" style="">
+													<input class="file_get_name" readonly="readonly" type="text" value="">
+												</div>
+											</div>
+											<div style="width:25%;" class="file_get_2">选择文件
+												<input name="<{@v['k']}>" width="50" class="file_get_2_file opacity_0" type="file">
+											</div>
+											<div class="clear"></div>
+										<?php
+												break;
+												case '4':
+										$arr = explode(',',$v['default_val']);
+										?>
+										<select name="<{@v['k']}>">
+										<?php foreach($arr as $vo){ ?>
+											<option <{if @v['v']==@vo}>selected="selected"<{/if}> value="<{@vo}>"><{@vo}></option>
+										<?php } ?>
+										</select>
+										<?php
+												break;
+												case '5':
+												$arr = explode(',',$v['default_val']);
+												$arr2=explode(',',$v['v']);
+										?>
+										<div style="line-height:30px;font-size:13px;">
+<{foreach @arr as $vc}>
+<input name="<{@v['k']}>[]" <?php if(in_array($vc,$arr2)){echo 'checked="checked"';} ?> value="<{@vc}>" type="checkbox">&nbsp;<{@vc}>&nbsp;&nbsp;
+<{/foreach}>
+										</div>
+										<?php
+												break;
+											}
+
+										?>
+									</div>
+									<{if @v['type']!='2'}>
+									<div style="width:30%;" class="oli_div_3">
+										<{@v['tishi']}>&nbsp;<?php if($v['type']=='3'){
+											if(!empty($v['v'])){
+												echo "已上传 <a target='_blank' href='{$v['v']}'>点击查看</a>";
+											}
+										} ?>
+									</div>
+									<{/if}>
+									<div style="width:10%;" class="oli_div_3">
+										<{if @v['xitong']==='0'}>
+										<a style="margin:0;" href="?h=set_up&c=add_extended_settings&k=<{@v['id']}>">编辑</a>|<a class="delete_tishi" style="margin:0;" href="?h=set_up&c=delete_extended_settings&k=<{@v['id']}>">删除</a>
+										<{else /}>
+										<span style="font-size:13px;">系统设置</span>
+										<{/if}>&nbsp;
+									</div>
+								<div class="clear"></div>
+								</li>
+
+								<{/foreach}>
+								<{/if}>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="保存修改">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+			<{*网站基本信息结束*}>
+
+		</div>
+		<{include index::footer.hhc}>

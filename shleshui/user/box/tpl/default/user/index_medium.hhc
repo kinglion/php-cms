@@ -1,0 +1,210 @@
+<div class='user_main_medium'>
+
+<dl style="padding:0;margin:0;">
+	<dt>心情微博</dt>
+	<form class="weibo_submit" method="post" action="?h=hudong&c=weibo_submit">
+	<dd style="margin:0;padding:5px;">
+		<div contenteditable="true" class="user_main_textarea"></div>
+	</dd>
+	<dd style="margin:0;padding:0;background:#f6f6f6;height:35px;overflow:hidden;">
+		<div class="user_main_textarea_div click_false">
+			<img title="表情" src="./sundry/static_file/img/img/1.gif">
+			<div class="user_main_textarea_div_submit">发布</div>
+		</div>
+		<div class="clear"></div>
+	</dd>
+</dl>
+<div style="display:none;" class="fabu_biaoqing click_false">
+<div class="fabu_biaoqing_p">
+	<div class="fabu_biaoqing_main">
+		<ul>
+		</ul>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+	window.onload=function(){
+		biaoqing_go();
+	}
+</script>
+		<textarea style="display:none;" name="weibo" class="weibo"></textarea>
+
+</form>
+
+
+							
+<div class="index_mediun_x" style="display:inline-block;margin:0;width:100%;margin-top:30px;">
+	<div class="title_l">
+			最新日志
+	</div>
+	<div class="title_r"><a href="?h=hudong&c=zx_rizhi">更多>></a></div>
+	<div class="clear"></div>
+	<ul style="margin-top:10px;display:inline-block;width:100%;">
+		<?php 
+	$tb_name = DB_PRE.'user_rizhi';
+	$type = 'a.id,a.title,a.time,a.con,a.zan,b.user_name,b.username,b.user_id,b.pic';
+	$w = " a.zhuangtai='1' ";
+	if($_GET['c']=='jc_rizhi'){
+		$w .= 'and a.tuijian="1"';
+	}
+	$order = 'order by a.id desc';
+	$even_arr = array(
+			array('table_k'=>'b','table_name'=>DB_PRE.'user','where'=>'on a.user_id=b.user_id'),
+		);
+	$page = new page($tb_name,$type,$w.$order,30,'p',true,'a',$even_arr);
+	$res = $page->page_2(5,1);
+		?>
+		<{if(empty(@res['0']))}>
+			<li>没有日志</li>
+		<{/if}>
+		<?php foreach($res['0'] as $v){ ?>
+		<li>
+			<div class="user_xinqing_pinglun_l"><img src="<{@v['pic']}>"></div>
+			<div class="user_xinqing_pinglun_r">
+				<input type="hidden" name="id" value="<{@v['id']}>">
+				<a href="?"><{if(empty(@v['username']))}><{@v['user_name']}><{else /}><{@v['username']}><{/if}></a><span>: <a target="_blank" href="?h=hudong&c=rizhi_content&k=<{@v['id']}>"><{@v['title']}></a><br/></span>
+				<p><{@v['con']}></p>
+				<div class="user_xinqing_pinglun_r_1">
+					<div class="user_xinqing_pinglun_r_1_r">
+						<a href="javascript:void(0)" class="zyx rizhi_zan">赞一下</a>&nbsp;
+						<a target="_blank" href="?h=hudong&c=rizhi_content&k=<{@v['id']}>" class="zkpl">查看原文及评论</a>
+					</div>
+					<span class="date_t"><?php echo date('Y-m-d H:i',$v['time']); ?></span>
+				</div>
+				<div href="javascript:void(0)" class="jdhz"><a style="font-size:13px;" class="jdhz_a" key="<{@v['id']}>"><i style="color:#369;"><{@v['zan']}></i>个人觉得赞！</a></div>
+				<div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</li>
+<?php } ?>
+
+
+
+	</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<form method="post" action="?h=hudong&c=weibo_pl_submit">
+	
+<div class="index_mediun_x" style="">
+	<div class="title_l">最新心情</div>
+	<div class="title_r"><a href="?h=hudong&c=weibo">更多>></a></div>
+	<div class="clear"></div>
+	<ul style="margin-top:10px;">
+		<?php 
+$tb_name = DB_PRE."weibo";
+$type='`a`.`id`,`a`.`content`,`a`.`time`,`a`.`zan`,`b`.`user_name`,`b`.`username`,`b`.`user_id`,`b`.`pic`';
+$w = "`a`.`shenhe`='0'";
+$order = 'order by a.id desc';
+$even_arr = array(
+	array('table_k'=>'b','table_name'=>DB_PRE."user",'where'=>'on a.user_id=b.user_id'),
+);
+$page = new page($tb_name,$type,$w.$order,10,'p',true,'a',$even_arr);
+$weibo = $page->page_2(5,1);
+$weibo['0'] = empty($weibo['0']) ? array() : $weibo['0'];
+?>
+<{if empty(@weibo['0'])}>
+<li>没有心情微博</li>
+<{else /}>
+<?php
+	//获取评论
+	$id='';
+	foreach($weibo['0'] as $v){
+		$id .= "{$v['id']},";
+	}
+	$id = trim($id,',');
+	$sql = 'select a.*,b.user_name,b.username,b.pic,b.user_id from '.DB_PRE.'weibopl as a left join '.DB_PRE."user as b on a.user_id = b.user_id where weibo_id in ($id)";
+	$res = $pdo -> query($sql);
+	$pl_res = array();
+	foreach($res as $v){
+		$pl_res[$v['weibo_id']][$v['id']] = $v;
+	}
+?>
+<?php
+		 foreach($weibo['0'] as $v){
+		 ?>
+		<li>
+			<div class="user_xinqing_pinglun_l"><img src="<{@v['pic']}>"></div>
+			<div class="user_xinqing_pinglun_r">
+				<a href="?"><{if empty(@v['username'])}><{@v['user_name']}><{else /}><{@v['username']}><{/if}></a><span>: <{@v['content']}></span>
+				<div class="user_xinqing_pinglun_r_1">
+					<div class="user_xinqing_pinglun_r_1_r">
+						<a href="?" class="zkpl"></a>&nbsp;
+						<!--<a href="?" class="zyx">赞一下</a>-->
+					</div>
+					<span class="date_t"><?php echo date('Y-m-d H:i',$v['time']); ?></span>
+				</div>
+				<!--<a href="?" class="jdhz"><{@v['zan']}>个人觉得赞！</a>-->
+				<div class="wypl"><input name="hfwb[<{@v['id']}>]" value="我来说两句。。[100个字符以内]" type="text"></div>
+				<div>
+					<div class="xqpl_s" style="display:none;"><input type="submit" value="评论" name="hf_<{@v['id']}>"><span></span></div>
+				</div>
+				<ul class="ckhf">
+					<?php if(!empty($pl_res[$v['id']])){
+						foreach($pl_res[$v['id']] as $vs){
+					?>
+					<li>
+						<div class="ckhf_l"><img src="<{@vs['pic']}>"></div>
+						<div class="ckhf_r">
+							<div><a href="?"><{if empty(@vs['username'])}><{@vs['user_name']}><{else /}><{@vs['username']}><{/if}></a><span>
+								<?php if($vs['pid']!='0'){ ?>
+								@&nbsp;<?php 
+	if(empty($pl_res[$v['id']][$vs['pid']]['username'])){
+		echo $pl_res[$v['id']][$vs['pid']]['user_name'];
+	}else{
+		echo $pl_res[$v['id']][$vs['pid']]['username'];
+	} 
+?><?php } ?>：<{@vs['content']}></span></div>
+							<div class="ckhf_r_m"><a href="javascript:void(0)" class="ckhf_r_hf">回复</a>于<?php echo date('Y-m-d H:i',$vs['time']); ?>发表</div>
+							<div style="display:none;" class="ckhf_r_hf_z">
+								<input type="hidden" class="ckhf_r_hf_h1" value="@<{if empty(@vs['username'])}><{@vs['user_name']}><{else /}><{@vs['username']}><{/if}> [最多100个字符]">
+								<input type="text" name="hfpl[<{@v['id']}>]" class="ckhf_r_hf_text" value="@<{if empty(@vs['username'])}><{@vs['user_name']}><{else /}><{@vs['username']}><{/if}> [最多100个字符]">
+								<input name="hf_<{@v['id']}>_<{@vs['id']}>" type="submit" value="回复" class="ckhf_r_hf_s">
+							</div>
+						</div>
+					</li>
+					<?php
+					}  ?>
+					<?php } ?>
+				</ul>
+			</div>
+		</li>
+<?php } ?>
+
+
+
+<{/if}>
+	</ul>
+</div>
+
+
+
+</form>
+
+
+
+</div>
+
+
+
+
+<div class="zan_user">
+	<div class="click_false">
+		<span></span>
+		<h2>赞过的人</h2>
+	</div>
+	<ul class=''>
+		
+	</ul>
+</div>

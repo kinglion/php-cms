@@ -1,0 +1,49 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=ziliao&c=avatar"><li>修改头像</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">上传头像</li>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<form action="?h=ziliao&c=avatar_add_submit" method="post" enctype="multipart/form-data">
+						<div class="avatar_add_main">
+							<input class="pic" type="file" name="pic">
+							<img class="uploading_img" style="display:none;" src="HHC_TPL_HHC/default/img/uploading.gif">
+							<span class="uploading_text" style="display:none;">上传中，请稍后...</span>
+							<span style="color:#AAAAAA;" class="scsyc">[建议使用80px*80px尺寸的图片 不能超过2MB 请使用jpg、gif、png图片]</span>
+						</div>
+						<div style="margin:50px 0 0 20px;">
+							<input class="submit" type="submit" value="开始上传">
+						</div>
+					</div>
+				</form>
+				</div>
+				<script type="text/javascript">
+					$(function(){
+						$('form').submit(function(){
+							$('.pic').hide();
+							$('.scsyc').hide();
+							$('.uploading_img').show();
+							$('.uploading_text').show();
+						})
+					})
+				</script>
+
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=avatar">修改头像</a></li>
+					<li><a href="?h=ziliao&c=avatar_add">上传头像</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

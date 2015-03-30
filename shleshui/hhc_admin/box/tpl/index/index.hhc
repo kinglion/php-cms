@@ -1,0 +1,9 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+
+<{include index::con_top.hhc}>
+<{include index::zidingyi.hhc}>
+
+		<{include index::footer.hhc}>

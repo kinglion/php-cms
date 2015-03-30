@@ -1,0 +1,133 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*文章管理管理开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						模型文章管理
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table' style="margin:0;">
+								<form method="post" action="?h=article&c=pinglun_delete">
+									<input type="hidden" name="m" value="<{@_GET['moxing']}>">
+								<tr class='admin_con_tr_title'>
+									<th>删除</th>
+									<th>编号</th>
+									<th>文章标题</th>
+									<th>评论的作者</th>
+									<th>评论时间</th>
+									<th>回复的编号</th>
+									<th>状态</th>
+									<th>操作</th>
+								</tr>
+								<{foreach $data as $v}>
+								<tr class="admin_con_tr_con">
+									<td><input name="id[]" value="<{@v['pinglun_id']}>" class="check_all" type="checkbox"></td>
+									<td><{@v['pinglun_id']}></td>
+									<td><?php if(!empty($v['con_biaoti'])){echo mb_substr($v['con_biaoti'],0,18,'utf-8');} ?></td>
+									<td><{if !empty(@v['user_name'])}><{@v['user_name']}><{/if}></td>
+									<td><?php echo date('Y-m-d H:i:s',$v['time']); ?></td>
+									<td><{@v['parent_id']}></td>
+									<td><{if @v['zhuangtai']=='0'}>已审核<{else /}><span style="color:red;">未审核</span><{/if}></td>
+									<td><a target="_blank" href="?h=article&c=pinglun_update&k=<{@v['pinglun_id']}>">编辑</a>&nbsp;|&nbsp;<a class="delete_tishi" href="?h=article&c=pinglun_delete&k=<{@v['pinglun_id']}>&m=<{@_GET['moxing']}>">删除</a></td>
+								</tr>
+								<{/foreach}>
+							</table>
+							<div style="border-width:0px 1px 1px 1px;border-color:#CCCCCC;border-style:solid;padding:8px 10px;" class="art_list_call">
+								<{if !empty($data)}>
+								<a class="quanxuan art_list_call_s" href="javascript:void(0)">全选</a>&nbsp;
+								<a class="quanbuxuan art_list_call_s" href="javascript:void(0)">全不选</a>&nbsp;&nbsp;&nbsp;
+								<input name="shanchu" type="submit" class="quanxuan_shanchu art_list_call_s" value="删除选中">&nbsp;&nbsp;&nbsp;
+								<input name="shenhe" type="submit" class="quanxuan_shenhe art_list_call_s" value="选中项更改为已审核">&nbsp;&nbsp;&nbsp;
+								<input name="bushenhe" type="submit" class="quanxuan_quxiao art_list_call_s" value="选中项更改为未审核">
+							<style type="text/css">
+								.art_list_call_s{font-size:13px;color:#0074A2;cursor:pointer;}
+								.art_list_call_s:hover{text-decoration:underline;}
+							</style>
+							<script type="text/javascript">
+								$(function(){
+									$('.quanxuan').click(function(){
+										$('.check_all').prop("checked",true);
+			  						});  
+									$('.quanbuxuan').click(function(){
+										$('.check_all').prop("checked",false);
+			  						});  
+			  						$('.quanxuan_shanchu').click(function(){
+			  							if(!confirm('确定要删除选中项吗？'))
+			  								return false;
+			  						})
+			  						$('.quanxuan_shenhe').click(function(){
+			  							if(!confirm('确定要修改选中项吗？'))
+			  								return false;
+			  						})
+			  						$('.quanxuan_quxiao').click(function(){
+			  							if(!confirm('确定要修改选中项吗？'))
+			  								return false;
+			  						})
+
+			  						$('.xiugaiquanbu').click(function(){
+			  							$('.all_form1').submit();
+			  						})
+								})
+					
+					
+					
+					</script>
+								<{else }>
+								没有数据
+								<{/if}>
+							</div>
+						</form>
+							<{*分页和检索*}>
+							<div class="page_so_parent">
+								<div class="hhc_page">
+									<{$page}>
+								</div>
+								<div style="height:10px;">&nbsp;</div>
+								<form method="get" action="?">
+								<input type="hidden" name="h" value="article">
+								<input type="hidden" name="c" value="pinglun">
+								<div class="hhc_so">
+									<select name="moxing">
+										<?php  
+											include './sundry/cache/json/moxing/moxing.php';
+											$moxing = json_decode($json,true);
+											unset($json);
+										?>
+										<option value="<{@_GET['moxing']}>">--模型--</option>
+										<{foreach @moxing as $v}>
+										<option <?php if($v['id']==$_GET['moxing']){echo 'selected="selected"';} ?> value="<{@v['id']}>"><{@v['name']}></option>
+										<{/foreach}>
+									</select>
+									<select name="shunxu">
+										<option value="0">--顺序--</option>
+										<option <?php if($_GET['shunxu']=='1'){echo 'selected="selected"';} ?> value="1">新=》旧</option>
+										<option <?php if($_GET['shunxu']=='2'){echo 'selected="selected"';} ?> value="2">旧=》新</option>
+									</select>
+									<select name="zhuangtai">
+										<option value="0">--状态--</option>
+										<option <?php if($_GET['zhuangtai']=='1'){echo 'selected="selected"';} ?> value="1">已审核</option>
+										<option <?php if($_GET['zhuangtai']=='2'){echo 'selected="selected"';} ?> value="2">未审核</option>
+									</select>
+									每页显示&nbsp;<input name="num" type="text" value="<?php if(!empty($_GET['num'])){echo ceil($_GET['num']);}else{echo 10;} ?>" class="page_input">&nbsp;条
+									作者名&nbsp;<input value="<?php if(!empty($_GET['author'])){echo $_GET['author'];} ?>" name="author" type="text" class="page_input input_width_100">&nbsp;
+									文章标题&nbsp;<input value="<?php if(!empty($_GET['title'])){echo $_GET['title'];}else{echo '';} ?>" name="title" type="text" class="page_input input_width_100">&nbsp;
+									<input type="submit" class="page_input_so" value="搜索">
+								</div>
+								</form>
+							<div class="clear"></div>
+							</div>
+							<{*/分页和检索*}>
+							&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+					<{*/文章管理结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

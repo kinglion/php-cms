@@ -1,0 +1,198 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=ziliao&c=bianji"><li>基本资料</li></a>
+							<a href="?h=ziliao&c=lianxi"><li>联系方式</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">详细信息</li>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+					<form action="?h=ziliao&c=xiangxi_submit" method="post">
+						<div class="main_red_title">
+							<div class="main_red_title_1">
+								<div class="main_red_title_1_1">
+									教育情况
+								</div>
+								<div class="main_red_title_1_2"></div>
+							</div>
+							<div class="main_red_title_2">
+								
+							</div>
+							<div class="clear"></div>
+						</div>
+						<ul class="n_main_main_main_sul">
+							<li>
+								<div class="n_main_main_main_li_l">毕业院校&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="byyx" class="text" type="text" value="<{@_SESSION['user']['byyx']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">50个字符以内&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">学历&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<select name="xueli">
+										<option <?php if($_SESSION['user']['xueli']=='0'){echo 'selected="selected"';} ?> value="0">
+											未接受教育
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='1'){echo 'selected="selected"';} ?> value="1">
+											幼儿园/托儿所
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='2'){echo 'selected="selected"';} ?> value="2">
+											小学
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='3'){echo 'selected="selected"';} ?> value="3">
+											初中
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='4'){echo 'selected="selected"';} ?> value="4">
+											中专
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='5'){echo 'selected="selected"';} ?> value="5">
+											高中
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='6'){echo 'selected="selected"';} ?> value="6">
+											专科
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='7'){echo 'selected="selected"';} ?> value="7">
+											本科
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='8'){echo 'selected="selected"';} ?> value="8">
+											研究生
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='9'){echo 'selected="selected"';} ?> value="9">
+											博士
+										</option>
+										<option <?php if($_SESSION['user']['xueli']=='0'){echo 'selected="selected"';} ?> value="50">
+											其他
+										</option>
+									</select>	
+								&nbsp;
+								</div>
+								<div class="n_main_main_main_li_r">&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+						</ul>
+						<div class="main_red_title">
+							<div class="main_red_title_1">
+								<div class="main_red_title_1_1">
+									工作情况
+								</div>
+								<div class="main_red_title_1_2"></div>
+							</div>
+							<div class="main_red_title_2">
+								
+							</div>
+							<div class="clear"></div>
+						</div>
+						<ul class="n_main_main_main_sul">
+							<li>
+								<div class="n_main_main_main_li_l">工作情况&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<select name="jyzt">
+										<option <?php if($_SESSION['user']['jyzt']=='0'){echo 'selected="selected"';} ?> value="0">
+											待业中
+										</option>
+										<option <?php if($_SESSION['user']['jyzt']=='1'){echo 'selected="selected"';} ?> value="1">
+											实习期
+										</option>
+										<option <?php if($_SESSION['user']['jyzt']=='2'){echo 'selected="selected"';} ?> value="2">
+											工作正常
+										</option>
+										<option <?php if($_SESSION['user']['jyzt']=='3'){echo 'selected="selected"';} ?> value="3">
+											创业
+										</option>
+									</select>	
+								&nbsp;
+								</div>
+								<div class="n_main_main_main_li_r">&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">职业&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<select name="jylx">
+<option <?php if($_SESSION['user']['jylx']=='0'){echo 'selected="selected"';} ?> value='0'>计算机类</option>
+<option <?php if($_SESSION['user']['jylx']=='1'){echo 'selected="selected"';} ?> value='1'>公务员</option>
+<option <?php if($_SESSION['user']['jylx']=='2'){echo 'selected="selected"';} ?> value='2'>电子信息类</option>
+<option <?php if($_SESSION['user']['jylx']=='3'){echo 'selected="selected"';} ?> value='3'>中文类</option>
+<option <?php if($_SESSION['user']['jylx']=='4'){echo 'selected="selected"';} ?> value='4'>外文类</option>
+<option <?php if($_SESSION['user']['jylx']=='5'){echo 'selected="selected"';} ?> value='5'>经济学类</option>
+<option <?php if($_SESSION['user']['jylx']=='6'){echo 'selected="selected"';} ?> value='6'>金融学类</option>
+<option <?php if($_SESSION['user']['jylx']=='7'){echo 'selected="selected"';} ?> value='7'>管理类</option>
+<option <?php if($_SESSION['user']['jylx']=='8'){echo 'selected="selected"';} ?> value='8'>市场营销类</option>
+<option <?php if($_SESSION['user']['jylx']=='9'){echo 'selected="selected"';} ?> value='9'>法学类</option>
+<option <?php if($_SESSION['user']['jylx']=='10'){echo 'selected="selected"';} ?> value='10'>教育类</option>
+<option <?php if($_SESSION['user']['jylx']=='11'){echo 'selected="selected"';} ?> value='11'>社会学类</option>
+<option <?php if($_SESSION['user']['jylx']=='12'){echo 'selected="selected"';} ?> value='12'>历史类</option>
+<option <?php if($_SESSION['user']['jylx']=='13'){echo 'selected="selected"';} ?> value='13'>哲学类</option>
+<option <?php if($_SESSION['user']['jylx']=='14'){echo 'selected="selected"';} ?> value='14'>艺术类</option>
+<option <?php if($_SESSION['user']['jylx']=='15'){echo 'selected="selected"';} ?> value='15'>图书馆类</option>
+<option <?php if($_SESSION['user']['jylx']=='16'){echo 'selected="selected"';} ?> value='16'>情报档案类</option>
+<option <?php if($_SESSION['user']['jylx']=='17'){echo 'selected="selected"';} ?> value='17'>政治类</option>
+<option <?php if($_SESSION['user']['jylx']=='18'){echo 'selected="selected"';} ?> value='18'>数学类</option>
+<option <?php if($_SESSION['user']['jylx']=='19'){echo 'selected="selected"';} ?> value='19'>统计类</option>
+<option <?php if($_SESSION['user']['jylx']=='20'){echo 'selected="selected"';} ?> value='20'>物理类</option>
+<option <?php if($_SESSION['user']['jylx']=='21'){echo 'selected="selected"';} ?> value='21'>化学类</option>
+<option <?php if($_SESSION['user']['jylx']=='22'){echo 'selected="selected"';} ?> value='22'>生物类</option>
+<option <?php if($_SESSION['user']['jylx']=='23'){echo 'selected="selected"';} ?> value='23'>食品类</option>
+<option <?php if($_SESSION['user']['jylx']=='24'){echo 'selected="selected"';} ?> value='24'>医学类</option>
+<option <?php if($_SESSION['user']['jylx']=='25'){echo 'selected="selected"';} ?> value='25'>环境类</option>
+<option <?php if($_SESSION['user']['jylx']=='26'){echo 'selected="selected"';} ?> value='26'>地理类</option>
+<option <?php if($_SESSION['user']['jylx']=='27'){echo 'selected="selected"';} ?> value='27'>建筑类</option>
+<option <?php if($_SESSION['user']['jylx']=='28'){echo 'selected="selected"';} ?> value='28'>测绘类</option>
+<option <?php if($_SESSION['user']['jylx']=='29'){echo 'selected="selected"';} ?> value='29'>电气类</option>
+<option <?php if($_SESSION['user']['jylx']=='30'){echo 'selected="selected"';} ?> value='30'>机械类</option>
+<option <?php if($_SESSION['user']['jylx']=='100'){echo 'selected="selected"';} ?> value='100'>其他类</option>
+									</select>	
+								&nbsp;
+								</div>
+								<div class="n_main_main_main_li_r">&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">公司名称&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="gsmc" class="text" type="text" value="<{@_SESSION['user']['gsmc']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">50个字符以内&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">公司地址&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="gsdz" class="text" type="text" value="<{@_SESSION['user']['gsdz']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">50个字符以内&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">职位&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input name="zhiwei" class="text" type="text" value="<{@_SESSION['user']['zhiwei']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">50个字符以内&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+						</ul>
+						<div style="margin:30px 0 0 20px;">
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</div>
+				</div>
+			</form>
+
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=bianji">基本资料</a></li>
+					<li><a href="?h=ziliao&c=lianxi">联系方式</a></li>
+					<li><a href="?h=ziliao&c=xiangxi">详细信息</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

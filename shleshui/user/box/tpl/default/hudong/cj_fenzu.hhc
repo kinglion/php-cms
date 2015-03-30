@@ -1,0 +1,73 @@
+<?php 
+	if(!empty($_GET['k'])){
+		$pdo = get_pdo();
+		$fz_res = $pdo -> query('select name,paixu from '.DB_PRE."rizhi_fenzu where id='{$_GET['k']}' and user_id='{$_SESSION['user']['user_id']}' limit 1",'');
+		if(empty($fz_res))
+			alert_2(0,'分组不存在','?h=hudong&c=fz_guanli',3);
+	}
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=hudong&c=rizhi"><li>我的日志</li></a>
+							<a href="?h=hudong&c=fb_rizhi"><li>发布日志</li></a>
+							<a href="?h=hudong&c=zx_rizhi"><li>最新日志</li></a>
+							<a href="?h=hudong&c=jc_rizhi"><li>精彩日志</li></a>
+							<a href="?h=hudong&c=fz_guanli"><li style="border-bottom:0;height:35px;background:#FFFFFF;">分组管理</li></a>
+						</ul>
+					</div>
+					<form action="?h=hudong&c=cj_fenzu_submit" method="post">
+					<div class="n_main_main_main">
+						<ul class="n_main_main_main_sul">
+							<li>
+								<div class="n_main_main_main_li_l">分组名称&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 
+									<input type="text" class="text" name="name" <?php if(!empty($fz_res)){echo 'value="'.$fz_res['name'].'"';} ?>>
+								&nbsp;</div>
+								<div class="n_main_main_main_li_r">分组的名称，20个字符以内&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">排序&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 
+									<input style="width:30%;" type="text" class="text" name="paixu" <?php if(!empty($fz_res)){echo 'value="'.$fz_res['paixu'].'"';} ?>>
+								&nbsp;</div>
+								<div class="n_main_main_main_li_r">0-255之间 排列顺序是 大 =》小&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							 <?php if(!empty($fz_res)){
+							 ?>
+							 <input type="hidden" name="id" value="<{@_GET['k']}>">
+							 <?php
+							 } ?>
+						</ul>
+						<div style="margin:30px 0 0 20px;">
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</div>
+				</div>
+</form>
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=rizhi">我的日志</a></li>
+					<li><a href="?h=hudong&c=fb_rizhi">发布日志</a></li>
+					<li><a href="?h=hudong&c=zx_rizhi">最新日志</a></li>
+					<li><a href="?h=hudong&c=jc_rizhi">精彩日志</a></li>
+					<li><a href="?h=hudong&c=fz_guanli">分组管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+
+<{include public::footer.hhc}>

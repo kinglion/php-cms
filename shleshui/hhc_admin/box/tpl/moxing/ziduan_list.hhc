@@ -1,0 +1,50 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*字段管理开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						模型字段管理
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table'>
+								<tr class='admin_con_tr_title'>
+									<th>字段名称</th>
+									<th>英文名</th>
+									<th>数据类型</th>
+									<th>操作</th>
+								</tr>
+								<{foreach $ziduan as $v}>
+								<tr class="admin_con_tr_con">
+									<td><{@v['cn_name']}></td>
+									<td><{@v['en_name']}></td>
+									<td><?php echo get_ziduan_leixing($v['moxing_type'],1); ?></td>
+									<{if @v['xitong']!=='1'}>
+									<td><a href="?h=moxing&c=ziduan_update&k=<{@v['ziduan_id']}>&k2=<{@_GET['k']}>">编辑</a>&nbsp;|&nbsp;<a class="delete_tishi" href="?h=moxing&c=ziduan_delete&k=<{@v['ziduan_id']}>">删除</a></td>
+									<{else /}>
+									<td>系统字段</td>
+									<{/if}>
+								</tr>
+								<{/foreach}>
+							</table>
+							<{*分页和检索*}>
+							<div class="page_so_parent">
+								<div style="height:10px;">&nbsp;</div>
+									<a class="create_zidingyi" href="?h=moxing&c=ziduan_create&k=<{@_GET['k']}>">新建一个字段</a>
+								</div>
+							<div class="clear"></div>
+							</div>
+							<{*/分页和检索*}>
+							&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+					<{*/字段管理结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

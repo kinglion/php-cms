@@ -1,0 +1,76 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+	<script type="text/javascript" src="./sundry/static_file/js/colorpicker.js"></script>
+			<{*网站栏目设置开始*}>
+			<form class="form1" method="post" action="?h=user&c=quanxian_submit">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						用户权限
+						<span style="color:#FFFFFF;margin-left:100px;"> </span>
+					</h1>
+					<?php 
+						$pdo = get_pdo();
+						$res = $pdo -> query('select * from '.DB_PRE."level order by paixu desc");
+						$res = empty($res) ? array() : $res;
+					?>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table admin_nav_layout_table'>
+								<tr class='admin_con_tr_title admin_nav_layout'>
+									<th class="nav_th_text_shunxu">顺序</th>
+									<th class="nav_th_text">称号</th>
+									<th class="nav_th_text">等级</th>
+									<th class="nav_th_text">经验值下限</th>
+									<th class="nav_th_text">称号颜色</th>
+									<th class="nav_th_leixing">操作</th>
+								</tr>
+								<{*循环*}>
+								<?php foreach($res as $v){ ?>
+								<tr class="admin_con_tr_con">
+									<input type="hidden" name="s<?php echo $v['level_id'] ?>[id]" value="<?php echo $v['level_id'] ?>">
+									<td><input name="s<?php echo $v['level_id'] ?>[paixu]" class="nav_input_text" type="text" value="<?php echo $v['paixu']; ?>"></td>
+									<td><input name="s<?php echo $v['level_id'] ?>[level_name]" value="<?php echo $v['level_name']; ?>" class="nav_input_text" type="text"></td>
+									<td><input style="width:20%;" name="s<?php echo $v['level_id'] ?>[level_class]" value="<?php echo $v['level_class']; ?>" class="nav_input_text" type="text">&nbsp;<span style="font-size:13px;">级[填正整数]</span></td>
+									
+									<td>
+										<{if @v['xitong']=='0'}>
+											<input name="s<?php echo $v['level_id'] ?>[experience]" value="<?php echo $v['experience']; ?>" class="nav_input_text" type="text">
+										<{else /}>
+											--0--
+											<input name="s<?php echo $v['level_id'] ?>[experience]" value="0" type="hidden">
+										<{/if}>
+									</td>
+									<td><input key="<{@v['level_color']}>" readonly="readonly" style="width:50%;background:<{@v['level_color']}>;color:<{@v['level_color']}>;" name="s<?php echo $v['level_id'] ?>[level_color]" value="<?php echo $v['level_color']; ?>" class="nav_input_text input_text_no" type="text"></td>
+									<td>
+										<a class="" href="?h=user&c=quanxian_update&k=<?php echo $v['level_id'] ?>">编辑</a>
+										<{if @v['xitong']=='1'}><{else/}>|<a class="delete_tishi" href="?h=user&c=quanxian_delete&k=<?php echo $v['level_id'] ?>">删除</a><{/if}></td>
+								</tr>
+								<?php } ?>
+								<{*/循环*}>
+							</table>
+<a href="?h=user&c=quanxian_add" class="a_F60" style="display:block;margin:5px 0 0 15px;float:left;">创建新的项</a>
+<div class="clear"></div>
+							<input class="create_zidingyi" style="float:left;margin:50px 10px 30px 10px;" type="submit" value="修改全部">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+			<{*网站栏目设置结束*}>
+<script type="text/javascript">
+	$(function(){
+		$(".input_text_no").colorpicker({
+    		fillcolor:true
+		});
+		$(".input_text_no").click(function(event){
+			event.stopPropagation();
+			$('#colorpanel').show();
+		})
+	})
+</script>
+
+		</div>
+		<{include index::footer.hhc}>

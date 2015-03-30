@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<site>
+	<index name="首页">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="网站公告">notice</module>
+		<module name="产品分类">goods_tree</module>
+		<module name="用户登录">login</module>
+		<module name="联系我们">contact</module>
+		<module name="友情链接">link</module>
+		<module name="公司简介">about</module>
+		<module name="推荐产品">best_goods</module>
+		<module name="推荐产品列表">goods_list</module>
+		<module name="推荐文章列表">article_list</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</index>
+	<about name="关于我们">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="菜单">about_menu</module>
+		<module name="主体">about_main</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</about>
+	<goods name="产品展示">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="菜单">goods_tree</module>
+		<module name="主体">goods_main</module>
+		<module name="评论">comment</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</goods>
+	<article name="资讯中心">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="菜单">article_tree</module>
+		<module name="主体">article_main</module>
+		<module name="评论">comment</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</article>
+	<recruit name="人才招聘">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="联系我们">contact</module>
+		<module name="主体">recruit_main</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</recruit>
+	<download name="下载中心">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="联系我们">contact</module>
+		<module name="主体">download_main</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</download>
+	<message name="在线留言">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="在线调查">research</module>
+		<module name="主体">message_main</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</message>
+	<search name="搜索结果">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="菜单">goods_tree</module>
+		<module name="主体">search_main</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</search>
+	<user name="用户中心">
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="主体">user/main</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</user>
+	<info>
+		<module name="头部">header</module>
+		<module name="焦点图片">focus</module>
+		<module name="主体">info_main</module>
+		<module name="底部">footer</module>
+		<module name="在线客服">service</module>
+	</info>
+</site>

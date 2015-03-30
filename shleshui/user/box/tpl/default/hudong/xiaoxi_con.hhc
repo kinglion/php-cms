@@ -1,0 +1,59 @@
+<?php 
+	if(empty($_GET['k']))
+		alert_2(0,'请选择一条消息','?h=hudong&c=xiaoxi',3);
+	$pdo = get_pdo();
+	$con_res = $pdo -> query('select * from '.DB_PRE."xiaoxi where id = '{$_GET['k']}' limit 1",'');
+	if(empty($con_res))
+		alert_2(0,'消息不存在或已被删除','?h=hudong&c=zx_rizhi',3);
+	$pdo -> sql('update '.DB_PRE."xiaoxi set on_read='1' where id='{$_GET['k']}'");
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">我的消息</li>
+							<a href="?h=hudong&c=fs_xiaoxi"><li>发送消息</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main" style="padding:20px;">
+						<div style="line-height:35px;background:#F2F2F2;">
+							<a class="all_a" style="float:right;padding-right:20px;" href="?h=hudong&c=xiaoxi">返回我的消息</a>
+							<h3 style="padding-left:30px;color:#555555;font-weight:bold;">消息详情</h3>
+						</div>
+						<div style="padding:0 10px;">
+							<h1 style="margin:20px 0;font-weight:bold;font-size:26px;line-height:35px;"><{@con_res['title']}></h1>
+
+							<div class="">
+								<div>
+									<span style="color:#AAAAAA;">接收时间：<?php echo date('Y-m-d H:i',$con_res['time']); ?>&nbsp;&nbsp;</span>
+								</div>
+								&nbsp;
+							</div>
+
+							<div style="margin:20px 0;border-top:1px solid #F1F1F1;">&nbsp;</div>
+
+							<div style="font-size:14px;">
+								<{@con_res['con']}>
+							</div>
+
+						</div>
+					</div>
+				</form>
+				</div>
+
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=xiaoxi">我的消息</a></li>
+					<li><a href="?h=ziliao&c=fs_xiaoxi">发送消息</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

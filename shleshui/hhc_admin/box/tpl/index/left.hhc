@@ -1,0 +1,41 @@
+			<div id="admin_left_main">
+				<div style="height:54px;"></div>
+				<div id="admin_left" class="click_false">
+					<div id="admin_left_bo_main">
+						<div id="admin_left_main_so">
+							
+						</div>
+						<div style="clear"></div>
+						<div style="height:15px;border-bottom:1px solid #18191D;"></div>
+						<div class=''>
+						<{foreach $left_nav as $v}>
+						<dl class="admin_left_main_dl <{@v['name']}>">
+							<dt><a style="color:#C5D52B;" href="<{@v['url']}>"><{@v['title']}></a></dt>
+							<{foreach @v['child'] as $val }>
+							<dd><a href="<{@val['url']}>"><{@val['title']}></a></dd>
+							<{/foreach}>
+						</dl>
+						<{/foreach}>
+						</div>
+						<script type="text/javascript">
+						$(function(){
+							<?php if(empty($_GET['hconfig'])){ ?>
+							var obj = $(".<?php echo $_GET['h']; ?>");
+							obj.find('dd').show();
+							<?php }else{
+							?>
+							var obj = $(".<?php echo $_GET['hconfig']; ?>");
+							obj.find('dd').show();
+							<?php
+							} ?>
+							show();
+						})
+						</script>
+					</div>
+					<ul class="admin_left_main_fy">
+						<li class="admin_left_main_fy_top"></li>
+						<li class="admin_left_main_fy_bottom"></li>
+					</ul>
+				</div>
+				<div id="admin_left_border"></div>
+			</div>

@@ -1,0 +1,60 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站栏目设置开始*}>
+			<form class="form1" method="post" action="?h=custom&c=hdp_update_submit">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						幻灯片编辑
+						<span style="color:#FFFFFF;margin-left:100px;"> </span>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table admin_nav_layout_table'>
+								<tr class='admin_con_tr_title admin_nav_layout'>
+									<th class="nav_th_text_shunxu">顺序</th>
+									<th class="nav_th_text">标题</th>
+									<th class="nav_th_text">描述</th>
+									<th class="nav_th_text">图片地址</th>
+									<th class="nav_th_leixing">显示</th>
+									<th class="nav_th_leixing">操作</th>
+								</tr>
+								<{*循环*}>
+								<?php
+									$pdo = get_pdo();
+									$res = $pdo -> query('select * from `'.DB_PRE."hdp` where `custom_id` = '{$_GET['k']}'");
+									if($res===false){
+										header('Location: ?');
+										exit;
+									}
+									$res = empty($res) ? array() :$res;
+									foreach($res as $v){
+								?>
+								<tr class="admin_con_tr_con">
+									<td><input name="s<?php echo $v['id']; ?>[paixu]" class="nav_input_text" type="text" value="<?php echo $v['paixu']; ?>"></td>
+									<td><input name="s<?php echo $v['id']; ?>[title]" value="<?php echo $v['title']; ?>" class="nav_input_text" type="text"></td>
+									<td><input name="s<?php echo $v['id']; ?>[alt]" value="<?php echo $v['alt']; ?>" class="nav_input_text" type="text"></td>
+									
+									<td><input name="s<?php echo $v['id']; ?>[pic]" value="<?php echo $v['pic']; ?>" class="nav_input_text" type="text"></td>
+									<td><input <?php if($v['xianshi']==='1'){echo 'checked="checked"';} ?> name="s<?php echo $v['id']; ?>[xianshi]" value="1" type="checkbox"></td>
+									<input type="hidden" value="<?php echo $v['id']; ?>" name="s<?php echo $v['id']; ?>[id]">
+									<td><a href="?h=custom&c=hdp_ziduan_update&k=<{@v['id']}>">编辑</a>|<a class="delete_tishi" href="?h=custom&c=hdp_ziduan_delete&k=<?php echo $v['id']; ?>">删除</a></td>
+								</tr>
+								<?php } ?>
+								<{*/循环*}>
+							</table>
+<a href="?h=custom&c=hdp_ziduan_create&k=<{@_GET['k']}>" class="a_F60" style="display:block;margin:5px 0 0 15px;float:left;">创建新的项</a>
+<div class="clear"></div>
+							<input class="create_zidingyi" style="float:left;margin:50px 10px 30px 10px;" type="submit" value="修改全部">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+			<{*网站栏目设置结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

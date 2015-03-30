@@ -1,0 +1,84 @@
+<?php
+	$pdo = get_pdo();
+	$links = $pdo -> query('select * from '.DB_PRE."links order by paixu desc");
+	$links = empty($links)?array():$links;
+?>
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			
+
+			<{*文章管理管理开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						友情链接管理
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table' style="margin:0;">
+								<tr class='admin_con_tr_title'>
+									<th style="width:10%;">排序</th>
+									<th style="width:30%;">名称</th>
+									<th style="width:40%;">链接地址</th>
+									<th style="width:20%;">操作</th>
+								</tr>
+								<?php foreach($links as $v){ ?>
+								<tr class="admin_con_tr_con">
+									<td><{@v['paixu']}></td>
+									<td><{@v['name']}></td>
+									<td><{@v['link']}></td>
+									<td><a href="?h=system&c=link_add&k=<{@v['id']}>">编辑</a>&nbsp;|&nbsp;<a class="delete_tishi" href="?h=system&c=link_delete&k=<{@v['id']}>">删除</a></td>
+								</tr>
+								<?php } ?>
+							</table>
+							
+							<{*分页和检索*}>
+<a href="?h=system&c=link_add" class="create_zidingyi" style="margin:50px 10px 30px 10px;">创建链接</a>
+							</div>
+							<{*/分页和检索*}>
+							&nbsp;
+						</div>
+					</div>
+				</div>
+					<{*/文章管理结束*}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="height:100px;"></div>
+
+			</div>
+
+
+
+
+
+
+		</div>
+		<{include index::footer.hhc}>

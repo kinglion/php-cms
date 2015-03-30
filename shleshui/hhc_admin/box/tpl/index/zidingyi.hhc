@@ -1,0 +1,107 @@
+
+<{*自定义 单页/表单/幻灯片 开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						自定义 单页/表单/幻灯片
+					</h1>
+					<?php
+						$path1 = './sundry/cache/json/custom/custom.php';
+						if(is_file($path1)){
+							include $path1;
+							$custom=json_decode($json,true);
+						}else{
+							$pdo = get_pdo();
+							$res = $pdo -> query('select * from `'.DB_PRE."custom`");
+							$res = empty($res) ? array() : $res;
+							$custom = array();
+							foreach($res as $v){
+								$custom[$v['en_name']]=$v;
+							}
+							$data = json_encode($custom);
+							$json = <<<JSON
+<?php
+	\$json='{$data}';
+?>
+JSON;
+							file_put_contents($path1,$json);
+						}
+						$danye = array();
+						$biaodan = array();
+						$huandengpian = array();
+						foreach($custom as $k => $v){
+							if($v['type']=='1')
+								$danye[$k] = $v;
+							else if($v['type']=='2')
+								$biaodan[$k] =$v;
+							else if($v['type']=='3')
+								$huandengpian[$k]=$v;
+						}
+						unset($custom);
+						$path1 = './sundry/cache/json/custom/danye.php';
+						if(is_file($path1)){
+							include $path1;
+							$res = json_decode($json,true);
+						}else{
+							$pdo = get_pdo();
+							$ress = $pdo -> query('select * from '.DB_PRE."danye");
+							if($ress===false)
+								alert(0,0,'?','不存在的单页',1);
+							$res = array();
+							foreach($ress as $v){
+								$res[$v['k']]=$v;
+							}
+							$data = json_encode($res);
+							$json = <<<JSON
+<?php
+	\$json='{$data}';
+?>
+JSON;
+							file_put_contents($path1,$json);
+						}
+					?>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<{*单页开始*}>
+							<div class='admin_con_main_con_main_div_3'>
+								<h2>自定义单页</h2>
+								
+								<?php foreach($danye as $v){ ?>
+								<div class="admin_con_main_con_main_div_3_div"><a target="_blank" href="index.php?h=custom&c=danye&k=<?php echo $v['en_name']; ?>"><?php echo $v['cn_name'] ?></a>&nbsp;&nbsp;<a href="?h=custom&c=danye_update&k=<?php echo $v['en_name']; ?>" class="admin_con_main_con_main_div_3_div_bianji">编辑</a>&nbsp;<a class="admin_con_main_con_main_div_3_div_bianji admin_con_main_con_main_div_3_div_shanchu delete_tishi" href="?h=custom&c=danye_delete&k=<?php echo $v['en_name']; ?>">删除</a></div>
+								<?php } ?>
+							
+							<a href="?h=custom&c=danye_create" class="create_zidingyi">创建一个单页</a>
+							</div>
+							<{*单页结束*}>
+							<{*表单开始*}>
+							<div class='admin_con_main_con_main_div_3'>
+								<h2>自定义表单</h2>
+								
+								<div class="admin_con_main_con_main_div_3_div"><a target="_blank" href="user.php?h=login&c=register">用户注册</a>&nbsp;&nbsp;<a href="?h=custom&c=form_update&k=reg" class="admin_con_main_con_main_div_3_div_bianji">编辑</a></div>
+
+								<?php foreach($biaodan as $v){ ?>
+								<div class="admin_con_main_con_main_div_3_div"><a target="_blank" href="index.php?h=custom&c=biaodan&k=<{@v['en_name']}>"><?php echo $v['cn_name'] ?></a>&nbsp;&nbsp;<a href="?h=custom&c=form_update&key=<?php echo $v['en_name']; ?>" class="admin_con_main_con_main_div_3_div_bianji">编辑</a>&nbsp;<a class="admin_con_main_con_main_div_3_div_bianji" href="?h=custom&c=form_guanli&k=<?php echo $v['en_name']; ?>" style="color:#ff6600">管理</a>&nbsp;<a href="?h=custom&c=biaodan_delete&k=<?php echo $v['en_name']; ?>" class="admin_con_main_con_main_div_3_div_bianji admin_con_main_con_main_div_3_div_shanchu delete_tishi">删除</a></div>
+								<?php } ?>
+
+							<a href="?h=custom&c=form_create" class="create_zidingyi">创建一个表单</a>
+							</div>
+							<{*表单结束*}>
+							<{*幻灯片开始*}>
+							<div class='admin_con_main_con_main_div_3'>
+								<h2>自定义幻灯片</h2>
+
+								<?php foreach($huandengpian as $v){ ?>
+								<div class="admin_con_main_con_main_div_3_div"><a href="#"><?php echo $v['cn_name'] ?></a>&nbsp;&nbsp;<a href="?h=custom&c=hdp_update&k=<?php echo $v['id']; ?>" class="admin_con_main_con_main_div_3_div_bianji">编辑</a>&nbsp;<a href="?h=custom&c=hdp_delete&k=<?php echo $v['id']; ?>" class="admin_con_main_con_main_div_3_div_bianji admin_con_main_con_main_div_3_div_shanchu delete_tishi">删除</a></div>
+								<?php } ?>
+							
+							<a href="?h=custom&c=hdp_create" class="create_zidingyi">创建一个幻灯片组</a>
+							</div>
+							<{*幻灯片结束*}>
+						</div>
+					</div>
+				</div>
+			</div>
+<{*/自定义 单页/表单/幻灯片 结束*}>
+
+		</div>
+		<div class='clear'></div>

@@ -1,0 +1,115 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+<?php
+	$pdo = get_pdo();
+	$res = $pdo -> query('select * from `'.DB_PRE."mail`");
+	$data = array();
+	foreach($res as $v){
+		$data[$v['k']] = $v;
+	}
+?>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						SMTP server 配置 &nbsp;&nbsp;<a href="?" target="_blank">如何配置？</a>&nbsp;&nbsp;<a href="?" target="_blank">交流论坛</a>
+					</h1>
+					<form method="post" action="?h=system&c=mail_server_submit">
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										服务器地址
+									</div>
+									<div class="oli_div_2">
+										<input value="<?php echo $data['server']['v']; ?>" name="server" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										smtp 服务器的地址 如：smtp.ithhc.cn
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										smtp 用户名 
+									</div>
+									<div class="oli_div_2">
+										<input value="<?php echo $data['user_name']['v']; ?>" name="user_name" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										smtp 的用户名【有时是完整邮箱】
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										smtp密码
+									</div>
+									<div class="oli_div_2">
+										<input value="<?php echo $data['user_pwd']['v']; ?>" name="user_pwd" type="password" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										smtp登陆密码
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										发信者邮箱
+									</div>
+									<div class="oli_div_2">
+										<input value="<?php echo $data['mail']['v']; ?>" name="mail" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										发信者邮箱 必须是上面用户名所拥有的邮箱 否则发信会失败
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" style="margin:50px 10px 30px 10px;" value="提交修改">
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+			<{*网站基本信息结束*}>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						测试一封邮件
+					</h1>
+					<form method="post" action="?h=system&c=mail_test_submit">
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										邮箱地址
+									</div>
+									<div class="oli_div_2">
+										<input name="mail" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										收信人的邮箱地址
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" style="margin:50px 10px 30px 10px;" value="发送">
+							
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+			<{*网站基本信息结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

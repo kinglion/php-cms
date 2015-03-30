@@ -1,0 +1,166 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">基本资料</li>
+							<a href="?h=ziliao&c=lianxi"><li>联系方式</li></a>
+							<a href="?h=ziliao&c=xiangxi"><li>详细信息</li></a>
+						</ul>
+					</div>
+					<form action="?h=ziliao&c=bianji_submit" method="post" enctype="multipart/form-data">
+					<div class="n_main_main_main">
+						<ul class="n_main_main_main_sul">
+							<li>
+								<div class="n_main_main_main_li_l">用户名&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input class="text readonly" readonly="readonly" type="text" value="<{@_SESSION['user']['user_name']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">注册时的用户名 无法修改&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">真实姓名&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<input class="text" name="username" type="text" value="<{@_SESSION['user']['username']}>">&nbsp;</div>
+								<div class="n_main_main_main_li_r">&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">性别&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 
+									<span class="r_c_p_f">
+										<input value="1" <{if @_SESSION['user']['sex']=='1'}>checked="checked"<{/if}> name="sex" type="radio">&nbsp;男
+									</span>
+									<span class="r_c_p_f">
+										<input value="0" <{if @_SESSION['user']['sex']=='0'}>checked="checked"<{/if}> name="sex" type="radio">&nbsp;女
+									</span>
+									&nbsp;</div>
+								<div class="n_main_main_main_li_r">&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<div class="n_main_main_main_li_l">出生日期&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<?php
+			$year=ceil(date('Y',time()));
+			$month=ceil(date('m',time()));
+			$day=ceil(date('d',time()));
+			echo "<select class='birthday' name='birthday[year]'>";
+			$c = '';
+			for($l=$year;$l>$year-100;$l--){
+				$c = '';
+				if($l==$_SESSION['user']['b_year'])
+					$c = 'selected="selected"';
+				echo "<option {$c} >{$l}</option>";
+			}
+			echo '</select>&nbsp;<span>年</span>&nbsp;';
+
+			echo "<select class='birthday' name='birthday[month]'>";
+			for($l=1;$l<13;$l++){
+				$c = '';
+				if($l==$_SESSION['user']['b_month'])
+					$c = 'selected="selected"';
+				echo "<option {$c}>{$l}</option>";
+			}
+			echo '</select>&nbsp;<span>月</span>&nbsp;';
+
+			echo "<select class='birthday' name='birthday[day]'>";
+			for($l=1;$l<32;$l++){
+				$c = '';
+				if($l==$_SESSION['user']['b_day'])
+					$c = 'selected="selected"';
+				echo "<option {$c}>{$l}</option>";
+			}
+			echo '</select>&nbsp;<span>日</span>';
+									?>
+								&nbsp;
+								</div>
+								<div class="n_main_main_main_li_r">&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<?php
+								$pdo = get_pdo();
+								$res = $pdo -> query('select * from `'.DB_PRE."myform` where `hc` = '1' and type < 100 ");
+								foreach($res as $v){
+							?>
+							<li>
+								<div class="n_main_main_main_li_l"><{@v['cn_name']}>&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 	<?php
+										switch($v['type']){
+											case '1':
+												?>
+													<input name="<{@v['en_name']}>" class="text" value="<?php echo $_SESSION['user'][$v['en_name']]; ?>" type="text">
+												<?php
+											break;
+											case '2':
+												?>
+													<textarea name="<{@v['en_name']}>" noresize class="text"><?php echo $_SESSION['user'][$v['en_name']]; ?></textarea>
+												<?php
+											break;
+											case '3':
+												?>
+													<input name="<{@v['en_name']}>" type="file">
+												<?php
+											break;
+											case '4':
+												$arr = explode(',',$v['defaults']);
+												foreach($arr as $vf){
+													?>
+				<input class='<{@v['en_name']}>' value='<{@vf}>' type='checkbox' name='<{@v['en_name']}>[]' />&nbsp;<{@vf}>
+				<?php
+			}
+											break;
+											case '5':
+												$arr = explode(',',$v['defaults']);
+												foreach($arr as $vf){
+													?>
+				<input class='<{@v['en_name']}>' value='<{@vf}>' type='radio' name='<{@v['en_name']}>' />&nbsp;<{@vf}>
+				<?php
+			}
+											break;
+											case '6':
+												$arr = explode(',',$v['defaults']);
+												?>
+								<select name="<{@v['en_name']}>">
+												<?php
+												foreach($arr as $vf){
+													?>
+				<option><{@vf}></option>
+				<?php
+			}
+			?>
+			</select>
+			<?php
+											break;
+										}
+									?>&nbsp;</div>
+								<div class="n_main_main_main_li_r"><{@v['tishi']}><?php if($v['type']=='3' && !empty($_SESSION['user'][$v['en_name']])){echo '已上传，<a target="_blank" href="'.$_SESSION['user'][$v['en_name']].'">点击查看</a>';} ?>&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							<?php } ?>
+						</ul>
+						<div style="margin:30px 0 0 20px;">
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</div>
+				</div>
+</form>
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=bianji">基本资料</a></li>
+					<li><a href="?h=ziliao&c=lianxi">联系方式</a></li>
+					<li><a href="?h=ziliao&c=xiangxi">详细信息</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

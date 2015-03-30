@@ -1,0 +1,70 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*文章管理管理开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						模型文章管理
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table'>
+								<tr class='admin_con_tr_title'>
+									<th>删除</th>
+									<th>标题</th>
+									<th>作者</th>
+									<th>发布时间</th>
+									<th>状态</th>
+									<th>操作</th>
+								</tr>
+								<tr class="admin_con_tr_con">
+									<td><input type="checkbox"></td>
+									<td>我的文章</td>
+									<td>郝海川</td>
+									<td>2014-01-02 18:00:00</td>
+									<td>已审核</td>
+									<td>编辑&nbsp;|&nbsp;删除</td>
+								</tr>
+							</table>
+							<{*分页和检索*}>
+							<div class="page_so_parent">
+								<div class="hhc_page">
+									<span class="hhc_page_1">首页</span>
+									<span class="hhc_page_1">上一页</span>
+									<span class="hhc_page_1 dangqianye">1</span>
+									<a class="hhc_page_1">下一页</a>
+									<a class="hhc_page_1">尾页</a>
+								</div>
+								<div style="height:10px;">&nbsp;</div>
+								<div class="hhc_so">
+									<select>
+										<option checked="checked">--栏目--</option>
+										<option>美食</option>
+										<option>美女</option>
+									</select>
+									<select>
+										<option checked="checked">--顺序--</option>
+										<option>新=》旧</option>
+										<option>旧=》新</option>
+									</select>
+									每页显示&nbsp;<input type="text" class="page_input">&nbsp;条
+									作者名&nbsp;<input type="text" class="page_input input_width_100">&nbsp;
+									标题&nbsp;<input type="text" class="page_input input_width_100">&nbsp;
+									<input type="submit" class="page_input_so" value="搜索">
+									<a class="create_zidingyi" href="#">发布一篇文章</a>
+								</div>
+							<div class="clear"></div>
+							</div>
+							<{*/分页和检索*}>
+							&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+					<{*/文章管理结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

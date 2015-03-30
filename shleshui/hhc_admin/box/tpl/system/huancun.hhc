@@ -1,0 +1,31 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						系统在线升级
+					</h1>
+					<form method="post" action="?h=system&c=huancun_submit" class="sj_form">
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli" style="font-size:13px;">
+									<input type="checkbox" name="huancun[]" value="moban">&nbsp;模板缓存&nbsp;&nbsp;&nbsp;
+									<input type="checkbox" name="huancun[]" value="shuju">&nbsp;数据缓存
+								</li>
+							</ul>
+							<input type="submit" class="create_zidingyi" style="margin:50px 10px 30px 10px;" value="清除">
+							
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+			<{*网站基本信息结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

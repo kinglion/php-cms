@@ -1,0 +1,201 @@
+<{include public::header.hhc}>
+<link href="HHC_TPL_HHC/default/css/lzl.css" rel="stylesheet" type="text/css" media="all">
+<div class="main">
+
+
+<{hhc::content}>
+
+<div id="main_left" class="main_left">
+<!--详情页-->
+<div class="contentBox">
+<h3 class="titleCanNotClick"><{hhc::content::con_biaoti /}></h3>
+
+<p class="contentCanClick"><{hhc::content::neirong /}><br/></p>
+<br/>
+<div class="lzlComments articleAddition">
+
+ <script type="text/javascript">
+    $('title').text('<{hhc::content::con_biaoti /}> - <{hhc::set_up::short_title}>');
+ </script>
+        
+
+</div>
+<style type="text/css">
+    .guli{color:#79b7e7;cursor:pointer;-webkit-transition: all 0.3s ease-in-out;}
+    .guli:hover{color: #fce557;}
+</style>
+<script type="text/javascript">
+    $(function(){
+        $('.guli').click(function(){
+            var str = 'id='+$(this).attr('key');
+            var guli_val = $(this).parent().find('.guli_val').text();
+            var guli_this = $(this).parent().find('.guli_val');
+            //$(this).parent().find('.guli_val').text(parseInt(guli_val)+1);
+            $.post('?h=index&c=guli',str,function(data){
+                if(data=='1'){
+                    alert('鼓励成功');
+                    guli_this.text(parseInt(guli_val)+1);
+                }else{
+                    alert(data);
+                }
+            })
+        })
+    })
+</script>
+
+<ul class="collect-hug-share">
+<li class="collectIcon" style="width:auto;padding:0;">阅读：<{hhc::content::con_liulan /}>次</li>
+<li class="hugIcon" style="width:auto;">
+<span class="guli" key="<{hhc::artlist_content::con_id /}>">鼓励</span> <span class="guli_val"><{hhc::content::guli /}></span>人
+</li>
+<?php $pdo = get_pdo(); ?>
+<?php $count_res = $pdo -> query('select count(*) from '.DB_PRE."pinglun where art_id='{$_GET['con_id']}' limit 1",''); ?>     
+<li class="hugIcon" style="width:auto;">留言：<{@count_res['count(*)']}>人</li>
+<li class="shareIcon">
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more" style="background:none;"></a> </div>
+</li>
+</ul>
+<span class="readNum"></span><br/><br/>
+<style type="text/css">
+.main img{max-width:590px;}
+</style>
+<div class="content">
+<{@neirong_pages}>
+</div>
+<style type="text/css">
+.page_1{background: none repeat scroll 0 0 rgba(6, 32, 42, 0.8) !important;border-radius: 4px; padding: 5px 10px;margin-right:10px;}
+</style>
+</div><!--contentBox-end-->
+<div class="lineBetweenReplyAndContent"></div>
+
+<div class="replayContent">
+
+</div>
+
+<{/hhc::content}>
+<!--replay-->
+<a name="comment"></a>
+<div class="replayContent">
+ 
+<?php
+    $tb_name=DB_PRE.'pinglun';
+    $type=<<<TYPE
+        a.*,
+        b.user_name,
+        b.username,
+        b.pic
+TYPE;
+    $w=" a.art_id='{$_GET['con_id']}'";
+    $order='order by pinglun_id desc';
+    $even_arr = array(
+        array('table_k'=>'b','table_name'=>DB_PRE."user",'where'=>'on a.user_id=b.user_id'),
+    );
+    $page = new page($tb_name,$type,$w.$order,20,'p',true,'a',$even_arr);
+    $res = $page->page_2(5,1);
+
+
+foreach($res['0'] as $v){
+?>
+
+
+    <div class="replayBox">
+        <div class="likes" style="width:60px;height:60px;">
+            <img src="<{if !empty(@v['user_id'])}><{@v['pic']}><{else /}>./sundry/static_file/img/pic/<?php echo rand(1,30) ?>.jpg<{/if}>" style="width:60px;height:60px;">
+        </div>
+        <div class="commentBox" style="margin-left:70px;">
+            <div class="comment">
+                <div class="contentLzl">
+                    <div class="author"><{if !empty(@v['user_id'])}><{if empty(@v['username'])}><{@v['user_name']}><{else /}><{@v['username']}><{/if}><{else /}>游客<{/if}></div>
+                   <{if !empty(@v['parent_id'])}>
+                    <div style="color:#777777;margin-top:5px;"><font style="font-size:20px;font-family:'宋体'">“</font><{@v['hf_con']}><font style="font-size:20px;font-family:'宋体'">”</font></div>
+                    <{/if}>
+                    <div class="content"><{@v['con']}></div>
+                    <input type="hidden" name="p_id" class="p_id" value="<{@v['pinglun_id']}>">
+                    <div class="postTime"><?php echo date('Y-m-d H:i:s',$v['time']); ?></div>
+                </div>
+                <div class="replayButtonLzl" style="display:block"><a href="#textarea">回复</a></div>
+            </div>
+    </div>
+</div>
+
+
+
+<?php } ?>
+
+
+
+
+
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.replayButtonLzl a').click(function(){
+            $('.aite').text('@'+$(this).parent().parent().find('.author').text());
+            $('.hf_con').val($(this).parent().parent().find('.content').text());
+            $('.parent_id').val($(this).parent().parent().find('.p_id').val());
+        })
+    })
+</script>
+
+<div class="searchMoreBox" style="">
+
+    <div class="page" style="margin-top:20px;">
+        <{@res['1']}>
+    </div>
+<a name="textarea"></a>
+
+<{if !empty(@_SESSION['user']['user_id'])}>
+<form action="?h=index&c=comment_submit" method="post">
+    <div style="margin-top:100px;border:1px solid #888888;">
+       <textarea name="con" style="background:none;width:95%;outline:none;padding:0;height:60px;resize:none;font-size:14px;padding:10px 2%;border:none;color:#AAAAAA;"></textarea>
+       <input type="hidden" name="hf_con" class="hf_con" value="">
+       <input type="hidden" name="parent_id" class="parent_id" value="">
+    </div>
+       <div style="border:1px solid #888888;color:#AAAAAA;border-top:0;background:#56568A;">
+            <input type="submit" value="提交" style="padding:8px 15px;float:right;background:#00A3CF;color:#FFFFFF;border:none;cursor:pointer;">
+            <span class="aite" style="padding:5px 12px;float:left;"></span>
+            <div class="clear"></div>
+       </div>
+<input type="hidden" name="lanmu_id" value="<{@_GET['lanmu_id']}>">
+<input type="hidden" name="con_id" value="<{@_GET['con_id']}>">
+</form>
+<{else /}>
+<div style="margin:50px 0 30px 0;">你需要登陆 才能发表评论</div>
+<{/if}>
+
+
+
+</div>
+
+
+
+<!--searchMoreBox-end-->
+
+
+
+</div>
+
+<{include public::index_right.hhc}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<!--上部云朵背景图-->
+<div class="bg_top"></div>
+<!--上部云朵背景图end-->
+<!--下部黄色背景图-->
+<div class="bg_bot"></div>
+
+
+
+<{include public::footer.hhc}>

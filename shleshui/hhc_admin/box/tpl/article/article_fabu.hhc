@@ -1,0 +1,233 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<form method="post" action="?h=article&c=article_fabu_submit" enctype="multipart/form-data">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						发布文章
+					</h1>
+					<input type="hidden" name="moxing_id" value="<{$moxing_id}>">
+					<input type="hidden" name="lanmu_id" value="<{@_GET['lanmu']}>">
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<?php $ts = false; ?>
+								<{foreach $ziduan as $v}>
+								<li class="oli">
+									<div class="oli_div_1">
+										<{@v['cn_name']}>
+									</div>
+									<div style="<?php if($v['moxing_type']=='8'){echo "width:65%";} ?>" class="oli_div_2">
+										<?php
+											switch($v['moxing_type']){
+												case '1':
+												case '2':
+												case '4':
+												case '6':
+												default:
+										?>
+
+										<input name="<{@v['en_name']}>" type="text" class="oli_text">
+										<?php
+												break;
+												case '3':
+										?>
+										<textarea name="<{@v['en_name']}>" class='oli_textarea'></textarea>
+										<?php
+												break;
+												case '7':
+												case '12':
+										?>
+											<div style="width:40%;" class="file_get_1">
+												<div class="file_get_1_div" style="">
+													<input class="file_get_name" readonly="readonly" type="text" value="">
+												</div>
+											</div>
+											<div style="width:25%;" class="file_get_2">选择文件
+												<input name="<{@v['en_name']}>" width="50" class="file_get_2_file opacity_0" type="file">
+											</div>
+											<div class="clear"></div>
+										<?php
+												break;
+												case '8':
+												//html文本
+												if($ts===false){
+													//第一次引入
+										?>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.config.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.all.min.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/lang/zh-cn/zh-cn.js"></script>
+										<?php
+												}else{
+													$ts=true;
+												}
+$v['html_gongneng']=!empty($v['html_gongneng'])?$v['html_gongneng']:'source,bold,italic,link,unlink,imagenone,imagecenter,imageleft,imageright,simpleupload,insertimage,inserttable,deletetable,forecolor,customstyle,paragraph,fontfamily,fontsize,emotion,map,attachment,spechars,searchreplace';
+$arr = explode(',',$v['html_gongneng']);
+$o='';
+foreach($arr as $vxz){
+	$o.="'$vxz',";
+}
+										?>
+    <script id="<{@v['en_name']}>" type="text/plain" style="width:100%;height:200px;" name="<{@v['en_name']}>"></script>
+    <script type="text/javascript">
+    var ue = UE.getEditor('<{@v['en_name']}>', {   
+    toolbars:[[
+      <{@o}>
+    ]]
+});
+    </script>
+										<?php
+												break;
+												case '9':
+												//option 
+												case '10':
+												//radio
+												case '11':
+												//checkbox
+				$v['default_val']=str_replace('，',',',$v['default_val']);
+				$v['default_val']=explode(',',$v['default_val']);
+						foreach($v['default_val'] as $k => $vs){
+							if(empty($vs) && $vs!=='0')
+								unset($v['default_val'][$k]);
+						}	
+					if($v['moxing_type']=='9'){			
+				?>
+				<select name="<{@v['en_name']}>">
+					<?php foreach($v['default_val'] as $vs){ ?>
+						<option value="<?php echo $vs; ?>"><?php echo $vs; ?></option>
+					<?php } ?>
+				</select>
+					<?php }else if($v['moxing_type']=='10'){
+						?><div style="line-height:30px;">
+						<?php
+						foreach($v['default_val'] as $vs){
+					 ?>
+	<div style="float:left;"><input name="<{@v['en_name']}>" value="<?php echo $vs; ?>" type="radio">&nbsp;<?php echo $vs; ?>&nbsp;&nbsp;</div>
+					
+					<?php } ?>
+	<div class="clear"></div>
+					</div>
+					<?php }else if($v['moxing_type']=='11'){ ?><div style="line-height:30px;">
+						<?php
+						foreach($v['default_val'] as $vs){
+					 ?>
+	<div style="float:left;"><input name="<{@v['en_name']}>[]" value="<?php echo $vs; ?>" type="checkbox">&nbsp;<?php echo $vs; ?>&nbsp;&nbsp;</div>
+					
+					<?php } ?>
+	<div class="clear"></div>
+					</div>
+					<?php } ?>
+										<?php
+												break;
+												case '15':
+										?>
+				
+										<?php
+												break;
+												case '16':
+											$pdo = get_pdo();
+											$resz=$pdo -> query('select * from '.DB_PRE."fenlei where ziduan_id={$v['ziduan_id']} and top_id=0 order by fenlei_id asc");
+											
+										?>	 
+										<select name="<{@v['en_name']}>">
+											<{foreach @resz as $vx}>
+											<option value="<{@vx['fenlei_id']}>"><{@vx['fenlei_name']}></option>
+											<{/foreach}>
+										</select>
+										<?php 
+												break;
+										?>
+										<?php } ?>
+									&nbsp;</div>
+									<?php if($v['moxing_type']!='8'){ ?>&nbsp;
+									<div class="oli_div_3">
+										<{@v['tishi']}>
+									</div>
+									<?php } ?>
+								<div class="clear"></div>
+								</li>
+								<{/foreach}>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="确定发布">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+			<{*网站基本信息结束*}>
+
+<script type="text/javascript">
+$(function(){
+	$('.duotu_s').click(function(){
+		$(this).next().show();
+		$('.op_up_zhegai').show();
+	})
+	$('.queding').click(function(){
+		$(this).parent().hide();
+		$('.op_up_zhegai').hide();
+	})
+})
+</script>
+<style type="text/css">
+.op_up_1{width:650px;height:400px;border:1px solid #CCCCCC;
+position:fixed;z-index:99999;left:50%;top:50%;background:#FFFFFF;
+border-radius:6px;box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);}
+.op_up_zhegai{position:fixed;top:0;left:0;z-index:99998;
+background:#CCCCCC;}
+.op_up_1_top{background:url(HHC_TPL_HHC/img/css/admin/dialog-title-bg.png);height:31px;border-bottom:1px solid #CCCCCC;cursor:move;}
+.op_up_1_top_title{font-weight:bold;line-height:31px;margin-left:15px;font-size:13px;}
+.op_up_1_medium{width:630px;height:300px;
+margin:15px 0 0 10px;}
+.op_up_1_medium_bottom{border:1px solid #CCCCCC;height:269px;border-top:0;overflow:hidden;}
+.op_up_1_medium_top ul{margin:0;border-bottom:1px solid #CCCCCC;height:32px;}
+.op_up_1_medium_top ul li{height:31px;float:left;line-height:31px;padding:0px 10px;margin-right:10px;background:url(HHC_TPL_HHC/img/css/admin/dialog-title-bg.png);border:1px solid #CCCCCC;border-bottom:0;cursor:pointer;color:#666666;font-size:13px;}
+.op_up_1_medium_top .op_up_1_medium_top_click{background:#FFFFFF;height:32px;}
+.op_up_1_medium_bottom_pe{margin-top:5px;}
+.op_up_1_medium_bottom_title{line-height:38px;font-size:13px;color:#888888;margin-left:10px;float:left;}
+.op_up_1_medium_bottom_right{float:right;margin-right:15px;}
+.xuanze_wenjian,.kaishishangchuan{float:left;height:30px;line-height:30px;padding:0 10px;font-size:13px;color:#666666;border-radius:4px;cursor:pointer;}
+.xuanze_wenjian{border:1px solid #DDDDDD;background:#FFFFFF;margin-right:20px;}
+.kaishishangchuan{background:#00b7ee;border:1px solid #00b7ee;color:#FFFFFF;}
+.op_up_1_medium_bottom_main{width:580px;height:224px;}
+.op_up_1_medium_bottom_main_s{}
+</style>
+<script type="text/javascript">
+$(function(){
+	op_up_re();
+
+	$(".op_up_1_top").bind("mousedown",function(event){
+		var _this = $(this)
+		var offset_x = $(this).parent().css('left');//x坐标
+		var offset_y = $(this).parent().css('top');//y坐标
+
+		var mouse_x = event.pageX;
+		var mouse_y = event.pageY;				
+
+		$(document).bind("mousemove",function(ev){
+			var _x = ev.pageX - mouse_x;
+			var _y = ev.pageY - mouse_y;
+			
+			var now_x = (parseInt(offset_x) + _x ) + "px";
+			var now_y = (parseInt(offset_y) + _y ) + "px";
+								
+			_this.parent().css({
+				top:now_y,
+				left:now_x
+			});
+				
+		});
+	});$(document).bind("mouseup",function(){
+				//alert($div.css('top'))
+				$(this).unbind("mousemove");
+			});
+
+})
+
+</script>
+
+		</div>
+		<{include index::footer.hhc}>

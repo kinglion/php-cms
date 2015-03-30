@@ -1,0 +1,65 @@
+<?php 
+	if(empty($_GET['k']))
+		alert_2(0,'请选择日志','?h=hudong&c=zx_rizhi',3);
+	$pdo = get_pdo();
+	$con_res = $pdo -> query('select * from '.DB_PRE."user_rizhi where id = '{$_GET['k']}' limit 1",'');
+	if(empty($con_res))
+		alert_2(0,'日志不存在或已被删除','?h=hudong&c=zx_rizhi',3);
+?>
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=hudong&c=rizhi"><li>我的日志</li></a>
+							<a href="?h=hudong&c=fb_rizhi"><li>发布日志</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;">最新日志</li>
+							<a href="?h=hudong&c=jc_rizhi"><li>精彩日志</li></a>
+							<a href="?h=hudong&c=fz_guanli"><li>分组管理</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main" style="padding:20px;">
+						<div style="line-height:35px;background:#F2F2F2;">
+							<a class="all_a" style="float:right;padding-right:20px;" href="?h=hudong&c=zx_rizhi">返回最新日志</a>
+							<h3 style="padding-left:30px;color:#555555;font-weight:bold;">阅读日志</h3>
+						</div>
+						<div style="padding:0 10px;">
+							<h1 style="margin:20px 0;font-weight:bold;font-size:26px;line-height:35px;"><{@con_res['title']}></h1>
+
+							<div class="">
+								<div style="float:right">
+									<span style="color:#AAAAAA;">发布时间：<?php echo date('Y-m-d H:i',$con_res['time']); ?>&nbsp;&nbsp;阅读(<{@con_res['liulan']}>)</span>
+								</div>
+								<input name="id" type="hidden" value="<{@con_res['id']}>">
+								<a style="display:inline;" href="javascript:void(0)" class="rz_con_s_zan all_a rizhi_zan jdhz">赞(<i><{@con_res['zan']}></i>)</a>&nbsp;
+							</div>
+
+							<div style="margin:20px 0;border-top:1px solid #F1F1F1;">&nbsp;</div>
+
+							<div style="font-size:14px;">
+								<{@con_res['con']}>
+							</div>
+
+						</div>
+					</div>
+				</form>
+				</div>
+
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=rizhi">我的日志</a></li>
+					<li><a href="?h=hudong&c=fb_rizhi">发布日志</a></li>
+					<li><a href="?h=hudong&c=zx_rizhi">最新日志</a></li>
+					<li><a href="?h=hudong&c=jc_rizhi">精彩日志</a></li>
+					<li><a href="?h=hudong&c=fz_guanli">分组管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

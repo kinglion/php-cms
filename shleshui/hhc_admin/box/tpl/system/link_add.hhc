@@ -1,0 +1,70 @@
+<?php
+	if(!empty($_GET['k'])){
+		$pdo = get_pdo();
+		$link = $pdo -> query('select * from '.DB_PRE."links where id='{$_GET['k']}' limit 1",'');
+		if(empty($link))
+			alert(0,0,'?h=system&c=links',"不存在的项");
+	}
+?>
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<form method="post" class="forms" action="?h=system&c=link_add_submit">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						<{if empty(@_GET['k'])}>添加友情链接<{else /}>友情链接编辑<{/if}>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										名称
+									</div>
+									<div class="oli_div_2">
+										<input name="name" type="text" class="oli_text" value="<{if !empty(@link['name'])}><{@link['name']}><{/if}>">
+									</div>
+									<div class="oli_div_3">
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										链接地址
+									</div>
+									<div class="oli_div_2">
+										<input name="link" type="text" class="oli_text" value="<{if isset(@link['link'])}><{@link['link']}><{else /}>http://<{/if}>">
+									</div>
+									<div class="oli_div_3">
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										排序
+									</div>
+									<div class="oli_div_2">
+										<input name="paixu" type="text" class="oli_text" value="<{if isset(@link['paixu'])}><{@link['paixu']}><{/if}>">
+									</div>
+									<div class="oli_div_3">
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+<{if !empty(@link)}>
+	<input type="hidden" name="id" value="<{@_GET['k']}>">
+<{/if}>
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+			<{*网站基本信息结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

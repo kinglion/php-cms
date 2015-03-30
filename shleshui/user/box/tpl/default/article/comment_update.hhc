@@ -1,0 +1,73 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=article&c=manage&k=<{@_GET['k']}>"><li>文章管理</li></a>
+							<a href="?h=article&c=release&k=<{@_GET['k']}>"><li>发布文章</li></a>
+							<a href="?h=article&c=comment&k=<{@_GET['k']}>"><li style="border-bottom:0;height:35px;background:#FFFFFF;">评论管理</li></a>
+						</ul>
+					</div>
+					<form action="?h=article&c=comment_update_submit" method="post">
+					<div class="n_main_main_main">
+						<ul class="n_main_main_main_sul">
+						<div style="margin:30px 0 0 20px;">
+	<?php
+		$pdo = get_pdo();
+		$res = $pdo -> query('select con from '.DB_PRE."pinglun where pinglun_id='{$_GET['k2']}' limit 1",'');
+		if(empty($res))
+			alert_2(1,'不存在的评论','',3);
+	?>		
+			<li>
+				<div style="width:5%;" class="n_main_main_main_li_l">评论&nbsp;</div>
+				<div style="width:85%" class="n_main_main_main_li_m"> 
+				
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.config.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.all.min.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/lang/zh-cn/zh-cn.js"></script>
+				<?php
+$v['html_gongneng']='bold,italic,link,unlink,imagenone,imagecenter,imageleft,imageright,simpleupload,insertimage,inserttable,deletetable,forecolor,customstyle,paragraph,fontfamily,fontsize,emotion,map,attachment,spechars,searchreplace';
+$arr = explode(',',$v['html_gongneng']);
+$o='';
+foreach($arr as $vxz){
+	$o.="'$vxz',";
+}
+										?>
+    <script id="con" type="text/plain" style="width:98%;height:200px;" name="con"><{@res['con']}></script>
+    <script type="text/javascript">
+    var ue = UE.getEditor('con', {   
+    toolbars:[[
+      <{@o}>
+    ]]
+});
+    </script>
+				
+				&nbsp;</div>
+				
+				<div class="clear"></div>
+			</li>
+<input type="hidden" name="k" value="<{@_GET['k2']}>">
+<input type="hidden" name="kk" value="<{@_GET['k']}>">
+<div class="clear"></div>
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</div>
+				</div>
+</form>
+				<ul class="position_right_title">
+					<li><a href="?h=article&c=manage&k=<{@_GET['k']}>">文章管理</a></li>
+					<li><a href="?h=article&c=release&k=<{@_GET['k']}>">文章发布</a></li>
+					<li><a href="?h=article&c=comment&k=<{@_GET['k']}>">评论管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

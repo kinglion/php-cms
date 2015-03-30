@@ -1,0 +1,57 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*发布开始*}>
+			<form method="get" action="?">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						<{if $k=='1'}>
+							文章管理
+						<{else if $k=='2' /}>
+							评论管理
+						<{/if}>
+						
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										选择模型
+									</div>
+						<{if $k=='1'}>
+							<input type="hidden" name="h" value="article">
+							<input type="hidden" name="c" value="article_list">
+						<{else if $k=='2' /}>
+							<input type="hidden" name="h" value="article">
+							<input type="hidden" name="c" value="pinglun">
+						<{/if}>
+									
+									<div class="oli_div_2">
+										<select name="moxing">
+											<option value="0">--请选择--</option>
+									<{foreach $moxing as $v}>
+											<option value="<{@v['id']}>"><{@v['name']}></option>
+									<{/foreach}>
+										</select>
+									</div>
+									<div class="oli_div_3">
+										请选择查看哪个模型下的文章 <br/>如果没有模型 请点击<a href="?h=moxing&c=moxing_create" target="_blank" class="color_a">立即创建</a>
+									</div>
+								<div class="clear"></div>
+								</li>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="确定">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+			<{*栏目选择结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

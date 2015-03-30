@@ -1,0 +1,25 @@
+<div class="toolbar">
+<a class="backtop" href="#" alt="回到顶部" ></a>
+<a class="feedback" href="javascript:scroll(0,0)" onclick="document.getElementById('helpform').style.display='block';document.getElementById('fade').style.display='block'" alt="在线反馈"></a>
+</div>
+</div>
+
+
+<div class="foot">
+<div class="footBox">
+<div class="footCopy">@<{hhc::set_up::short_title}>&nbsp;&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn/"><{hhc::set_up::beian}></a></div>
+<ul><!--
+<li><a href="article/web/link/">友情链接</a></li>
+<li><a href="article/web/about/">关于秘密</a></li>
+<li><a href="article/web/disclaimer/">免责声明</a></li>
+<li><a href="#">工作机会</a></li>-->
+<div class="clear"></div>
+</ul>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>
+

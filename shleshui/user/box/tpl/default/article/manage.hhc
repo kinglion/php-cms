@@ -1,0 +1,82 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">文章管理</li>
+							<a href="?h=article&c=release&k=<{@_GET['k']}>"><li>发布文章</li></a>
+							<a href="?h=article&c=comment&k=<{@_GET['k']}>"><li>评论管理</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<table class="auto_table" style="width:94%;margin:0 auto;">
+							<tr>
+								<th>选中</th>
+								<th>标题</th>
+								<th>发布时间</th>
+								<th>状态</th>
+								<th>浏览</th>
+								<th>操作</th>
+							</tr>
+							<form action="?h=article&c=manage_submit" method="post">
+							<?php 
+								$pdo = get_pdo(); 
+								$res = $pdo -> query('select `nav_moxing` from `'.DB_PRE."nav` where `nav_id`='{$_GET['k']}' limit 1",'');
+								if(empty($res)){
+									header('Location: ?');
+									exit;
+								}
+								$res2 = $pdo -> query('select `moxing_ziduan_table_name` from `'.DB_PRE."moxing` where `id`='{$res['nav_moxing']}' limit 1",'');
+								$page = new page(DB_PRE."{$res2['moxing_ziduan_table_name']}",'con_id,con_time,con_biaoti,con_liulan,con_quanxian',"con_lanmu_id={$_GET['k']} and `con_user_id`='{$_SESSION['user']['user_id']}' order by con_id desc",20,'pc');
+								$res3 = $page->page_2(5,1);
+								if(!empty($res3['0'])){
+									foreach($res3['0'] as $v){
+							?>
+							<tr>
+								<td style="width"><input class="checkbox" type="checkbox" name="con_id[]" value="<{@v['con_id']}>"></td>
+								<td><a href="index.php?h=index&c=moxing_content&con_id=<{@v['con_id']}>&lanmu_id=<{@_GET['k']}>" class="all_a" target="_blank"><{@v['con_biaoti']}></a></td>
+								<td><?php echo date('Y-m-d H:i',$v['con_time']); ?></td>
+								<td><{if @v['con_quanxian']==='0'}>已审核<{else /}><span style="color:#FF0000;">未审核</span><{/if}></td>
+								<td><{@v['con_liulan']}></td>
+								<td><a class="all_a" href="?h=article&c=manage_update&k=<{@_GET['k']}>&k2=<{@v['con_id']}>">编辑</a> | <a href="?h=article&c=manage_submit&k1=<{@v['con_id']}>&k2=<{@_GET['k']}>&k3=<?php echo DB_PRE."{$res2['moxing_ziduan_table_name']}" ?>" class="all_a delete_tishi">删除</a></td>
+							</tr>
+							<?php 	} ?>
+							<tr>
+								<td colspan="6" style="text-align:left;">　
+									<a class="all_a quanxuan_table_a" href="javascript:void(0)">全选</a>&nbsp;&nbsp;
+									<a class="all_a qxquanxuan_table_a" href="javascript:void(0)">取消全选</a>&nbsp;&nbsp;
+									<a key="scxz" class="all_a scxzx_table_a" href="javascript:void(0)">删除选中项</a>&nbsp;&nbsp;&nbsp;
+								</td>
+							</tr>
+							<input class="go_type" type="hidden" name="go_type" value="">
+							<input type="hidden" name="tb_name" value="<?php echo DB_PRE."{$res2['moxing_ziduan_table_name']}" ?>">
+							<input value="<{@_GET['k']}>" type="hidden" name="key">
+							</form>
+							<tr>
+								<td colspan="6" style="padding:12px 0;"><{@res3['1']}></td>
+							</tr>
+							<?php }else{ ?>
+							<tr>
+								<td colspan="6">本栏目没有文章 <a class="all_a" href="?h=article&c=release&k=<{@_GET['k']}>">发布文章</a></td>
+							</tr>
+							<?php } ?>
+						</table>
+					</div>
+				</div>
+				<ul class="position_right_title">
+					<li><a href="?h=article&c=manage&k=<{@_GET['k']}>">文章管理</a></li>
+					<li><a href="?h=article&c=release&k=<{@_GET['k']}>">文章发布</a></li>
+					<li><a href="?h=article&c=comment&k=<{@_GET['k']}>">评论管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

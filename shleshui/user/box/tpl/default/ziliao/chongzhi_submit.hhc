@@ -1,0 +1,95 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">选择充值方式</li>
+						</ul>
+					</div>
+					<form action="" method="post" class="pay_form">
+					<div class="n_main_main_main">
+						<div class="jf_main">
+							<table>
+								<tr>
+									<th>选择</th>
+									<th>充值方式</th>
+									<th>说明</th>
+								</tr>
+							<?php
+			$dizhi = explode('/hhc',"http://{$_SERVER['HTTP_HOST']}{$_SERVER['SCRIPT_NAME']}");
+			$dizhi = $dizhi['0'];
+							?>
+							<?php 
+								$pdo = get_pdo();
+								$time = time();
+								$data = array(
+									'title'=>"金币{$this->tpl_vars['jinbi']}个",
+									'danjia'=>'1',
+									'num'=>$this->tpl_vars['jinbi'],
+								);
+								$json = json_encode($data);
+								$pdo -> sql('insert into '.DB_PRE."dingdan(`time`,`type`,`data`,`return_url`,`user_id`)values('{$time}','1','{$json}','{$dizhi}?h=ziliao&c=jinbi','{$_SESSION['user']['user_id']}')");
+								$id = $pdo -> last_id();
+
+								$res = $pdo -> query('select * from `'.DB_PRE."pay_type` where `yingyong`='1' order by `paixu` desc");
+								if(empty($res)){
+									?>
+								<tr>
+									<td colspan="3" class="td3">网站暂时未开通在线支付，请联系站长或管理员</td>
+								</tr>
+									<?php
+								}else{
+									$o = false;
+									foreach($res as $v){
+							?>
+								<tr>
+									<td style="width:10%;">
+										<input class="pay_checkbox" <?php if($o===false){echo 'checked="checked"';$o=true;} ?> value="<{@v['name']}>" name="pay" type="radio">
+									</td>
+									<td class="td2">
+										<img src="<{@v['pic']}>">
+									</td>
+									<td class="td3">
+										<{@v['shuoming']}>
+									</td>
+								</tr>
+								<?php }  } ?>
+							</table>
+							<input type="hidden" name="WIDseller_email" value="488411712@qq.com">
+							<input type="hidden" name="WIDout_trade_no" value="<{@id}>">
+							<input type="hidden" name="WIDsubject" value="金币<{$jinbi}>个">
+							<input type="hidden" name="WIDtotal_fee" value="<{$jinbi}>">
+							<input type="hidden" name="WIDbody" value="">
+							<input type="hidden" name="WIDshow_url" value="<{@dizhi}>">
+
+							<input value="提交" style="margin-top:50px;" type="submit" class="submit">
+						</div>
+					</div>
+				</div>
+			</form>
+
+			</div>
+<script type="text/javascript">
+function pay_change(){
+	if($('.pay_checkbox:checked').val()=='支付宝'){
+		$('.pay_form').attr('action','./sundry/plus/alipay/alipayapi.php');
+	}
+}
+window.onload = function (){
+	pay_change();
+}
+
+$(function(){
+	$('.pay_checkbox').change(function(){
+		pay_change();
+	})
+})
+
+</script>
+
+		</div>
+<{include public::footer.hhc}>

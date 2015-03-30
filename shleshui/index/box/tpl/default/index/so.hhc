@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>搜索 -  <{hhc::set_up::short_title}> </title>
+<link href="./sundry/static_file/css/hhc_init.css" rel="stylesheet" type="text/css" media="all">
+<script type="text/javascript" src="./sundry/static_file/js/jquery.js"></script>
+<style type="text/css">
+	.so_main{width:96%;margin:20px auto 10px;min-width:960px;}
+</style>
+</head>
+<body>
+	<div style="height:28px;background:url(HHC_TPL_HHC/default/index/so_img/eyoung_toptb.jpg);border-bottom:1px solid #CCCCCC;">
+		<a href="index.php" style="font-size:13px;color:blue;line-height:28px;padding:0 0 0 10px;">返回首页</a>
+	</div>
+
+	<div class="so_main">
+		<div style="float:left;">
+			<img style="width:200px;height:60px;" src="<{hhc::set_up::logo}>">
+		</div>
+		<form method="get" action="?">
+		<input type="hidden" name="h" value="index">
+		<input type="hidden" name="c" value="so">
+		<div style="float:left;margin:30px 0 0 50px;">
+			<input type="text" name="word" style="border:1px solid #CCCCCC;padding:3px 5px;color:#999999;border-color:#707070 #CECECE #CECECE #707070;width:200px;" value="<?php if(isset($_GET['word'])){echo $_GET['word'];} ?>">
+			<select name="moxing" style="border:1px solid #CECECE;font-size:13px;padding:3px 0;margin-left:10px;">
+				<{foreach $so_res ['moxing'] as $v}>
+				<option value="<{@v['id']}>"><{@v['name']}></option>
+				<{/foreach}>
+			</select>
+			<input type="submit" style="padding:3px 35px;margin-left:10px;background:url(HHC_TPL_HHC/default/index/so_img/search-bt.gif) no-repeat;cursor:pointer;" value="">
+		</div>
+		</form>
+		<div class="clear"></div>
+
+		<div style="margin:10px 0;padding:6px 10px;border-bottom:1px solid #CCC;background:#F5F5F5;font-size:13px;font-weight:bold;color:#333333;">结果: 找到 “<span style="color:#FF0000;font-size:13px;font-weight:bold;"><{@_GET['word']}></span>” 相关内容 <{$so_res['count']}> 个</div>
+
+		<div>
+			<div style="float:left;width:65%;border-right:1px solid #DDDDDD;padding-right:5%;">
+				<style type="text/css">
+					*{font-family:Tahoma,Helvetica,'SimSun',sans-serif;}
+					.con_ul{margin-top:20px;}
+					.con_ul li .a_title{color:#00C;text-decoration:underline;}
+					.con_ul li .a_title span{color:#FF0000;}
+				</style>
+				<ul class="con_ul">
+					<{foreach $so_res ['content'] ['0'] as $v}>
+					<li style="margin-bottom:30px;">
+						<div><a target="_blank" href="?h=index&c=moxing_content&con_id=<{@v['con_id']}>&lanmu_id=<{@v['con_lanmu_id']}>" class="a_title"><?php echo mb_substr(str_replace($_GET['word'],"<span>{$_GET['word']}</span>",$v['con_biaoti']),0,'50','utf-8'); ?></a></div>
+						<div style="margin:5px 0 2px 0;font-size:12px;color:#AAAAAA;"><{@v['con_liulan']}> 次查看</div>
+						<p style="font-size:12px;color:#333333;line-height:20px;"><?php if(isset($v[$this->tpl_vars['so_res']['now_moxing']['con_name']])){echo str_replace('_ueditor_page_break_tag_','',mb_substr(strip_tags($v[$this->tpl_vars['so_res']['now_moxing']['con_name']]),0,200,'utf-8'));}else{echo '无简介';} ?></p>
+						<div style="margin-top:3px;font-size:12px;color:#666666;"><span style="color:#3A8000;font-size:12px;"><?php echo date('Y-m-d H:i',$v['con_time']); ?></span> - <a style="font-size:12px;color:#666666;text-decoration:underline;"><{if !empty(@v['username'])}><{@v['username']}><{else /}><{@v['user_name']}><{/if}></a> - <a style="font-size:12px;color:#666666;text-decoration:underline;"><{@v['nav_name']}></a></div>
+					</li>
+					<{/foreach}>
+				</ul>
+			</div>
+			<div style="float:right;width:28%;">暂时没有搜索推广
+			</div>
+		</div>
+				<div class="clear"></div>
+				<div style="margin:10px 0 50px 0;" class="page">
+					<{$so_res['content']['1']}>
+				</div>
+				<style type="text/css">
+					.page_1{border-radius:3px;background-color:#FBFBFB;padding:6px 8px;border:1px solid #DDDDDD;color:#444444;font-size:12px;margin-right:10px;}
+					.page a:hover{border:1px solid #DE6014;color:#DE6014;}
+				</style>
+	</div>
+</body>
+
+</html>

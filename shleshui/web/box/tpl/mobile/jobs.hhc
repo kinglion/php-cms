@@ -1,0 +1,23 @@
+<?php
+	$pdo = get_pdo();
+	$artcle = $pdo -> query('select * from '.DB_PRE."z_web_config2 where id = '1' limit 1",'');
+	if(empty($artcle))
+		alert_2(1,'栏目不存在','',3);
+    include './sundry/cache/json/config.php';
+    $arr = json_decode($json,true);
+	$top_title = "人才招聘 - {$arr['4']}";
+?>
+<{include ./header.hhc}>
+			<div id="content" style="min-height:500px;">
+				<h2 style="margin-bottom:20px;">人才招聘</h2>
+				
+<p>
+<{@artcle['v']}>
+</p>				
+			</div>
+			<div class="block">
+				
+			</div>
+			
+			
+<{include ./footer.hhc}>

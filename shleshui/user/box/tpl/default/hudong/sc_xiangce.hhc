@@ -1,0 +1,50 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=hudong&c=xiangce"><li>我的相册</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;">上传照片</li>
+							<a href="?h=hudong&c=cj_xiangce"><li>创建相册</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<ul class="n_main_main_main_sul">
+							<li>
+								<div class="n_main_main_main_li_l">选择图片&nbsp;</div>
+								<div class="n_main_main_main_li_m"> 
+									<div style="border: 1px solid #DDDDDD;width:30%;border-radius:4px;background:#00b7ee;color:#FFFFFF;text-align:center;cursor:pointer;font-size:15px;" class="user_duotu">选择文件
+									</div>
+<script type="text/javascript">
+$('.user_duotu').hover(function(){$(this).css('background','#00a2d4');},function(){$(this).css('background','#00b7ee');})
+</script>
+
+								&nbsp;</div>
+								<div class="n_main_main_main_li_r">如果不选择相册 会自动上传至默认相册&nbsp;
+								</div>
+								<div class="clear"></div>
+							</li>
+							
+						</ul>
+						<div style="margin:30px 0 0 20px;">
+						</div>
+					</div>
+				</div>
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=xiangce">我的相册</a></li>
+					<li><a href="?h=hudong&c=sc_xiangce">上传照片</a></li>
+					<li><a href="?h=hudong&c=cj_xiangce">创建相册</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+				<{include ./scxc_img.hhc}>
+<{include public::footer.hhc}>

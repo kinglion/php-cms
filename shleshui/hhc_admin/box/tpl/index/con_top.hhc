@@ -1,0 +1,89 @@
+<?php
+
+	$str = false;
+
+	if(is_file('./sundry/cache/data/con_top.php')){
+		include './sundry/cache/data/con_top.php';
+	}
+	if(!empty($str)){
+		$y_time = date('Ymd',$time);
+		$n_time = date('Ymd',time());
+	}
+
+	if(empty($str) || $y_time<$n_time){
+		@$str=file_get_contents('http://upgrade.blog.ithhc.cn/data.php');
+		$time = time();
+		if(!empty($str)){
+			$str = <<<STR
+	<?php
+		\$time = {$time};
+		\$str = <<<S
+			{$str}
+S;
+
+	?>
+STR;
+			file_put_contents('./sundry/cache/data/con_top.php',$str);
+			include './sundry/cache/data/con_top.php';
+		}else{
+			$str = false;
+		}
+	}
+
+	if($str!==false){
+		$dx_arr = explode('=_=',$str);
+?>
+
+			<div class='admin_con_top'>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						官方动态
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<{@dx_arr['0']}>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+
+			<div class='admin_con_top'>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						热点资讯
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<{@dx_arr['1']}>
+							</ul></div>
+					</div>
+				</div>
+			</div>
+			</div>
+
+			<div class='admin_con_top'>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						广告赞助&nbsp;&nbsp;&nbsp;<a class="admin_con_main_b" href="#" target="_blank">广告服务</a>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<{@dx_arr['2']}>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="clear"></div>
+
+<?php } ?>

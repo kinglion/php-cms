@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<title>内容采集--郝海川博客</title>
+			<script src="./sundry/static_file/js/jquery.js" type="text/javascript"></script>
+		</head>
+		<body>
+			<div class="title">正在分析原网站...</div><br/>
+			<div class="t1"></div><br/>
+			<div class="t2"></div>
+		<script type="text/javascript">
+			$(function(){				
+				//分析
+				var str='website_list=<{@_POST['website_list']}>';
+				str+='&start_page=<{@_POST['start_page']}>';
+				str+='&stop_page=<{@_POST['stop_page']}>';
+				str+='&start_q=<{@_POST['start_q']}>';
+				str+='&stop_q=<{@_POST['stop_q']}>';
+				str+='&start_c=<{@_POST['start_c']}>';
+				str+='&stop_c=<{@_POST['stop_c']}>';
+				$.post('?h=system&c=ajax_fenxi',str,function(data){
+					if(data.indexOf('~+_+~')>0){
+						var str_arr=data.split('~+_+~');
+						$('.title').text('分析成功，共分析可采集文章'+str_arr['1']+'篇');
+						$('.t1').text('正在执行采集，请勿关闭浏览器...');
+		var str2 = str+'&website_con=<{@_POST['website_con']}>';
+		str2+='&con=<?php echo json_encode($_POST['con']); ?>';
+		str2+='&lanmu=<{@_POST['lanmu']}>';
+						$.post('?h=system&c=ajax_caiji',str2,function(data){
+								$('.t2').text(data);
+						})
+					}else{
+						alert(data);
+					}
+				})
+			})
+		</script>
+		</body>
+	</html>
+	

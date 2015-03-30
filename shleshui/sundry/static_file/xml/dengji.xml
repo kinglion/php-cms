@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<dengji>
+	<input name="yxys" value="允许隐身" />
+	<input name="fbwz" value="发表文章" />
+
+	<input name="ydwz" value="阅读文章" />
+	<input name="fbrz" value="发表日志" />
+	
+	<input name="fbsp" value="发表视频" />
+	<input name="fbxqwb" value="发表心情微博" />
+
+	<input name="yxscxc" value="允许上传相册" />
+	<input name="fbpl" value="发布评论" />
+
+	<input name="wzss" value="文章搜索" />
+	<input name="yxfznxx" value="允许发站内消息" />
+	
+	<input name="yxfyj" value="允许发送邮件" />
+	<input name="yxfssjdx" value="允许发送手机短信" />
+	
+	<input name="yxtjhy" value="允许添加好友" />
+	<input name="yxsygxqm" value="允许使用个性签名" />
+	
+	<input name="yxjgz" value="允许TA +关注" />
+	<input name="yxfbxlcs" value="允许发布心理测试" />
+	
+	<input name="yxktwdzy" value="允许开通我的主页" />
+	<input name="yxsyejym" value="允许使用二级域名" />
+	
+	<input name="ckwzwsjm" value="查看文章无视加密" />
+	<input name="yxscwz" value="允许删除文章" />
+	
+	<input name="yxscpl" value="允许删除评论" />
+	<input name="yxsdyh" value="允许锁定用户" />
+	
+	<input name="fbwzyxsylj" value="发布文章允许使用链接" />
+	<input name="fbwzbxysh" value="发布文章不需要审核" />
+	
+	<input name="fbplbxysh" value="发布评论不需要审核" />
+	<input name="fbwbbxysh" value="发布微博不需要审核" />
+</dengji>
+
+

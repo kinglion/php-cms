@@ -1,0 +1,51 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">网址推广</li>
+							<a href="?h=ziliao&c=tuiguangjilu"><li>推广记录</li></a>
+						</ul>
+					</div>
+					<?php
+						$pdo = get_pdo();
+						$res = $pdo -> query('select * from '.DB_PRE."config where id in(46,47,48)");
+					?>
+					<div class="n_main_main_main">
+						<div class="n_main_main_main_2">
+							<div class="td_top">
+<p>如果您的朋友通过链接注册成为会员,您将获得奖励
+<?php if(!empty($res['0']['v'])){ ?>
+<span><{hhc::set_up::jifen}>+1</span>
+<?php } ?>
+<?php if(!empty($res['1']['v'])){ ?>
+<span><{hhc::set_up::jindou}>+1</span>
+<?php } ?>
+<?php if(!empty($res['2']['v'])){ ?>
+<span><{hhc::set_up::jinbi}>+1</span>
+<?php } ?>
+
+</p>
+							</div>
+							<div style="margin-top:40px;">
+								我的推广链接：&nbsp;&nbsp;http://<{@_SERVER['HTTP_HOST']}>/?extension_uid=<{@_SESSION['user']['user_id']}>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=tuiguang">网址推广</a></li>
+					<li><a href="?h=ziliao&c=tuiguangjilu">推广记录</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

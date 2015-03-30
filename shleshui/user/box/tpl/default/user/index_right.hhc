@@ -1,0 +1,61 @@
+<div class='user_main_right'>
+<a href="?" class="user_main_right_vip">升级vip会员，享受更多特权</a>
+
+
+			<dl class="vip_dl">
+				<dt>VIP - 特权介绍</dt>
+				<dd>
+					<span class="right_vip_1_color">专属身份标志</span>
+					<span class="right_vip_2_color"> 查看谁看过我</span>
+					<span class="right_vip_3_color">发出文章/微博置顶</span>
+					<span class="right_vip_4_color">空间存储量增大</span>
+					<span class="right_vip_5_color">查看联系方式</span>
+					<span class="right_vip_6_color">查看vip视频</span>
+					<div class="clear"></div>
+				</dd>
+			</dl>
+<!--
+			<dl class="fangke_dl">
+				<dt><a class="fangke_dl_a" href="?">更多</a>最近访客</dt>
+				<dd>
+					<div class="fangke_dl_left">
+						<img src="HHC_TPL_HHC/default/img/avatar_big.jpg.thumb.jpg">
+					</div>
+					<div class="fangke_dl_right">
+						<h6><a href="?">郝海川</a></h6>
+						<p>2014-06-06 18:00:00</p>
+					</div>
+					<div class="clear"></div>
+				</dd>
+			</dl>
+-->
+<?php 
+	$pdo = get_pdo();
+	$new_user = $pdo -> query('select user_id,user_name,sex,pic,username from '.DB_PRE."user order by user_id desc limit 10");
+?>
+			<dl class="fangke_dl">
+				<dt>最新注册</dt>
+				<?php foreach($new_user as $v){ ?>
+				<dd>
+					<div class="fangke_dl_left">
+						<img src="<{@v['pic']}>">
+					</div>
+					<div class="fangke_dl_right">
+						<h6><a href="?"><{@v['user_name']}></a></h6>
+						<p><{if @v['sex']=='1'}>男<{else /}>女<{/if}> <{if !empty(@v['username'])}>- <{@v['username']}><{/if}></p>
+					</div>
+					<div class="clear"></div>
+				</dd>
+				<?php } ?>
+			</dl>
+<?php 
+	$rz_res = $pdo -> query('select id,title from '.DB_PRE."user_rizhi where zhuangtai='1' and tuijian='1' order by id desc");
+?>
+			<dl class="list_dl rizhi_list_dl">
+				<dt><a href="?h=hudong&c=jc_rizhi" class="fangke_dl_a">更多</a>精彩日志</dt>
+				<?php foreach($rz_res as $v){ ?>
+				<a href="?h=hudong&c=rizhi_content&k=<{@v['id']}>"><dd><?php echo mb_substr($v['title'],0,16); ?></dd></a>
+				<?php } ?>
+			</dl>
+
+</div>

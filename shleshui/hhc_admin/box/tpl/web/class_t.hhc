@@ -1,0 +1,127 @@
+<?php
+	if(empty($_GET['k'])){
+		//添加
+	}else{
+		$pdo = get_pdo();
+		$artcle = $pdo -> query('select * from '.DB_PRE."z_web_class where id='{$_GET['k']}' limit 1",'');
+	}
+?>
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<form method="post" class="forms" action="?h=web&c=class_submit">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						分类创建
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										名称
+									</div>
+									<div class="oli_div_2">
+										<input type="text" name="title" value="<?php if(!empty($artcle)){echo $artcle['title'];} ?>" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										
+									</div>
+								<div class="clear"></div>
+								</li>
+<?php if(!empty($artcle)){ ?>
+<input type="hidden" name="k" value="<{@artcle['id']}>">
+<?php } ?>
+
+								<li class="oli">
+									<div class="oli_div_1">
+										类型
+									</div>
+									<div class="oli_div_2">
+										<?php $class_t = array('1'=>'新闻动态','2'=>'产品展示','3'=>'客户案例','4'=>'解决方案'); ?>
+										<select name="type">
+											<?php foreach($class_t as $k => $v){ ?>
+											<option <?php if(!empty($artcle['type']) && $artcle['type']==$k){echo 'selected="selected"';} ?> value="<{@k}>"><{@v}></option>
+											<?php } ?>
+										</select>
+									</div>
+									<div class="oli_div_3">
+										
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										排序
+									</div>
+									<div class="oli_div_2">
+										<input type="text" name="paixu" value="<?php if(!empty($artcle)){echo $artcle['paixu'];} ?>" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										最大50000  显示顺序由大到小
+									</div>
+								<div class="clear"></div>
+								</li>
+
+
+							</ul>
+
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</div>
+					</div>
+				</div>
+				</form>
+
+			</div>
+			<{*网站基本信息结束*}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="height:100px;"></div>
+
+			</div>
+
+
+
+
+
+
+		</div>
+		<{include index::footer.hhc}>

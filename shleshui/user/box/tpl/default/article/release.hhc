@@ -1,0 +1,183 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=article&c=manage&k=<{@_GET['k']}>"><li>文章管理</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">发布文章</li>
+							<a href="?h=article&c=comment&k=<{@_GET['k']}>"><li>评论管理</li></a>
+						</ul>
+					</div>
+					<form action="?h=article&c=release_submit" method="post" enctype="multipart/form-data">
+					<div class="n_main_main_main">
+				<input type="hidden" name="k" value="<{@_GET['k']}>">
+						<ul class="n_main_main_main_sul">
+						<div style="margin:30px 0 0 20px;">
+							<?php  
+$pdo = get_pdo();
+$db_pre = DB_PRE;
+$res = $pdo -> query("select `nav_type`,`nav_moxing`,`fabu` from `{$db_pre}nav` where `nav_id` = '{$_GET['k']}' limit 1",'');		
+if(empty($res))
+	alert_2(1,'你使用了一个不存在的栏目，请重新选择','',3);
+if($res['nav_type']!=='1' || empty($res['nav_moxing']))
+	alert_2(1,'你使用的栏目不是模型栏目，请重新选择','',3);
+if($res['fabu']=='1')
+	alert_2(1,'你没有在本栏目发布文章的权限','',3);
+	?>
+	<input type="hidden" name="k2" value="<{@res['nav_moxing']}>">
+	<?php
+		//获取字段
+		$sql=<<<SQL
+	select 
+		`cn_name`,`ziduan_id`,`en_name`,`moxing_type`,`default_val`,`html_gongneng`,`tishi`
+	from 
+		{$db_pre}ziduan
+	where 
+		`moxing_id` = '{$res['nav_moxing']}'
+	and 
+		`xianshi_fangshi` <>'1' 
+	and 
+		`xianshi_fangshi` <>'2' 
+	and 
+		`moxing_type` <> '17'
+	order by
+		ziduan_id asc
+SQL;
+		$res2 = $pdo -> query($sql);
+		$res2 = empty($res2) ? array() : $res2;
+		$arr = array(
+					'cn_name'=>'标题',
+					'en_name'=>'con_biaoti',
+					'moxing_type'=>'1',
+					'default_val'=>'',
+					'tishi'=>'文章的标题'
+				);
+		array_unshift($res2,$arr);
+		$ts=false;
+		foreach($res2 as $v){
+		?>
+			<li>
+				<div class="n_main_main_main_li_l"><{@v['cn_name']}>&nbsp;</div>
+				<div style="<?php if($v['moxing_type']=='8'){echo "width:75%";} ?>" class="n_main_main_main_li_m"> 
+				<?php
+					switch($v['moxing_type']){
+						case '1':
+						case '2':
+						case '4':
+						case '6':
+						default:
+				?>	
+					<input class="text" type="text" value="" name="<{@v['en_name']}>">
+				<?php
+						break;
+						case '3':
+				?>
+					<textarea name="<{@v['en_name']}>" noresize class="text"></textarea>
+				<?php
+						break;
+						case '7':
+						case '12':
+				?>
+					<input type="file" name="<{@v['en_name']}>">
+				<?php
+						break;
+						case '8':
+							if($ts===false){
+								//第一次引入
+				?>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.config.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.all.min.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/lang/zh-cn/zh-cn.js"></script>
+				<?php
+							}else{
+								$ts=true;
+							}
+$v['html_gongneng']=!empty($v['html_gongneng'])?$v['html_gongneng']:'source,bold,italic,link,unlink,imagenone,imagecenter,imageleft,imageright,simpleupload,insertimage,inserttable,deletetable,forecolor,customstyle,paragraph,fontfamily,fontsize,emotion,map,attachment,spechars,searchreplace';
+$arr = explode(',',$v['html_gongneng']);
+$o='';
+foreach($arr as $vxz){
+	$o.="'$vxz',";
+}
+										?>
+    <script id="<{@v['en_name']}>" type="text/plain" style="width:98%;height:200px;" name="<{@v['en_name']}>"></script>
+    <script type="text/javascript">
+    var ue = UE.getEditor('<{@v['en_name']}>', {   
+    toolbars:[[
+      <{@o}>
+    ]]
+});
+    </script>
+				<?php
+						break;
+						case '9':
+						//option 
+						case '10':
+						//radio
+						case '11':
+						//checkbox
+						$v['default_val']=str_replace('，',',',$v['default_val']);
+						$v['default_val']=explode(',',$v['default_val']);
+						foreach($v['default_val'] as $k => $vs){
+							if(empty($vs) && $vs!=='0')
+								unset($v['default_val'][$k]);
+						}		
+					if($v['moxing_type']=='9'){			
+				?>
+				<select name="<{@v['en_name']}>">
+					<?php foreach($v['default_val'] as $vs){ ?>
+						<option value="<?php echo $vs; ?>"><?php echo $vs; ?></option>
+					<?php } ?>
+				</select>
+					<?php }else if($v['moxing_type']=='10'){
+						?><div style="line-height:30px;">
+						<?php
+						foreach($v['default_val'] as $vs){
+					 ?>
+	<div style="float:left;"><input name="<{@v['en_name']}>" value="<?php echo $vs; ?>" type="radio">&nbsp;<?php echo $vs; ?>&nbsp;&nbsp;</div>
+					
+					<?php } ?>
+	<div class="clear"></div>
+					</div>
+					<?php }else if($v['moxing_type']=='11'){ ?><div style="line-height:30px;">
+						<?php
+						foreach($v['default_val'] as $vs){
+					 ?>
+	<div style="float:left;"><input name="<{@v['en_name']}>[]" value="<?php echo $vs; ?>" type="checkbox">&nbsp;<?php echo $vs; ?>&nbsp;&nbsp;</div>
+					
+					<?php } } ?></div>
+				<?php } ?>
+				&nbsp;</div>
+				 <?php if($v['moxing_type']!='8'){ ?>
+				<div class="n_main_main_main_li_r">
+					<{@v['tishi']}>
+				&nbsp;</div>
+				<?php
+				} ?>
+				<div class="clear"></div>
+			</li>
+		<?php
+		}
+?>
+<div class="clear"></div>
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</div>
+				</div>
+</form>
+				<ul class="position_right_title">
+					<li><a href="?h=article&c=manage&k=<{@_GET['k']}>">文章管理</a></li>
+					<li><a href="?h=article&c=release&k=<{@_GET['k']}>">文章发布</a></li>
+					<li><a href="?h=article&c=comment&k=<{@_GET['k']}>">评论管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

@@ -1,0 +1,88 @@
+			<{*文章管理管理开始*}>
+			<?php 
+	$tb_name = DB_PRE.'z_web_product';
+	$type = 'id,title,time,on_read,class_id';
+	$w = '1';
+	$order = ' order by id desc ';
+	$page = new page($tb_name,$type,$w.$order,10,'p2');
+	$res = $page->page_2(10);
+	$res['0'] = !empty($res['0']) ? $res['0'] : array();
+?>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						产品展示&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="?h=web&hconfig=mokuai&c=update&key=product">发布</a>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<form class="all_form1" method="post" action="?h=web&c=delete">
+							<input type="hidden" name="key" value="product">
+							<table class='admin_main_table' style="margin:0;">
+								<tr class='admin_con_tr_title'>
+									<th style="">删除</th>
+									<th style="">标题</th>
+									<th style="">分类</th>
+									<th style="">发布时间</th>
+									<th style="">点击量</th>
+									<th style="">操作</th>
+								</tr>
+								<?php foreach($res['0'] as $v){ ?>
+								<tr class="admin_con_tr_con">
+									<td><input class="check_all" name="all[<{@v['id']}>]" value="<{@v['id']}>" type="checkbox"></td>
+									<td><a target="_blank" title="<{@v['title']}>" href="web.php?h=index&c=product_content&k=<{@v['id']}>"><?php echo mb_substr($v['title'],0,'10','utf-8'); ?></a></td>
+									<td><?php if(!empty($class_res[$v['class_id']]['title'])){echo $class_res[$v['class_id']]['title'];} ?> </td>
+									<td><?php echo date('Y-m-d H:i',$v['time']); ?></td>
+									<td><{@v['on_read']}></td>
+									<td><a href="?h=web&hconfig=mokuai&k=<{@v['id']}>&c=update&key=product">编辑</a>&nbsp;|&nbsp;<a class="delete_tishi" href="?h=web&hconfig=mokuai&k=<{@v['id']}>&c=delete&key=product">删除</a></td>
+								</tr>
+								<?php } ?>
+							</table>
+							<div style="border-width:0px 1px 1px 1px;border-color:#CCCCCC;border-style:solid;padding:8px 10px;" class="art_list_call">
+								<{if !empty(@res['0'])}>
+								<a class="quanxuan art_list_call_s" href="javascript:void(0)">全选</a>&nbsp;
+								<a class="quanbuxuan art_list_call_s" href="javascript:void(0)">全不选</a>&nbsp;&nbsp;&nbsp;
+								<input name="shanchu" type="submit" class="quanxuan_shanchu2 art_list_call_s" value="删除选中">&nbsp;&nbsp;&nbsp;
+							<style type="text/css">
+								.art_list_call_s{font-size:13px;color:#0074A2;cursor:pointer;}
+								.art_list_call_s:hover{text-decoration:underline;}
+							</style>
+							<script type="text/javascript">
+								$(function(){
+									$('.quanxuan').click(function(){
+										$(this).parent().parent().find('.check_all').prop("checked",true);
+			  						});  
+									$('.quanbuxuan').click(function(){
+										$(this).parent().parent().find('.check_all').prop("checked",false);
+			  						});  
+			  						$('.quanxuan_shanchu2').click(function(){
+			  							if(!confirm('确定要删除选中项吗？'))
+			  								return false;
+			  						})
+								})
+					
+					
+					
+					</script>
+								<{else }>
+								没有数据
+								<{/if}>
+							</form>
+							</div>
+							<{*分页和检索*}>
+							<div class="page_so_parent">
+								<div class="hhc_page">
+									<?php echo $res['1']; ?>
+								</div>
+								<div style="height:10px;">&nbsp;</div>
+								
+								</div>
+							<div class="clear"></div>
+							</div>
+							<{*/分页和检索*}>
+							&nbsp;
+						</div>
+					</div>
+				</div>
+					<{*/文章管理结束*}>
+
+			

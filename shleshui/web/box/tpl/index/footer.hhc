@@ -1,0 +1,71 @@
+
+<div class="bot_nav">
+<div class="bottom">
+<div class="botdiv">
+<?php
+	$pdo = get_pdo();
+	$res = $pdo -> query('select * from '.DB_PRE."z_web_class");
+	$data_1 = array();
+	$data_2 = array();
+	$data_3 = array();
+	$data_4 = array();
+	foreach($res as $v){
+		if($v['type']=='1'){
+			$data_1[$v['id']] = $v;
+		}elseif($v['type']=='2'){
+			$data_2[$v['id']] = $v;
+		}elseif($v['type']=='3'){
+			$data_3[$v['id']] = $v;
+		}elseif($v['type']=='4'){
+			$data_4[$v['id']] = $v;
+		}
+	}
+?>
+<h2><a href="web.php?h=index&c=news">新闻动态</a></h2>
+<ul>
+<?php foreach($data_1 as $v){ ?>
+<li><a href="web.php?h=index&c=news&key=<{@v['id']}>" title="<{@v['title']}>"><?php echo mb_substr($v['title'],'0','12','utf-8'); ?></a></li>
+<?php } ?>
+</ul>
+</div>
+<div class="botdiv">
+<h2><a href="web.php?h=index&c=product">产品展示</a></h2>
+<ul>
+<?php foreach($data_2 as $v){ ?>
+<li><a href="web.php?h=index&c=product&key=<{@v['id']}>" title="<{@v['title']}>"><?php echo mb_substr($v['title'],'0','12','utf-8'); ?></a></li>
+<?php } ?>
+</ul>
+</div>
+<div class="botdiv">
+<h2><a href="web.php?h=index&c=casez">客户案例</a></h2>
+<ul>
+<?php foreach($data_3 as $v){ ?>
+<li><a href="web.php?h=index&c=casez&key=<{@v['id']}>" title="<{@v['title']}>"><?php echo mb_substr($v['title'],'0','12','utf-8'); ?></a></li>
+<?php } ?>
+</ul>
+</div>
+<div class="botdiv">
+<h2><a href="web.php?h=index&c=solution">解决方案</a></h2>
+<ul>
+<?php foreach($data_4 as $v){ ?>
+<li><a href="web.php?h=index&c=solution&key=<{@v['id']}>" title="<{@v['title']}>"><?php echo mb_substr($v['title'],'0','12','utf-8'); ?></a></li>
+<?php } ?>
+</ul>
+</div>
+<div class="botdiv">
+<h2><a href="#">其他</a></h2>
+<ul>
+<li><a href="web.php?h=index&c=comment">留言反馈</a></li>
+<li><a href="web.php?h=index&c=jobs">人才招聘</a></li>
+<li><a href="web.php?h=index&c=user">客户服务</a></li>
+</ul>
+</div>
+<div class="clear"></div>
+<div class="copyright">
+<p>Program by <strong><a href="http://www.ithhc.cn/" title="郝海川博客" target="_blank">郝海川博客</a></strong> &nbsp;&nbsp;&copy; Copyright <{hhc::set_up::short_title}>&nbsp;&nbsp;&nbsp;<a href="#" target="_blank"><{hhc::set_up::beian}></a>&nbsp;&nbsp;&nbsp;<{hhc::set_up::tongji}></p>
+<p></p>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站栏目设置开始*}>
+			<form class="form1" method="post" action="?h=set_up&c=nav_update">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						网站栏目设置
+						<span style="color:#FFFFFF;margin-left:100px;">请注意：使用链接地址时，请使用完整地址 如 http://ithhc.cn </span>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<table class='admin_main_table admin_nav_layout_table'>
+								<tr class='admin_con_tr_title admin_nav_layout'>
+									<th class="nav_th_checkbox">删除</th>
+									<th class="nav_th_text_shunxu">顺序</th>
+									<th class="nav_th_text">名称</th>
+									<th class="nav_th_erji">&nbsp;</th>
+									<th class="nav_th_text">上级栏目名称</th>
+									<input type="hidden" name="delete" value="0">
+									<th class="nav_th_leixing">类型</th>
+									<th class="nav_th_text">链接</th>
+									<th class="nav_th_checkbox">首页</th>
+									<th class="nav_th_checkbox">显示</th>
+									<th class="nav_th_caozuo">操作</th>
+								</tr>
+								<{foreach $nav as $k => $v}>
+								<tr class="admin_con_tr_con">
+									<td><input name="xuanzhong[]" value="<{@v['nav_id']}>" type="checkbox"></td>
+									<td><input name="<{@v['nav_id']}>[nav_paixu]" class="nav_input_text" type="text" value="<{@v['nav_paixu']}>"></td>
+									<td><input name="<{@v['nav_id']}>[nav_name]" value="<{@v['nav_name']}>" class="nav_input_text" type="text"></td>
+									<td><a href="?h=set_up&c=nav_extc&t=1&k=<{@v['nav_id']}>" class="nav_erji">添加下级栏目</a></td>
+									<td>
+										<{if empty($nav[@v['nav_parent_id']]['nav_name'])}>
+											--
+										<{else /}>
+										<input readonly="readonly" class="nav_input_text <{@bgi}>" type="text" value="<{$nav[$v['nav_parent_id']]['nav_name']}>">
+										<{/if}>
+									</td>
+									<td>
+										<{hhc:php}>
+											$url = '';
+											$readonly='readonly=readonly';
+											$bgi='bgie6';
+										<{/hhc:php}>
+										<{if @v['nav_type']=='0'}>
+											链接
+											<{hhc:php}>
+												$url=$v['nav_link'];
+												$readonly='';$bgi='';
+												$caozuo="<td><a href='?h=set_up&c=nav_extc&t=2&k={$v['nav_id']}'>编辑</a>&nbsp;|&nbsp;<a class='delete_tishi' href='?h=set_up&c=nav_update&id={$v['nav_id']}'>删除</a></td>";
+											<{/hhc:php}>
+										<{else if @v['nav_type']=='1' /}>
+											模型
+											<{hhc:php}>
+												$caozuo="<td><a href='?h=set_up&c=nav_extc&t=2&k={$v['nav_id']}'>编辑</a>&nbsp;|&nbsp;<a class='delete_tishi' href='?h=set_up&c=nav_update&id={$v['nav_id']}'>删除</a></td>";
+											<{/hhc:php}>
+										<{else if @v['nav_type']=='2' /}>
+											模块
+											<{hhc:php}>
+												$caozuo="<td><span>编辑</span>&nbsp;|&nbsp;<span>删除</span></td>";
+											<{/hhc:php}>
+											<{else if @v['nav_type']=='100' /}>
+											首页
+											<{hhc:php}>
+											$url=$v['nav_link'];
+											$caozuo='<td><span>系统栏目</span></td>';
+											<{/hhc:php}>
+										<{/if}>
+									</td>
+									<td><input class="nav_input_text <{@bgi}>" name="<{@v['nav_id']}>[nav_link]" type="text" value="<{@url}>" <{@readonly}>></td>
+									<td><input name="nav_shouye" type="radio" value="<{@v['nav_id']}>" <{if @v['nav_shouye']=='1'}>checked="checked"<{/if}>></td>
+									<td><input name="<{@v['nav_id']}>[nav_xianshi]" value="1" type="checkbox" <{if @v['nav_xianshi']=='1'}>checked="checked"<{/if}>></td>
+									<{@caozuo}>
+									
+								
+								</tr>
+								<{/foreach}>
+							</table>
+<a href="?h=set_up&c=nav_extc&t=1" class="a_F60" style="display:block;margin:5px 0 0 15px;float:left;">创建新栏目</a>
+<div class="clear"></div>
+							<a class="create_zidingyi nav_update_a" href="javascript:void(0)" style="float:left;margin:50px 10px 30px 10px;">修改全部</a>
+							<a class="create_zidingyi nav_delete_a" href="javascript:void(0)" style="float:left;margin:50px 10px 30px 10px;">删除选中</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+			<{*网站栏目设置结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

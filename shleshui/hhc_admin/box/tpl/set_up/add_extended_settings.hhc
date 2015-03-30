@@ -1,0 +1,248 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*字段创建开始*}>
+			<form method="post" action="?h=set_up&c=add_extended_settings_submit">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						扩展设置<{if empty(@_GET['k'])}>创建<{else /}>编辑<input type="hidden" name="s_id" value="<{@_GET['k']}>"><{/if}>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										设置中文名
+									</div>
+									<div class="oli_div_2">
+										<input name="cn_name" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										设置的中文名称 用于展示给后台使用者 30个字符之内
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										设置英文名
+									</div>
+									<div class="oli_div_2">
+										<input name="en_name" type="text" class="oli_text <?php if(!empty($_GET['k'])){echo 'bgie6';} ?>" <?php if(!empty($_GET['k'])){echo 'readonly="readonly"';} ?>>
+									</div>
+									<div class="oli_div_3">
+										设置的英文名称 用于存储在数据库中 30个字符之内
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										提示信息
+									</div>
+									<div class="oli_div_2">
+										<textarea name="tishi" class="oli_textarea"></textarea>
+									</div>
+									<div class="oli_div_3">
+										设置右边的提示信息 300个字符之内
+									</div>
+								<div class="clear"></div>
+								</li>
+								
+								<li class="oli">
+									<div class="oli_div_1">
+										是否是系统设置
+									</div>
+									<div class="oli_div_2 margin_left_10">
+
+										<input checked="checked" value="0" type="radio" name="xitong" class="">普通设置&nbsp;&nbsp;
+										<input value="1" type="radio" name="xitong" class="">系统设置<br/>
+									</div>
+									<div class="oli_div_3">
+										系统设置用户将无法直接修改和删除
+									</div>
+								<div class="clear"></div>
+								</li>
+								
+								<li class="oli" style="margin-top:50px;">
+									<div class="oli_div_1">
+										字段类型
+									</div>
+									<div class="oli_div_2 margin_left_10">
+										<ol>
+											<li class="ziduan_li">
+							<input key='x' <{if empty(@_GET['k'])}>checked="checked"<{/if}> type="radio" class="ziduan_create_leixing dan_wenben" <{if !empty($res) && $res['type']=='0'}>checked="checked"<{/if}> value="0" name="xxz">&nbsp;单行文本<div style="height:5px;"></div>
+							<input <{if !empty($res) && $res['type']=='1'}>checked="checked"<{/if}> key='y' type="radio" class="ziduan_create_leixing duo_wenben" value="1" name="xxz">&nbsp;多行文本<div style="height:5px;"></div>
+							<input <{if !empty($res) && $res['type']=='2'}>checked="checked"<{/if}> key="8" type="radio" class="ziduan_create_leixing" value="2" name="xxz">&nbsp;html文本<div style="height:5px;"></div>
+							<input <{if !empty($res) && $res['type']=='3'}>checked="checked"<{/if}> key="z" type="radio" class="ziduan_create_leixing" value="3" name="xxz">&nbsp;图片上传<div style="height:5px;"></div>
+							<input <{if !empty($res) && $res['type']=='4'}>checked="checked"<{/if}> type="radio" key="10" class="ziduan_create_leixing" value="4" name="xxz">&nbsp;option下拉列表<div style="height:5px;"></div>
+							<input <{if !empty($res) && $res['type']=='5'}>checked="checked"<{/if}> type="radio" key="11" class="ziduan_create_leixing" value="5" name="xxz">&nbsp;checkbox多选框<div style="height:5px;"></div>
+											</li>
+											<div class="clear"></div>
+										</ol>
+										</div>
+									<div class="oli_div_3">
+										设置的类型
+									</div>
+								<div class="clear"></div>
+								</li>
+								
+
+								<li class="oli dan_type_li" style="display:none;">
+									<div class="oli_div_1">
+										单行文本类型
+									</div>
+									<div class="oli_div_2">
+							<input <?php if(!empty($_GET['k'])){if($this->tpl_vars['res']['type']=='0'){if($this->tpl_vars['res']['dan_type']=='0'){echo 'checked="checked"';}}else{echo 'checked="checked"';}} ?> <{if empty(@_GET['k'])}>checked="checked"<{/if}> type="radio" class="ziduan_create_leixing" value="0" name="dan_type">&nbsp;不限<div style="height:5px;"></div>
+							<input <?php if(!empty($_GET['k'])){if($this->tpl_vars['res']['type']=='0'){if($this->tpl_vars['res']['dan_type']=='1'){echo 'checked="checked"';}}} ?> type="radio" class="ziduan_create_leixing" value="1" name="dan_type">&nbsp;整数<div style="height:5px;"></div>
+									</div>
+									<div class="oli_div_3">
+										单行文本的类型 字符串请选择不限 如果选择了整形或者浮点型 那么用户如果输入非整形或浮点型的值 会自动转化
+									</div>
+								<div class="clear"></div>
+								</li>
+<{*
+								<li class="oli duo_type_li" style="display:none;">
+									<div class="oli_div_1">
+										多行处理
+									</div>
+									<div class="oli_div_2">
+										<?php if(!empty($_GET['k'])){$arr = explode(',',$this->tpl_vars['res']['duo_type']);} ?>
+							<input <{if empty(@_GET['k'])}>checked="checked"<{else /}><?php if(in_array('1',$arr)){echo 'checked="checked"';} ?><{/if}> type="checkbox" class="ziduan_create_leixing" value="1" name="duo_type[]">&nbsp;将换行转化为html的&lt;br/&gt;<div style="height:5px;"></div>
+							<input <{if empty(@_GET['k'])}>checked="checked"<{else /}><?php if(in_array('2',$arr)){echo 'checked="checked"';} ?><{/if}> type="checkbox" class="ziduan_create_leixing" value="2" name="duo_type[]">&nbsp;将空格转化为html的&amp;nbsp;<div style="height:5px;"></div>
+									</div>
+									<div class="oli_div_3">
+										由于在textarea中的换行/空格 相同于文本格式的换行/空格 并不是网页格式的 所以如果希望在网页上也能换行和空格 请选中这里
+									</div>
+								<div class="clear"></div>
+								</li>*}>
+<{*
+								<li class="oli glx">
+									<div class="oli_div_1">
+										字符串处理
+									</div>
+									<div class="oli_div_2">
+							<input <{if !empty(@_GET['k'])}><{if $res['guolv']=='1'}>checked="checked"<{/if}><{/if}>  <{if empty(@_GET['k'])}>checked="checked"<{/if}> type="checkbox" class="ziduan_create_leixing" value="1" name="guolv">&nbsp;html标签过滤<div style="height:15px;"></div>
+										<textarea name="buguolv" class="oli_textarea"><{if !empty(@_GET['k'])}><{if $res['type']=='0' || $res['type']=='1'}><{$res['default_val']}><{/if}><{/if}></textarea>
+									</div>
+									<div class="oli_div_3">
+										是否使用html过滤，如果过滤 将会把&lt;html&gt;&lt;div&gt;..之类的标签转换成实体 不需要过滤的标签 请将值写在下面的文本框中 多个用逗号隔开 如：img,span
+									</div>
+								<div class="clear"></div>
+								</li>
+								*}>
+								<li  class="oli html_gongneng">
+									<div class="oli_div_1">
+										html文本功能
+									</div>
+									<div class="oli_div_2 margin_left_10" style="width:80%;">
+										<ul>
+						<?php
+							if(!empty($_GET['k'])){
+								$arr=explode(',',$this->tpl_vars['res']['default_val']);
+							}
+
+						$xml = get_xml_array('./sundry/static_file/xml/html_gongneng.xml');
+?>
+							<{foreach @xml['input'] as $v}>
+						<li class="html_gn_li"><input name="html_gongneng[]" value="<{@v['@attributes']['name']}>" <{if empty(@_GET['k'])}><?php if($v['@attributes']['key']=='1'){ ?>checked="checked"<?php } ?><{else /}><?php if(in_array($v['@attributes']['name'],$arr)){echo 'checked="checked"';} ?><{/if}> key="<{@v['@attributes']['key']}>" type="checkbox" class="html_gongneng_input">&nbsp;<{@v['@attributes']['value']}></li>
+						<{/foreach}>
+								<div class="clear"></div>
+
+										</ul>
+							<div>
+								<a href="javascript:void(0)" id="html_gongneng_quanxuan">全选</a>
+								<a href="javascript:void(0)" id="html_gongneng_quanbuxuan">全不选</a>
+								<a href="javascript:void(0)" id="html_gongneng_fanxuan">反选</a>
+								<a href="javascript:void(0)" id="html_gongneng_moren">默认</a>
+							</div>
+									</div>
+									<script type="text/javascript">
+									$(function(){
+
+							$('#html_gongneng_quanxuan').click(function(){
+								$('.html_gongneng_input').prop("checked",true);
+							})
+							$('#html_gongneng_quanbuxuan').click(function(){
+								$('.html_gongneng_input').prop("checked",false);
+							})
+							$('#html_gongneng_fanxuan').click(function(){
+								$('.html_gongneng_input').each(function(){
+									if($(this).prop("checked"))
+										$(this).prop("checked",false)
+									else
+										$(this).prop("checked",true)
+								})
+							})
+							$('#html_gongneng_moren').click(function(){
+								$('.html_gongneng_input').prop("checked",false);
+								$('.html_gongneng_input[key=1]').prop("checked",true);
+							})
+									})
+									</script>
+								<div class="clear"></div>
+								</li>
+								<li class="oli kexuan_zhi">
+									<div class="oli_div_1">
+										字段可选的值
+									</div>
+									<div class="oli_div_2">
+										<textarea name="default_val" class="oli_textarea"><{if !empty(@_GET['k'])}><{if $res['type']=='4' || $res['type']=='5'}><{$res['default_val']}><{/if}><{/if}></textarea>
+									</div>
+									<div class="oli_div_3">
+										字段可选的值,多个用逗号隔开，如 滨州,淄博,济南
+使用类型：option/checkbox
+									</div>
+								<div class="clear"></div>
+								</li>
+								<script type="text/javascript">
+									$(function(){
+										sx();
+									})
+										
+									$('.ziduan_create_leixing').change(function(){
+										sx();
+									})
+									function sx(){
+										var val = $('.ziduan_create_leixing:checked').attr('key');
+										if(val=='x'){
+											$('.dan_type_li').show();
+											$('.duo_type_li').hide();
+											$('.glx').show();
+										}else if(val=='y'){
+											$('.dan_type_li').hide();
+											$('.duo_type_li').show();
+											$('.glx').show();
+										}else if(val=='z'){
+											$('.dan_type_li').hide();
+											$('.duo_type_li').hide();
+											$('.glx').hide();
+										}else{
+											$('.dan_type_li').hide();
+											$('.duo_type_li').hide();
+											$('.glx').hide();
+										}
+									}
+								</script>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</form>
+						<{if !empty(@_GET['k'])}>
+						<script type="text/javascript">
+							$(function(){
+								$('input[name=cn_name]').val('<{$res['cn_name']}>');
+								$('input[name=en_name]').val('<{$res['en_name']}>');
+								$('textarea[name=tishi]').val('<{$res['tishi']}>');
+							})
+						</script>
+						<{/if}>
+						</div>
+					</div>
+				</div>
+			</div>
+			<{*字段创建结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

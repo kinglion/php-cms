@@ -1,0 +1,58 @@
+			<{*文章管理管理开始*}>
+<?php 
+	$pdo = get_pdo();
+	$res = $pdo -> query('select id,title,type,paixu from '.DB_PRE."z_web_class order by type desc");
+?>
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						分类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="?h=web&hconfig=mokuai&c=class_t">创建</a>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<form class="all_form1" method="post" action="?h=web&c=hdp_d">
+							<table class='admin_main_table' style="margin:0;">
+								<tr class='admin_con_tr_title'>
+									<th style="">排序</th>
+									<th style="">名称</th>
+									<th style="">类型</th>
+									<th style="">操作</th>
+								</tr>
+								<?php foreach($res as $v){ ?>
+								<tr class="admin_con_tr_con">
+									<td><{@v['paixu']}></td>
+									<td><{@v['title']}></td>
+									<td><?php switch($v['type']){
+										case '1':
+											echo '新闻动态';
+										break;
+										case '2':
+											echo '产品展示';
+										break;
+										case '3':
+											echo '客户案例';
+										break;
+										case '4':
+											echo '解决方案';
+										break;
+									} ?></td>
+									<td><a href="?h=web&hconfig=mokuai&k=<{@v['id']}>&c=class_t">编辑</a>&nbsp;|&nbsp;<a class="delete_tishi" href="?h=web&hconfig=mokuai&k=<{@v['id']}>&c=class_d">删除</a></td>
+								</tr>
+								<?php } ?>
+							</table>
+							</form>
+							</div>
+							<{*分页和检索*}>
+							<div class="page_so_parent">
+								<div style="height:10px;">&nbsp;</div>
+								
+								</div>
+							<div class="clear"></div>
+							</div>
+							<{*/分页和检索*}>
+							&nbsp;
+						</div>
+					</div>
+					<{*/文章管理结束*}>
+
+			

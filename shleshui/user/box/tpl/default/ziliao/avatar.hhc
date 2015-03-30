@@ -1,0 +1,87 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">修改头像</li>
+							<a href="?h=ziliao&c=avatar_add"><li>上传头像</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<div class="main_red_title">
+							<div class="main_red_title_1">
+								<div class="main_red_title_1_1">
+									系统头像
+								</div>
+								<div class="main_red_title_1_2"></div>
+							</div>
+							<div class="main_red_title_2">
+								
+							</div>
+							<div class="clear"></div>
+						</div>
+						<ul class="avatar_list">
+							<?php for($i=1;$i<=30;$i++){ ?>
+							<li>
+								<img src="./sundry/static_file/img/pic/<{@i}>.jpg">
+								<div <{if "./sundry/static_file/img/pic/@i.jpg"==@_SESSION['user']['pic']}>style="display:block;"<{/if}> class="avatar_list_hidden_b opacity_5"></div>
+								<div <{if "./sundry/static_file/img/pic/@i.jpg"==@_SESSION['user']['pic']}>style="display:block;"<{/if}> class="avatar_list_hidden_r">
+									<span></span>
+								</div>
+							</li>
+							<?php } ?>
+						</ul>
+						<div style="margin-top:30px;" class="main_red_title">
+							<div class="main_red_title_1">
+								<div class="main_red_title_1_1">
+									已上传头像
+								</div>
+								<div class="main_red_title_1_2"></div>
+							</div>
+							<div class="main_red_title_2">
+								
+							</div>
+							<div class="clear"></div>
+						</div>
+
+						<ul class="avatar_list">
+							<?php
+								$pdo = get_pdo();
+								$res = $pdo -> query('select * from `'.DB_PRE."user_pic` where `user_id` = '{$_SESSION['user']['user_id']}'");
+								$res = empty($res) ? array() : $res;
+								foreach($res as $v){
+							?>
+							<li>
+								<img src="<{@v['pic']}>">
+								<div <{if @v['pic']==@_SESSION['user']['pic']}>style="display:block;"<{/if}> class="avatar_list_hidden_b opacity_5"></div>
+								<div <{if @v['pic']==@_SESSION['user']['pic']}>style="display:block;"<{/if}> class="avatar_list_hidden_r">
+									<span></span>
+								</div>
+								<div class="avatar_list_hidden_text_2"><a class="delete_tishi" href="?h=ziliao&c=avatar_delete&k=<{@v['id']}>">删除</a></div>
+							</li>
+							<?php } ?>
+						</ul>
+<form method="post" action="?h=ziliao&c=avatar_submit">
+<input class="pic" type="hidden" name="pic" value="<{@_SESSION['user']['pic']}>">
+						<div style="margin:50px 0 0 20px;">
+							<input class="submit" type="submit" value="提交">
+						</div>
+					</form>
+					</div>
+				</div>
+
+				<ul class="position_right_title">
+					<li><a href="?h=ziliao&c=avatar">修改头像</a></li>
+					<li><a href="?h=ziliao&c=avatar_add">上传头像</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

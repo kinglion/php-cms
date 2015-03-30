@@ -1,0 +1,134 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<form method="post" class="forms" action="?h=set_up&c=basic_submit" enctype="multipart/form-data">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						网站基本信息
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										网站主标题
+									</div>
+									<div class="oli_div_2">
+										<input name="3" type="text" class="oli_text" value="<{$res['3']}>">
+									</div>
+									<div class="oli_div_3">
+										网站主标题,会显示在网站首页,并应用与对搜索引擎的网站名称
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										网站短标题
+									</div>
+									<div class="oli_div_2">
+										<input name='4' value="<{$res['4']}>" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										网站短标题,会应用于内页标题,图片title信息和底部信息
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										ICP备案号
+									</div>
+									<div class="oli_div_2">
+										<input name='5' type="text" class="oli_text" value="<{$res['5']}>">
+									</div>
+									<div class="oli_div_3">
+										网站备案号将会显示在网站底部
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										第三方流量统计
+									</div>
+									<div class="oli_div_2">
+										<textarea name="6" class='oli_textarea'><{$res['6']}></textarea>
+									</div>
+									<div class="oli_div_3">
+										第三方的流量统计代码，如果不需要很精确的了解访问量，不建议使用，会很大的影响访问速度
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										站点logo
+									</div>
+									<input type="hidden" name="hhc_v_k" value="7" />
+									<input type="hidden" name="hhc_v_k2" value="10" />
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+										<div class="file_get">
+											<div class="file_get_1">
+												<div class="file_get_1_div" style="">
+													<input class="file_get_name" readonly="readonly" type="text" value="<{$res['10']}>">
+												</div>
+											</div>
+											<div class="file_get_2">选择文件
+												<input name="logo" width="50" class="file_get_2_file opacity_0" type="file">
+											</div>
+											<div class="clear"></div>
+										</div>
+									</div>
+									<div class="oli_div_3">
+										网站左上角logo图片
+										<{if !empty($res['7'])}>
+											,已上传<a target="_blank;" class="logo_chakan" style="color:#0074A2;" href="<{$res['7']}>">点击查看</a>
+										<{/if}>
+										
+									</div>
+								<div class="clear"></div>
+								</li>
+								<{*<li class="oli">
+									<div class="oli_div_1">
+										是否开启站点
+									</div>
+									<div class="oli_div_2 margin_left_10" style="font-size:13px;color:#333333;">
+
+										<input value="1" type="radio" name="8" class="" <{if $res['8']=='1'}>
+											checked="checked"
+										<{/if}>>开启&nbsp;&nbsp;
+										<input value="0" type="radio" name="8" class="" <{if $res['8']=='0'}>
+											checked="checked"
+										<{/if}>>关闭
+									</div>
+									<div class="oli_div_3">
+										站点关闭后，只有指定用户或用户组可以访问
+									</div>
+								<div class="clear"></div>
+								</li>
+								<input type="hidden" name="9" value="<{$res['9']}>">
+								<li class="oli">
+									<div class="oli_div_1">
+										站点关闭的提示
+									</div>
+									<div class="oli_div_2">
+										<textarea name="9" class='oli_textarea'><{$res['9']}></textarea>
+									</div>
+									<div class="oli_div_3">
+										站点关闭后的提示&nbsp;&nbsp;譬如,网站升级中。。
+									</div>
+								<div class="clear"></div>
+								</li>*}>
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交修改">
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+			<{*网站基本信息结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

@@ -1,0 +1,198 @@
+<?php
+	$pdo = get_pdo();
+	$class_resz = $pdo -> query('select id,title,type from '.DB_PRE."z_web_class");
+	$class_res = array();
+	foreach($class_resz as $v){
+		$class_res[$v['id']] = $v;
+	}
+?>
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+<{include ./news.hhc}>
+<{include ./product.hhc}>
+<{include ./casez.hhc}>
+<{include ./solution.hhc}>
+<{include ./hdp.hhc}>
+<{include ./class.hhc}>
+
+<?php
+	$configs = $pdo -> query('select * from '.DB_PRE."z_web_config");
+	$config = array();
+	foreach($configs as $v){
+		$config[$v['k']] = $v;
+	}
+?>
+
+<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<form method="post" action="?h=web&c=config_submit">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						设置
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										首页 联系我们
+									</div>
+									<div class="oli_div_2" style="width:65%;" name="title">
+										<textarea name="lxwm" class="oli_textarea"><?php echo $config['lxwm']['v']; ?></textarea>
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										首页 公司简介
+									</div>
+									<div class="oli_div_2" style="width:65%;" name="title">
+										<textarea name="gsjj" class="oli_textarea"><?php echo $config['gsjj']['v']; ?></textarea>
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										首页 客户案例
+									</div>
+									<div class="oli_div_2" style="width:65%;" name="title">
+										<textarea name="khal" class="oli_textarea"><?php echo $config['khal']['v']; ?></textarea>
+									</div>
+								<div class="clear"></div>
+								</li>
+
+
+							</ul>
+
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</div>
+					</div>
+				</div>
+				</form>
+
+			</div>
+			<{*网站基本信息结束*}>
+
+
+
+
+
+
+
+<{*网站基本信息开始*}>
+			<div class="admin_con_main_parent">
+				<form method="post" class="forms" action="?h=web&c=config2_submit" enctype="multipart/form-data">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						设置2
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.config.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/ueditor.all.min.js"></script>
+<script type="text/javascript" src="./sundry/plus/ue/lang/zh-cn/zh-cn.js"></script>
+<?php
+	$configs = $pdo -> query('select * from '.DB_PRE."z_web_config2");
+	$config = array();
+	foreach($configs as $v){
+		$config[$v['k']] = $v;
+	}
+?>
+
+
+								<li class="oli">
+									<div class="oli_div_1">
+										人才招聘
+									</div>
+									<div class="oli_div_2" style="width:65%;">
+										<script id="pl1" type="text/plain" style="width:100%;height:200px;" name="rczp"><?php echo $config['rczp']['v']; ?></script>
+    <script type="text/javascript">
+    var ue = UE.getEditor('pl1', {   
+    toolbars:[[
+      'source','bold','italic','link','unlink','imagenone','imagecenter','imageleft','imageright','simpleupload','insertimage','inserttable','insertcode','deletetable','forecolor','customstyle','paragraph','fontfamily','fontsize','emotion','map','attachment','spechars','searchreplace',    ]]
+});
+    </script>
+									</div>
+								<div class="clear"></div>
+								</li>
+
+
+
+
+
+								<li class="oli">
+									<div class="oli_div_1">
+										客户服务
+									</div>
+									<div class="oli_div_2" style="width:65%;">
+										<script id="pl2" type="text/plain" style="width:100%;height:200px;" name="khfw"><?php echo $config['khfw']['v']; ?></script>
+    <script type="text/javascript">
+    var ue = UE.getEditor('pl2', {   
+    toolbars:[[
+      'source','bold','italic','link','unlink','imagenone','imagecenter','imageleft','imageright','simpleupload','insertimage','inserttable','insertcode','deletetable','forecolor','customstyle','paragraph','fontfamily','fontsize','emotion','map','attachment','spechars','searchreplace',    ]]
+});
+    </script>
+									</div>
+								<div class="clear"></div>
+								</li>
+
+
+
+							</ul>
+
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</div>
+					</div>
+				</div>
+				</form>
+
+			</div>
+			<{*网站基本信息结束*}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="height:100px;"></div>
+
+			</div>
+
+
+
+
+
+
+		</div>
+		<{include index::footer.hhc}>

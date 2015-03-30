@@ -1,0 +1,83 @@
+<{include ./header.hhc}>
+			<!-- Banner -->
+			<div class="bannerPane">
+			  <section class="slider">
+				<div class="flexslider">
+				  <ul class="slides">
+<?php
+    $pdo = get_pdo();
+    $res = $pdo -> query('select * from '.DB_PRE."z_web_hdp order by paixu desc");
+    $res = empty($res) ? array() : $res;
+    foreach($res as $v){
+?>
+					<li style="height:200px;overflow:hidden;">
+						<img style="height:200px;width:auto;" title="<{@v['title']}>" src="<{@v['pic']}>" />
+					</li>		
+<?php } ?>			
+				  </ul>
+				</div>
+			  </section>
+			</div>
+			<!-- End Banner -->
+			
+			<!-- Content -->
+			<div id="content">
+							
+			</div>
+			<div class="block">
+				<span class="i-phone c-red"></span><{*<a href="tel:867978387835">867978387835</a>*}>
+			</div>
+			
+			<div class="exploreSiteFullPane">
+				
+				<a style="border:0" href="web.php?m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i class="i-home"></i>
+					</span>
+					<h4>网站首页</h4>
+				</a>
+				<a style="float:right;border:0" href="web.php?h=index&c=news&m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i class="i-about"></i>
+					</span>
+					<h4>新闻动态</h4>
+				</a>
+				<div style="clear:both;border-top:1px solid #DDD;"></div>
+				<a href="web.php?h=index&c=product&m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i style="background-position:-72px 0px;" class="i-blog"></i>
+					</span>
+					<h4>产品展示</h4>
+				</a>
+				<a href="web.php?h=index&c=casez&m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i class="i-gallery"></i>
+					</span>
+					<h4>客户案例</h4>
+				</a>
+				<a href="web.php?h=index&c=solution&m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i style="background-position:-143px 0px;" class="i-gallery"></i>
+					</span>
+					<h4>解决方案</h4>
+				</a>
+				<a href="web.php?h=index&c=comment&m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i style="background-position:-143px -72px;" class="i-gallery"></i>
+					</span>
+					<h4>留言反馈</h4>
+				</a>
+				<a href="web.php?h=index&c=jobs&m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i style="background-position:0px -143px;" class="i-gallery"></i>
+					</span>
+					<h4>人才招聘</h4>
+				</a>
+				<a href="web.php?h=index&c=user&m=1" class="explorePane">
+					<span class="i-pane i-blue">
+						<i style="background-position:0px 0px;" class="i-gallery"></i>
+					</span>
+					<h4>客户服务</h4>
+				</a>				
+			</div>
+<{include ./footer.hhc}>

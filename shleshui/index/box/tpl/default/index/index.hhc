@@ -1,0 +1,150 @@
+<{include public::header.hhc}>
+<div class="main">
+
+
+<!--列表页-->
+<div class="main_left">
+
+<style type="text/css">
+.main_left img{max-width:590px;}
+</style>
+
+<!--content-->
+<?php $pdo = get_pdo(); ?>
+<style type="text/css">
+	.guli{color:#79b7e7;cursor:pointer;-webkit-transition: all 0.3s ease-in-out;}
+	.guli:hover{color: #fce557;}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$('.guli').click(function(){
+			var str = 'id='+$(this).attr('key');
+			var guli_val = $(this).parent().find('.guli_val').text();
+			var guli_this = $(this).parent().find('.guli_val');
+			//$(this).parent().find('.guli_val').text(parseInt(guli_val)+1);
+			$.post('?h=index&c=guli',str,function(data){
+				if(data=='1'){
+					alert('鼓励成功');
+					guli_this.text(parseInt(guli_val)+1);
+				}else{
+					alert(data);
+				}
+			})
+		})
+	})
+</script>
+
+<{hhc::artlist order_by="desc" page_key="page_1" moxing_name="shilianyizhan" list_num="10" page_num="5" cache="false" clear_cache="time" cache_time="10" even_user="true" page_type="2" sql="con_lanmu_id#24" }>
+
+<div class="outContentBox">
+<div class="contentBox wrap" id="tt" style="height:170px;">
+
+<a class="titleCanClick" href="<{hhc::artlist_content::arturl /}>" target="_blank"><{hhc::artlist_content::con_biaoti /}></a>
+<div class="lineC"></div>
+
+<a class="contentCanClick" target="_blank">
+<{hhc::artlist_content::neirong /}>
+</a>
+<ul class="actionArea">
+<div class="bdsharebuttonbox" style="float:left; width:400px;">
+<{*左边 分享那里*}>&nbsp;</div>
+<div class="fr"><a style="height:30px; display:block;" target="_blank" href="<{hhc::artlist_content::arturl /}>">查看全文及评论</a></div>
+<div class="clear"></div>
+
+
+
+<div class="gradient"></div>
+</ul>
+</div>
+
+<div class="seeallButton read-more ">
+<div class="info">
+<li class="fr date">
+	<?php $count_res = $pdo -> query('select count(*) from '.DB_PRE."pinglun where art_id='{$v['con_id']}' limit 1",''); ?>
+	<{*阅读(<{hhc::artlist_content::con_liulan /}>)*}>
+	留言(<{@count_res['count(*)']}>)
+	&nbsp;
+	<span class="guli" key="<{hhc::artlist_content::con_id /}>">鼓励</span> (<span class="guli_val"><{hhc::artlist_content::guli /}></span>)</li>
+
+<li class="con_pnum">
+	<{if empty(@v['user_id'])}>
+		游客
+	<{else/}>
+		<{if @v['sex']==='1'}>♂<{else /}>♀<{/if}>
+		<{if !empty(@v['con_user_id'])}>
+			<{if !empty(@v['username'])}>
+				<{@v['username']}>
+			<{else /}>
+				<{@v['user_name']}>
+			<{/if}>
+		<{/if}>
+	<{/if}>
+	&nbsp;&nbsp;
+	<{hhc::artlist_content::con_time->time[年-月-日 时:分:秒] /}></li></div>
+<a href="javascript:void(0);" class="zhankais" key="zk">展开阅读全文内容</a>
+</div>
+
+</div>
+
+<{/hhc::artlist}>
+
+
+
+
+<script type="text/javascript">
+	$('.zhankais').click(function(){
+		if($(this).attr('key')=='zk'){
+			var hh = $(this).parent().parent().find('.contentCanClick').height()+100;
+			hh = hh>170?hh:200;
+			$(this).parent().parent().find('.contentBox').animate({'height':hh+'px'});
+			$(this).attr('key','sq');
+			$(this).text('点击收缩');
+		}else{
+			$(this).parent().parent().find('.contentBox').animate({'height':'170px'});
+			$(this).attr('key','zk');
+			$(this).text('展开阅读全文内容');
+		}
+	})
+</script>
+
+
+
+
+<!--content finish-->
+
+<style type="text/css">
+.page_1{background: none repeat scroll 0 0 rgba(6, 32, 42, 0.8) !important;border-radius: 4px; padding: 5px 10px;margin-right:10px;}
+</style>
+
+<ul class="pagination">
+<{@page_1}>
+
+<div class="clear"></div>
+</ul>
+
+</div>
+
+
+
+
+
+
+
+
+<{include public::index_right.hhc}>
+
+
+
+
+
+
+</div>
+<!--上部云朵背景图-->
+<div class="bg_top"></div>
+<!--上部云朵背景图end-->
+<!--下部黄色背景图-->
+<div class="bg_bot"></div>
+
+
+
+<{include public::footer.hhc}>

@@ -1,0 +1,74 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<a href="?h=hudong&c=rizhi"><li>我的日志</li></a>
+							<a href="?h=hudong&c=fb_rizhi"><li>发布日志</li></a>
+							<a href="?h=hudong&c=zx_rizhi"><li>最新日志</li></a>
+							<a href="?h=hudong&c=jc_rizhi"><li>精彩日志</li></a>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">分组管理</li>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<div style="width:94%;margin:0 auto 20px;"><a href="?h=hudong&c=cj_fenzu" class="all_a">创建分组</a></div>
+						<table class="auto_table" style="width:94%;margin:0 auto;">
+							<tr>
+								<th>编号</th>
+								<th>排序</th>
+								<th>名称</th>
+								<th>显示</th>
+								<th>删除</th>
+							</tr>
+<?php 
+	$pdo = get_pdo();
+	$res = $pdo -> query('select * from '.DB_PRE."rizhi_fenzu where user_id='{$_SESSION['user']['user_id']}' order by paixu desc");
+
+						if(!empty($res)){
+							foreach($res as $v){
+?>
+							<tr>
+								<td style="width:12%;"><{@v['id']}></td>
+								<td style="width:12%;"><{@v['paixu']}></td>
+								<td><{@v['name']}></td>
+								<td style="width:15%;">
+									<{if(@v['xianshi']=='1')}>
+										<span>显示</span> |
+										<a href="?h=hudong&c=xs_fenzu&k=<{@v['id']}>&k2=0" class="all_a">不显示</a>
+									<{else /}>
+										<a href="?h=hudong&c=xs_fenzu&k=<{@v['id']}>&k2=1" class="all_a">显示</a> |
+										<span>不显示</span>
+									<{/if}>
+								</td>
+								<td style="width:15%;">
+									<a href="?h=hudong&c=cj_fenzu&k=<{@v['id']}>" class="all_a">编辑</a> |
+									<a href="?h=hudong&c=sc_fenzu&k=<{@v['id']}>" class="all_a delete_tishi">删除</a>
+								</td>
+							</tr>
+						<?php } }else{ ?>
+							<tr>
+								<td colspan="5">你还没有分组！ <a class="all_a" href="?h=hudong&c=cj_fenzu">创建分组</a></td>
+							</tr>
+						<?php } ?>
+						</table>
+					</div>
+				</div>
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=rizhi">我的日志</a></li>
+					<li><a href="?h=hudong&c=fb_rizhi">发布日志</a></li>
+					<li><a href="?h=hudong&c=zx_rizhi">最新日志</a></li>
+					<li><a href="?h=hudong&c=jc_rizhi">精彩日志</a></li>
+					<li><a href="?h=hudong&c=fz_guanli">分组管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>

@@ -1,0 +1,78 @@
+<?php
+	if(empty($_GET['name'])){
+		alert_2(1,'搜索关键词不能为空','',3);
+	}
+    include './sundry/cache/json/config.php';
+    $arr = json_decode($json,true);
+	$top_title = "站内搜索 - {$_GET['name']} - {$arr['4']}";
+?>
+<{include ./header.hhc}>
+<div class="index_con">
+<div class="page_left">
+<div class="magtop10 search">
+<p class="searchp01">站内搜索</p>
+<form action="web.php" method="get">
+<input type="hidden" name="h" value="index">
+<input type="hidden" name="c" value="so">
+<input name="name" type="text" value="<?php if(!empty($_GET['name'])){echo $_GET['name'];} ?>" class="searchinp"/>
+<p class="searchp02"><input type="submit" value="" class="searchbon" /></p>
+</form>
+
+</div>
+<div class="magtop10"><a href="web.php?h=index&c=comment" title="留言反馈"><img src="HHC_TPL_HHC/images/left01.gif"  alt="留言反馈"/></a></div>
+<{*<div class="magtop10"><a href="#" title=""><img src="HHC_TPL_HHC/images/left02.gif"  alt="在线加盟"/></a></div>*}>
+</div>
+<div class="page_right">
+<div class="pagetop"><span class="web_navi">当前位置：<a href="web.php">首页</a> &gt;&gt; <a href="web.php?h=index&c=so">站内搜索</a></span><h2>站内搜索</h2></div>
+<div class="borl_r">
+<ul class="newslist">
+<?php 
+	$res = array();
+	$db_pre = DB_PRE;
+	$sql = <<<SQL
+	select 
+		id,title,time 
+	from 
+		{$db_pre}z_web_news
+	where 
+		title like '%{$_GET['name']}%'
+	union select
+		id,title,time 
+	from 
+		{$db_pre}z_web_product
+	where 
+		title like '%{$_GET['name']}%'
+	union select
+		id,title,time 
+	from 
+		{$db_pre}z_web_solution
+	where 
+		title like '%{$_GET['name']}%'
+	union select
+		id,title,time 
+	from 
+		{$db_pre}z_web_case
+	where 
+		title like '%{$_GET['name']}%'
+
+SQL;
+	$res = $pdo -> query($sql);
+	$res = !empty($res) ? $res : array();
+	foreach($res as $v){
+?>
+<li><a href="web.php?h=index&c=news_content&k=<{@v['id']}>" title="<{@v['title']}>"><?php echo mb_substr($v['title'],'0','45','utf-8'); ?></a><span><?php echo date('Y-m-d H:i',$v['time']); ?></span></li>
+<?php } ?>
+</ul>
+<div class="epages">
+</div>
+
+
+
+</div>
+<div class="page_bot"></div>
+
+</div>
+<div class="clear"></div>
+<div class="blank10"></div>
+</div>
+<{include ./footer.hhc}>

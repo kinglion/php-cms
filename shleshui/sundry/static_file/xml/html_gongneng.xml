@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<editor>
+	<input name="fullscreen" value="全屏显示" key="0" />
+	<input name="source" value="源代码预览" key="0" />
+	
+	<input name="undo" value="撤销" key="0" />
+	<input name="redo" value="撤回" key="0" />
+	
+	<input name="bold" value="加粗" key="1" />
+	<input name="italic" value="倾斜" key="1" />
+	
+	<input name="underline" value="下划线" key="0" />
+	<input name="fontborder" value="文字边框" key="0" />
+	
+	<input name="strikethrough" value="删除线" key="0" />
+	<input name="anchor" value="锚点" key="0" />
+	
+	<input name="superscript" value="上标" key="0" />
+	<input name="subscript" value="下标" key="0" />
+	
+	<input name="removeformat" value="清除格式" key="0" />
+	<input name="formatmatch" value="格式刷" key="0" />
+	
+	<input name="autotypeset" value="自动排版" key="0" />
+	<input name="blockquote" value="引用" key="0" />
+	
+	<input name="justifyjustify" value="两端对齐" key="0" />
+	<input name="justifycenter" value="居中对齐" key="0" />
+	
+	<input name="justifyleft" value="居左对齐" key="0" />
+	<input name="justifyright" value="居右对齐" key="0" />
+	
+	<input name="touppercase" value="字母大写" key="0" />
+	<input name="tolowercase" value="字母小写" key="0" />
+	
+	<input name="link" value="超链接" key="1" />
+	<input name="unlink" value="删除超链接" key="1" />
+	
+	<input name="imagenone" value="图像默认" key="1" />
+	<input name="imagecenter" value="图像居中" key="1" />
+	
+	<input name="imageleft" value="图像左浮动" key="1" />
+	<input name="imageright" value="图像右浮动" key="1" />
+	
+	<input name="simpleupload" value="单图上传" key="1" />
+	<input name="insertimage" value="多图上传" key="1" />
+		
+	<input name="wordimage" value="图片转存" key="0" />
+	<input name="pasteplain" value="粘贴为文本" key="0" />
+	
+	<input name="inserttable" value="插入表格" key="1" />
+	<input name="deletetable" value="删除表格" key="1" />
+	
+	<input name="forecolor" value="字体颜色" key="1" />
+	<input name="backcolor" value="背景色" key="0" />
+	
+	<input name="insertorderedlist" value="有序列表" key="0" />
+	<input name="insertunorderedlist" value="无序列表" key="0" />
+	
+	<input name="customstyle" value="自定义标题" key="1" />
+	<input name="paragraph" value="段落标题" key="1" />
+	
+	<input name="fontfamily" value="文字字体" key="1" />
+	<input name="fontsize" value="文字大小" key="1" />
+	
+	<input name="directionalityltr" value="左向右输入" key="0" />
+	<input name="directionalityrtl" value="右向左输入" key="0" />
+	
+	<input name="emotion" value="表情" key="1" />
+	<input name="scrawl" value="涂鸦" key="0" />
+		
+	<input name="map" value="百度地图" key="1" />
+	<input name="gmap" value="谷歌地图" key="0" />
+	
+	<input name="attachment" value="插入附件" key="1" />
+	<input name="insertframe" value="插入iframe" key="0" />
+	
+	<input name="insertcode" value="插入代码" key="1" />
+	<input name="spechars" value="特殊字符" key="1" />
+	
+	<input name="template" value="模板" key="1" />
+	<input name="background" value="背景" key="1" />
+	
+	<input name="horizontal" value="分割线" key="1" />
+	<input name="searchreplace" value="查询替换" key="1" />
+	
+	<input name="print" value="打印" key="0" />
+	<input name="preview" value="预览" key="0" />
+	
+	<input name="pagebreak" value="内容分页" key="1" />
+</editor>
+
+ 

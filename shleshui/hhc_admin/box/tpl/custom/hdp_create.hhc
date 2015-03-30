@@ -1,0 +1,54 @@
+<{include index::header.hhc}>
+<{include index::left.hhc}>
+		<div class="main">
+<{include index::msg.hhc}>
+			<{*字段创建开始*}>
+			<form method="post" action="?h=custom&c=hdp_create_submit">
+			<div class="admin_con_main_parent">
+				<div class="admin_con_main">
+					<h1 class="admin_con_main_title">
+						创建幻灯片组<span>注：这里的选项不能修改</span>
+					</h1>
+					<div class="admin_con_main_con">
+						<div class="admin_con_main_con_main">
+							<ul>
+								<li class="oli">
+									<div class="oli_div_1">
+										幻灯片中文名
+									</div>
+									<div class="oli_div_2">
+										<input name="cn_name" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										幻灯片的中文名称 用于展示给后台使用者 20个字符之内
+									</div>
+								<div class="clear"></div>
+								</li>
+								<li class="oli">
+									<div class="oli_div_1">
+										幻灯片英文名
+									</div>
+									<div class="oli_div_2">
+										<input name="en_name" type="text" class="oli_text">
+									</div>
+									<div class="oli_div_3">
+										幻灯片的英文名称 用于存储在数据库中 20个字符之内
+									</div>
+								<div class="clear"></div>
+								</li>
+								
+
+							</ul>
+
+							<input type="submit" class="create_zidingyi" href="javascript:void(0)" style="margin:50px 10px 30px 10px;" value="提交">
+						</form>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+			<{*字段创建结束*}>
+
+
+		</div>
+		<{include index::footer.hhc}>

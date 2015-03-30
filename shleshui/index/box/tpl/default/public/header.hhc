@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><{hhc::set_up::lang_title}></title>
+<meta name="keywords" content="<{hhc::set_up::keywords}>">
+<meta name="description" content="<{hhc::set_up::description}>">
+<link rel="icon" href="./sundry/static_file/img/favicon.ico" mce_href="./sundry/static_file/img/favicon.ico" type="image/x-icon" /> 
+<link href="HHC_TPL_HHC/default/css/tstyle.css" rel="stylesheet" type="text/css" media="all">
+<script type="text/javascript" src="./sundry/static_file/js/jquery.js"></script>
+<script type="text/javascript">
+function CheckForm(){
+if (document.fedback.suggestion.value==""){
+history.back();
+document.fedback.suggestion.focus();
+return false;
+}
+else{
+document.fedback.submit();
+}
+}
+</script>
+
+<style type="text/css">
+#helpform{margin:300px auto;}
+</style>
+
+</head>
+<body style="background:#504C7C;" >
+	<div style="position:fixed;z-index:599999;width:100%;">
+<div id="helpform" name="helpform" class="form-block" style="display: none;">
+<div class="popTitle">
+<h1>请帮助我们进步</h1>
+<div class="popClose" href="javascript:void(0)" onclick="document.getElementById('helpform').style.display='none';document.getElementById('fade').style.display='none'"></div>
+<div class="clear"></div>
+</div>
+<form method="post"  action="user.php?h=login&c=fankui"  >
+<textarea tabindex="1" name="content" id="suggest-text" type="text"></textarea>
+<button type="submit" >提交</button>
+</form>
+</div>
+</div>
+<{user_login}>
+<div style="position:fixed;top:20px;right:100px;z-index:9999;"><span>欢迎你，<{user::name /}></span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="user.php">会员中心</a>&nbsp;&nbsp;&nbsp;<a href="user.php?h=login&c=goout">退出</a></div>
+<{/user_login}>
+
+<{user_not_login}>
+<div style="position:fixed;top:20px;right:100px;z-index:9999;"><a target="_blank" href="user.php?h=login&c=login">登陆</a>&nbsp;&nbsp;&nbsp;<a target="_blank" href="user.php?h=login&c=register">注册</a></div>
+<{/user_not_login}>
+
+
+<div id="fade" class="black_overlay" style="display:none"></div>
+<div class="container">
+<div class="header">
+<h1><a style="background:none;" class="h1_logo" title="秘密" href="?" target="_self"><img src="<{hhc::set_up::logo}>"></a></h1>
+<div class="menuBar">
+<ul class="nav" style="overflow:hidden">
+<{hhc::nav }>
+<li ks='x' class="nav_x_<{hhc::nav::nav_id /}> hot"><a <{hhc::nav::target/}> title="<{hhc::nav::nav_yincang /}>" href="<{hhc::nav::navurl/}>"><{hhc::nav::nav_name/}></a>
+<ul>
+	##id##
+<li><a ##target## title="##nav_yincang##" href="##navurl##">##nav_name##</a></li>
+	end##
+</ul>
+</li>
+
+<{/hhc::nav}>
+
+<{if(isset($nav_key))}>
+	<script type="text/javascript">
+		$(function(){
+		<{if $nav_key['key']=='index'}>
+				$(".nav_x_<{$nav_key['id']}>").addClass('on_click');
+				$(".nav_x_<{$nav_key['id']}>").attr('ks','o');
+		<{else if $nav_key['key']=='moxing_list' || $nav_key['key']=='moxing_content'/}>
+				$(".nav_x_<{$nav_key['id']}>").addClass('on_click');
+				$(".nav_x_<{$nav_key['id']}>").attr('ks','o');
+		<{/if}>
+		$('.nav li').hover(function(){
+			$(this).addClass('on_click');
+		},function(){
+			if($(this).attr('ks')=='x'){
+				$(this).removeClass('on_click');
+			}
+		})
+		})
+	</script>
+<{/if}>
+<!--
+<li class="hot"><a href="web/1/?status=day" target="_self">热门<span></span></a>
+<ul>
+<li><a href="web/1/?status=day">24小时内</a></li>
+<li><a href="web/1/?status=week">7天内</a></li>
+<li><a href="web/1/?status=month">30天内</a></li>
+</ul>
+</li>
+
+<li class="fabiao"><a href="article/web/history/1/" target="_self">穿越</a></li>
+
+
+<li class="fabiao"><a href="article/web/report/" target="_self">发表</a></li>
+
+<li class="download">
+<a href="http://app.mimi.me" target="_blank">手机客户端</a>
+
+</li>-->
+</ul>
+<div class="searchBox">
+<form action="?" method="get" target="_blank">
+<input name="word" value="搜索" onfocus="if (this.value='搜索'){this.value=''}" onblur="if (this.value==''){this.value='搜索'}" class="searchInput">
+<input type="submit" value="" class="searchSubmits" style="">
+<input type="hidden" name="h" value="index">
+<input type="hidden" name="c" value="so">
+</form>
+</div>
+<style type="text/css">
+.searchSubmits{border: 0;
+width: 40px;background: none;
+cursor: pointer;
+float: left;
+height: 30px;
+margin: 10px 0 0;}
+</style>
+<div class="clear"></div>
+</div>
+</div>

@@ -1,0 +1,181 @@
+<{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">我的日志</li>
+							<a href="?h=hudong&c=fb_rizhi"><li>发布日志</li></a>
+							<a href="?h=hudong&c=zx_rizhi"><li>最新日志</li></a>
+							<a href="?h=hudong&c=jc_rizhi"><li>精彩日志</li></a>
+							<a href="?h=hudong&c=fz_guanli"><li>分组管理</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<table class="auto_table" style="width:94%;margin:0 auto;">
+							<tr>
+								<th>选中</th>
+								<th>标题</th>
+								<th>发布时间</th>
+								<th>状态</th>
+								<th>浏览</th>
+								<th>分组</th>
+								<th>操作</th>
+							</tr>
+							<form action="?h=hudong&c=sc_all_rizhi" method="post">
+<?php 
+	$tb_name = DB_PRE.'user_rizhi';
+	$type = 'a.id,a.title,a.time,a.zhuangtai,a.liulan,b.name';
+	$w = "a.user_id='{$_SESSION['user']['user_id']}'";
+	$order = 'order by a.id desc';
+	$even_arr = array(
+			array('table_k'=>'b','table_name'=>DB_PRE.'rizhi_fenzu','where'=>'on a.fenzu_id=b.id'),
+		);
+	$page = new page($tb_name,$type,$w.$order,20,'p',true,'a',$even_arr);
+	$res = $page->page_2(5,1);
+						if(!empty($res['0'])){
+							foreach($res['0'] as $v){
+?>
+							<tr>
+								<td style="width"><input class="checkbox" type="checkbox" name="id[]" value="<{@v['id']}>"></td>
+								<td><a href="?h=hudong&c=rizhi_content&k=<{@v['id']}>" class="all_a" target="_blank"><{@v['title']}></a></td>
+								<td><?php echo date('Y-m-d H:i',$v['time']); ?></td>
+								<td>
+									<{if @v['zhuangtai']=='1'}>
+									显示中
+									<{else /}>
+									<span style="color:#FF0000;">审核中</span>
+									<{/if}>
+								</td>
+								<td><{@v['liulan']}></td>
+								<td><{@v['name']}></td>
+								<td><a class="all_a" href="?h=hudong&c=fb_rizhi&k=<{@v['id']}>">编辑</a> | <a href="?h=hudong&c=sc_rizhi&k=<{@v['id']}>" class="all_a delete_tishi">删除</a></td>
+							</tr>
+						<?php } ?>
+							<tr>
+								<td colspan="7" style="text-align:left;">　
+									<a class="all_a quanxuan_table_a" href="javascript:void(0)">全选</a>&nbsp;&nbsp;
+									<a class="all_a qxquanxuan_table_a" href="javascript:void(0)">取消全选</a>&nbsp;&nbsp;
+									<a key="scxz" class="all_a scxzx_table_a" href="javascript:void(0)">删除选中项</a>&nbsp;&nbsp;&nbsp;
+								</td>
+							</tr>
+							</form>
+							<tr>
+								<td colspan="7" style="padding:12px 0;"><{@res['1']}></td>
+							</tr>
+						<?php }else{ ?>
+							<tr>
+								<td colspan="7">你还没有写过日志哦！ <a class="all_a" href="?h=hudong&c=fb_rizhi">编写日志</a></td>
+							</tr>
+						<?php } ?>
+						</table>
+					</div>
+				</div>
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=rizhi">我的日志</a></li>
+					<li><a href="?h=hudong&c=fb_rizhi">发布日志</a></li>
+					<li><a href="?h=hudong&c=zx_rizhi">最新日志</a></li>
+					<li><a href="?h=hudong&c=jc_rizhi">精彩日志</a></li>
+					<li><a href="?h=hudong&c=fz_guanli">分组管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}><{include public::header.hhc}>
+		<div class="user_main">
+			<{include public::user_left.hhc}>
+			<div class="n_main">
+				<{include public::user_title.hhc}>
+				<?php
+				?>
+				<div class="n_main_main">
+					<div class="n_main_main_title">
+						<ul>
+							<li style="border-bottom:0;height:35px;background:#FFFFFF;cursor:default;">我的日志</li>
+							<a href="?h=hudong&c=fb_rizhi"><li>发布日志</li></a>
+							<a href="?h=hudong&c=zx_rizhi"><li>最新日志</li></a>
+							<a href="?h=hudong&c=jc_rizhi"><li>精彩日志</li></a>
+							<a href="?h=hudong&c=fz_guanli"><li>分组管理</li></a>
+						</ul>
+					</div>
+					<div class="n_main_main_main">
+						<table class="auto_table" style="width:94%;margin:0 auto;">
+							<tr>
+								<th>选中</th>
+								<th>标题</th>
+								<th>发布时间</th>
+								<th>状态</th>
+								<th>浏览</th>
+								<th>分组</th>
+								<th>操作</th>
+							</tr>
+							<form action="?h=hudong&c=sc_all_rizhi" method="post">
+<?php 
+	$tb_name = DB_PRE.'user_rizhi';
+	$type = 'a.id,a.title,a.time,a.zhuangtai,a.liulan,b.name';
+	$w = "a.user_id='{$_SESSION['user']['user_id']}'";
+	$order = 'order by a.id desc';
+	$even_arr = array(
+			array('table_k'=>'b','table_name'=>DB_PRE.'rizhi_fenzu','where'=>'on a.fenzu_id=b.id'),
+		);
+	$page = new page($tb_name,$type,$w.$order,20,'p',true,'a',$even_arr);
+	$res = $page->page_2(5,1);
+						if(!empty($res['0'])){
+							foreach($res['0'] as $v){
+?>
+							<tr>
+								<td style="width"><input class="checkbox" type="checkbox" name="id[]" value="<{@v['id']}>"></td>
+								<td><a href="?h=hudong&c=rizhi_content&k=<{@v['id']}>" class="all_a" target="_blank"><{@v['title']}></a></td>
+								<td><?php echo date('Y-m-d H:i',$v['time']); ?></td>
+								<td>
+									<{if @v['zhuangtai']=='1'}>
+									显示中
+									<{else /}>
+									<span style="color:#FF0000;">审核中</span>
+									<{/if}>
+								</td>
+								<td><{@v['liulan']}></td>
+								<td><{@v['name']}></td>
+								<td><a class="all_a" href="?h=hudong&c=fb_rizhi&k=<{@v['id']}>">编辑</a> | <a href="?h=hudong&c=sc_rizhi&k=<{@v['id']}>" class="all_a delete_tishi">删除</a></td>
+							</tr>
+						<?php } ?>
+							<tr>
+								<td colspan="7" style="text-align:left;">　
+									<a class="all_a quanxuan_table_a" href="javascript:void(0)">全选</a>&nbsp;&nbsp;
+									<a class="all_a qxquanxuan_table_a" href="javascript:void(0)">取消全选</a>&nbsp;&nbsp;
+									<a key="scxz" class="all_a scxzx_table_a" href="javascript:void(0)">删除选中项</a>&nbsp;&nbsp;&nbsp;
+								</td>
+							</tr>
+							</form>
+							<tr>
+								<td colspan="7" style="padding:12px 0;"><{@res['1']}></td>
+							</tr>
+						<?php }else{ ?>
+							<tr>
+								<td colspan="7">你还没有写过日志哦！ <a class="all_a" href="?h=hudong&c=fb_rizhi">编写日志</a></td>
+							</tr>
+						<?php } ?>
+						</table>
+					</div>
+				</div>
+				<ul class="position_right_title">
+					<li><a href="?h=hudong&c=rizhi">我的日志</a></li>
+					<li><a href="?h=hudong&c=fb_rizhi">发布日志</a></li>
+					<li><a href="?h=hudong&c=zx_rizhi">最新日志</a></li>
+					<li><a href="?h=hudong&c=jc_rizhi">精彩日志</a></li>
+					<li><a href="?h=hudong&c=fz_guanli">分组管理</a></li>
+				</ul>
+			</div>
+
+
+
+
+		</div>
+<{include public::footer.hhc}>
